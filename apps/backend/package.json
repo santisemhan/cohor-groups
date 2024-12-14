@@ -1,0 +1,13 @@
+{
+  "name": "@cohor/backend",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "serverless offline start",
+    "lint": "eslint \"src/**/*.{ts,js}\" --no-error-on-unmatched-pattern"
+  },
+  "devDependencies": {
+    "@cohor/eslint-config": "*",
+    "serverless": "^3.39.0",
+    "serverless-offline": "^13.9.0"
+  }
+}

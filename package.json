@@ -1,21 +1,23 @@
 {
-  "name": "Group",
   "private": true,
+  "name": "cohor",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --parallel",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.3.3",
-    "typescript": "5.5.4"
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": "20.x"
   },
-  "packageManager": "npm@10.9.0",
+  "packageManager": "npm@10.8.2",
   "workspaces": [
     "apps/*",
     "packages/*"
