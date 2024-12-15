@@ -1,0 +1,7 @@
+ENVIRONMENT:
+  local: "Local"
+  production: "Production"
+
+COHOR_APPLICATION_FRONTEND_ORIGIN:
+  local: ${env:COHOR_APPLICATION_FRONTEND_ORIGIN, "http://localhost:8080"}
+  production: ""

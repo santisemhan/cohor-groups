@@ -2,12 +2,17 @@
   "name": "@cohor/backend",
   "version": "0.1.0",
   "scripts": {
-    "dev": "serverless offline start",
-    "lint": "eslint \"src/**/*.{ts,js}\" --no-error-on-unmatched-pattern"
+    "dev": "rimraf .build && serverless offline --noPrependStageInUrl --reloadHandler --stage local",
+    "lint": "eslint \"src/**/*.{ts,js}\""
   },
   "devDependencies": {
     "@cohor/eslint-config": "*",
+    "@types/aws-lambda": "^8.10.146",
+    "@types/reflect-metadata": "^0.0.5",
+    "reflect-metadata": "^0.2.2",
     "serverless": "^3.39.0",
-    "serverless-offline": "^13.9.0"
+    "serverless-offline": "^13.9.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typedi": "^0.10.0"
   }
 }
