@@ -1,5 +1,5 @@
 Example:
-  handler: ./src/main/support/serverless/Dispatcher.Example
+  handler: src/main/support/serverless/Dispatcher.Example
   description: "Example"
   ephemeralStorageSize: 512
   events:

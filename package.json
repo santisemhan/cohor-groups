@@ -4,10 +4,11 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev --parallel",
+    "dev": "turbo dev --parallel --env-mode=loose",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\"",
-    "co": "sui-mono commit"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "co": "sui-mono commit",
+    "check": "sui-mono check"
   },
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",
@@ -17,7 +18,7 @@
     "typescript": "^5.7.2"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "packageManager": "npm@10.9.2",
   "workspaces": [

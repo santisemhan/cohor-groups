@@ -1,11 +1,11 @@
 service: cohor-backend
-frameworkVersion: '3'
+frameworkVersion: ~4.4.0
 
 configValidationMode: error
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs22.x
   region: ${self:custom.region}
   stage: local
   environment:
@@ -23,10 +23,7 @@ custom:
     reloadHandler: true
 
 plugins:
-  - serverless-plugin-typescript
   - serverless-offline
 
 functions:
   - ${file(./src/main/serverless/functions/Example.yaml)}
-          
-useDotenv: true
