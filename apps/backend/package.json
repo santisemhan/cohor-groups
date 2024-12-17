@@ -6,9 +6,9 @@
     "lint": "eslint \"src/**/*.{ts,js}\""
   },
   "devDependencies": {
+    "@cohor/types": "*",
     "@cohor/eslint-config": "*",
     "@types/aws-lambda": "^8.10.146",
-    "@types/reflect-metadata": "^0.0.5",
     "reflect-metadata": "^0.2.2",
     "serverless": "^4.4.16",
     "serverless-offline": "^14.4.0",
