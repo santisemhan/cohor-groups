@@ -1,10 +1,10 @@
-import { SizableText, TamaguiProvider, View } from "tamagui"
+import { TamaguiProvider } from "tamagui"
+import { Slot } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
-
-import { tamaguiConfig } from "../tamagui.config"
-
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
+
+import { tamaguiConfig } from "../tamagui.config"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -28,11 +28,7 @@ export default function RootLayout() {
 
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
-      <View backgroundColor="$background" style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <SizableText size="$display-large" color="$element-high">
-          display-large
-        </SizableText>
-      </View>
+      <Slot />
     </TamaguiProvider>
   )
 }
