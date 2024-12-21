@@ -174,27 +174,6 @@ export const tamaguiConfig = createTamagui({
     body: interFont
   },
   themes: {
-    dark: {
-      "element-high": "#FFFFFF",
-      "element-high-opacity-mid": "rgba(31, 31, 31, 0.12)",
-      "element-high-opacity-low": "rgba(31, 31, 31, 0.03)",
-      "element-mid": "#B8B8B8",
-      "element-low": "#858585",
-      "element-disabled": "#666666",
-
-      "outline-accent": "#424242",
-      outline: "#383838",
-
-      "overlay-accent": "#292929",
-      overlay: "#1F1F1F",
-
-      "surface-accent": "#141414",
-      surface: "#0A0A0A",
-      "surface-opacity-low": "rgba(235, 235, 235, 1)",
-
-      "background-accent": "#050505",
-      background: "#000000"
-    },
     light: {
       "element-high": "#1F1F1F",
       "element-high-opacity-mid": "rgba(255, 255, 255, 0.2)",
@@ -215,6 +194,27 @@ export const tamaguiConfig = createTamagui({
 
       "background-accent": "#F5F5F5",
       background: "#FAFAFA"
+    },
+    dark: {
+      "element-high": "#FFFFFF",
+      "element-high-opacity-mid": "rgba(31, 31, 31, 0.12)",
+      "element-high-opacity-low": "rgba(31, 31, 31, 0.03)",
+      "element-mid": "#B8B8B8",
+      "element-low": "#858585",
+      "element-disabled": "#666666",
+
+      "outline-accent": "#424242",
+      outline: "#383838",
+
+      "overlay-accent": "#292929",
+      overlay: "#1F1F1F",
+
+      "surface-accent": "#141414",
+      surface: "#0A0A0A",
+      "surface-opacity-low": "rgba(235, 235, 235, 1)",
+
+      "background-accent": "#050505",
+      background: "#000000"
     }
   }
 })
