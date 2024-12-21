@@ -26753,7 +26753,7 @@
   "tamaguiConfig": {
     "fonts": {
       "heading": {
-        "family": "Inter, Helvetica, Arial, sans-serif",
+        "family": "OpenSauceOne, sans-serif",
         "size": {
           "display-large": 36,
           "display-medium": 32,
@@ -26860,48 +26860,48 @@
         },
         "face": {
           "100": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "200": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "300": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "400": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "500": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "600": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "700": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "800": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "900": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "regular": {
-            "normal": "Inter"
+            "normal": "OpenSauceOne-Regular"
           },
           "medium": {
-            "normal": "Inter"
+            "normal": "OpenSauceOne-Medium"
           },
           "semibold": {
-            "normal": "InterBold"
+            "normal": "OpenSauceOne-SemiBold"
           },
           "bold": {
-            "normal": "InterBold"
+            "normal": "OpenSauceOne-Bold"
           }
         }
       },
       "body": {
-        "family": "Inter, Helvetica, Arial, sans-serif",
+        "family": "OpenSauceOne, sans-serif",
         "size": {
           "display-large": 36,
           "display-medium": 32,
@@ -27008,43 +27008,43 @@
         },
         "face": {
           "100": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "200": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "300": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "400": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "500": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "600": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "700": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "800": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "900": {
-            "normal": "Inter, Helvetica, Arial, sans-serif"
+            "normal": "OpenSauceOne, sans-serif"
           },
           "regular": {
-            "normal": "Inter"
+            "normal": "OpenSauceOne-Regular"
           },
           "medium": {
-            "normal": "Inter"
+            "normal": "OpenSauceOne-Medium"
           },
           "semibold": {
-            "normal": "InterBold"
+            "normal": "OpenSauceOne-SemiBold"
           },
           "bold": {
-            "normal": "InterBold"
+            "normal": "OpenSauceOne-Bold"
           }
         }
       }

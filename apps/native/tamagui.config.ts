@@ -19,7 +19,7 @@ const tokens = createTokens({
 })
 
 const interFont = createFont({
-  family: "Inter, Helvetica, Arial, sans-serif",
+  family: "OpenSauceOne, sans-serif",
   size: {
     "display-large": 36,
     "display-medium": 32,
@@ -154,10 +154,10 @@ const interFont = createFont({
   },
 
   face: {
-    regular: { normal: "Inter" },
-    medium: { normal: "Inter" },
-    semibold: { normal: "InterBold" },
-    bold: { normal: "InterBold" }
+    regular: { normal: "OpenSauceOne-Regular" },
+    medium: { normal: "OpenSauceOne-Medium" },
+    semibold: { normal: "OpenSauceOne-SemiBold" },
+    bold: { normal: "OpenSauceOne-Bold" }
   }
 })
 
