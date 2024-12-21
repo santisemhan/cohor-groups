@@ -5,6 +5,7 @@ import { useFonts } from "expo-font"
 import { useEffect } from "react"
 
 import { tamaguiConfig } from "../tamagui.config"
+import { StatusBar } from "expo-status-bar"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -28,6 +29,7 @@ export default function RootLayout() {
 
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
+      <StatusBar style="light" />
       <Slot />
     </TamaguiProvider>
   )
