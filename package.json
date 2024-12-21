@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",
+    "@tamagui/config": "^1.120.2",
     "@types/node": "^22.10.2",
     "prettier": "^3.4.2",
     "turbo": "^2.3.3",

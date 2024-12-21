@@ -7,16 +7,17 @@
     "lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\" --no-error-on-unmatched-pattern"
   },
   "dependencies": {
-    "expo": "~52.0.19",
-    "expo-status-bar": "~2.0.0",
+    "expo": "~52.0.20",
     "react": "18.3.1",
     "react-native": "0.76.5"
   },
   "devDependencies": {
-    "@cohor/types": "*",
-    "@cohor/eslint-config": "*",
     "@babel/core": "^7.26.0",
-    "@types/react": "~18.3.17"
+    "@cohor/eslint-config": "*",
+    "@cohor/types": "*",
+    "@tamagui/babel-plugin": "^1.120.2",
+    "@types/react": "~18.3.17",
+    "tamagui": "^1.120.2"
   },
   "private": true
 }

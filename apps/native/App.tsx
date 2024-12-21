@@ -1,20 +1,32 @@
-import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text, View } from "react-native"
+import { SizableText, TamaguiProvider, View } from "tamagui"
+
+import { tamaguiConfig } from "./tamagui.config"
+
+import { useFonts } from "expo-font"
 
 export default function App() {
+  const [loaded] = useFonts({
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf")
+  })
+
+  if (!loaded) {
+    return null
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
+      <View backgroundColor="$background" style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <SizableText size="$display-large" color="$element-high">
+          Display
+        </SizableText>
+        <SizableText size="$display-medium" color="$element-high">
+          Display
+        </SizableText>
+        <SizableText size="$display-small" color="$element-high">
+          Display
+        </SizableText>
+      </View>
+    </TamaguiProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-})
