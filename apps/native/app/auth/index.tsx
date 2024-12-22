@@ -51,6 +51,7 @@ export default function AuthWithEmail() {
             justifyContent: "flex-end"
           }}
           keyboardShouldPersistTaps="handled"
+          scrollEnabled={false}
         >
           <YStack gap={40} width="100%">
             <YStack justifyContent="center" alignItems="center" gap={4}>
