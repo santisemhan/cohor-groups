@@ -3,7 +3,8 @@ import { Button as TamaguiButton, GetProps, styled } from "tamagui"
 export const Button = styled(TamaguiButton, {
   unstyled: true,
   borderRadius: 100,
-  textAlign: "center",
+  flexDirection: "row",
+  justifyContent: "center",
 
   paddingVertical: 16,
   paddingHorizontal: 20,

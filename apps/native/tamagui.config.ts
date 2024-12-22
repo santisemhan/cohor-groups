@@ -25,9 +25,9 @@ const interFont = createFont({
     "display-medium": 32,
     "display-small": 26,
 
-    "heading-large": 28,
-    "heading-medium": 26,
-    "heading-small": 22,
+    "headline-large": 28,
+    "headline-medium": 26,
+    "headline-small": 22,
 
     "title-large": 18,
     "title-medium": 16,
@@ -58,9 +58,9 @@ const interFont = createFont({
     "display-medium": 40,
     "display-small": 34,
 
-    "heading-large": 36,
-    "heading-medium": 32,
-    "heading-small": 28,
+    "headline-large": 36,
+    "headline-medium": 32,
+    "headline-small": 28,
 
     "title-large": 24,
     "title-medium": 22,
@@ -91,9 +91,9 @@ const interFont = createFont({
     "display-medium": "bold",
     "display-small": "bold",
 
-    "heading-large": "bold",
-    "heading-medium": "bold",
-    "heading-small": "bold",
+    "headline-large": "bold",
+    "headline-medium": "bold",
+    "headline-small": "bold",
 
     "title-large": "semibold",
     "title-medium": "semibold",
@@ -124,9 +124,9 @@ const interFont = createFont({
     "display-medium": -2,
     "display-small": -2,
 
-    "heading-large": -2,
-    "heading-medium": -2,
-    "heading-small": -2,
+    "headline-large": -2,
+    "headline-medium": -2,
+    "headline-small": -2,
 
     "title-large": -1,
     "title-medium": -1,

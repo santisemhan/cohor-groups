@@ -1,5 +1,5 @@
 import { TamaguiProvider } from "tamagui"
-import { Slot } from "expo-router"
+import { Stack } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
@@ -30,7 +30,7 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
       <StatusBar style="light" />
-      <Slot />
+      <Stack screenOptions={{ headerShown: false }} />
     </TamaguiProvider>
   )
 }

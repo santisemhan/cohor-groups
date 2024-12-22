@@ -7,6 +7,7 @@
     "lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\" --no-error-on-unmatched-pattern"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "expo": "~52.0.20",
     "expo-av": "^15.0.1",
     "expo-blur": "^14.0.1",
@@ -21,7 +22,9 @@
     "@cohor/eslint-config": "*",
     "@cohor/types": "*",
     "@tamagui/babel-plugin": "^1.120.2",
+    "@tamagui/config": "^1.120.2",
     "@types/react": "~18.3.17",
+    "react-native-svg": "^15.10.1",
     "tamagui": "^1.120.2"
   },
   "private": true
