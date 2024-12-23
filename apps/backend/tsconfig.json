@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2022"],
+    "lib": ["es2015"],
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -14,9 +14,10 @@
     "resolveJsonModule": true,
     "rootDir": "./",
     "sourceMap": true,
+    "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "target": "es2022",
+    "target": "es5",
     "types": ["node", "reflect-metadata"]
   }
 }

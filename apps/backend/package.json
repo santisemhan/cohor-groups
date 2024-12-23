@@ -13,13 +13,14 @@
     "@cohor/types": "*",
     "@types/aws-lambda": "^8.10.146",
     "reflect-metadata": "^0.2.2",
-    "serverless": "^4.4.16",
-    "serverless-offline": "^14.4.0",
+    "serverless": "^3.40.0",
+    "serverless-offline": "^13.9.0",
     "typedi": "^0.10.0"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
     "prisma": "^6.1.0",
+    "serverless-plugin-typescript": "^2.1.5",
     "sql-formatter": "^15.4.8"
   }
 }
