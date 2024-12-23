@@ -57,3 +57,5 @@ expo-env.d.ts
 
 # Metro
 .metro-health-check*
+
+undefined
