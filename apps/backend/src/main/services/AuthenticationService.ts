@@ -4,12 +4,14 @@ import { Prisma } from "@prisma/client"
 import { UserRepository } from "../repository/UserRepository"
 import { Injectable } from "../support/decorator/Injectable"
 import { JWTPayload, jwtVerify, SignJWT } from "jose"
-
-const SECRET_KEY = new TextEncoder().encode("your-256-bit-secret")
+import { AuthenticationConfigurationProvider } from "../configuration/provider/AuthenticationConfiguration"
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly authenticationConfigurationProvider: AuthenticationConfigurationProvider
+  ) {}
 
   public async registerAsync(data: Prisma.UserCreateInput) {
     const user = {
@@ -31,16 +33,18 @@ export class AuthenticationService {
   }
 
   private async generateToken(payload: JWTPayload): Promise<string> {
+    const authenticationConfiguration = await this.authenticationConfigurationProvider.getConfigurationAsync()
     return await new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime("1h")
-      .sign(SECRET_KEY)
+      .sign(new TextEncoder().encode(authenticationConfiguration.JWTKey))
   }
 
   public async verifyToken(token: string): Promise<JWTPayload | null> {
     try {
-      const { payload } = await jwtVerify(token, SECRET_KEY)
+      const authenticationConfiguration = await this.authenticationConfigurationProvider.getConfigurationAsync()
+      const { payload } = await jwtVerify(token, new TextEncoder().encode(authenticationConfiguration.JWTKey))
       return payload
     } catch {
       return null

@@ -21,6 +21,7 @@ export class PersistenceConfigurationProvider extends ConfigurationProvider<Pers
     super("PersistenceConfigurationProvider", loggingService, timeService)
   }
 
+  // La informacion deberia venir del secret si es un ambiente de produccion o QA
   protected override async configureAsync(): Promise<PersistenceConfiguration> {
     return new PersistenceConfiguration({
       database: this.environmentService.getStringOrDefault("INTEGRATOR_DATASOURCE_DATABASE", "Integrator"),
