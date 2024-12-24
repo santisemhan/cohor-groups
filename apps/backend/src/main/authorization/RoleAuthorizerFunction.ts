@@ -51,6 +51,10 @@ export class RoleAuthorizerFunction
         throw new Error("Unauthorized")
       }
 
+      if (!functionPermissions.includes(validToken.role as string)) {
+        throw new Error("Unauthorized")
+      }
+
       const policy: PolicyDocument = this.iamService.generatePolicy([
         {
           Action: "execute-api:Invoke",
@@ -60,7 +64,8 @@ export class RoleAuthorizerFunction
       ])
 
       const loggedUserInfo: APIGatewayAuthorizerResultContext = {
-        id: validToken.sub
+        id: validToken.sub,
+        email: validToken.email as string
       }
 
       return this.apiGatewayService.authorizerResult(policy, loggedUserInfo)

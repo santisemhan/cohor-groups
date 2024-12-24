@@ -5,6 +5,7 @@ import { UserRepository } from "../repository/UserRepository"
 import { Injectable } from "../support/decorator/Injectable"
 import { JWTPayload, jwtVerify, SignJWT } from "jose"
 import { AuthenticationConfigurationProvider } from "../configuration/provider/AuthenticationConfiguration"
+import { Role } from "../authorization/Permission"
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +20,7 @@ export class AuthenticationService {
       password: await bcrypt.hash(data.password, 10)
     }
     const { id, email } = await this.userRepository.createUserAsync(user)
-    return this.generateToken({ sub: id, email: email })
+    return this.generateToken({ sub: id, email: email, role: Role.User })
   }
 
   public async loginAsync(email: string, password: string) {
@@ -29,7 +30,7 @@ export class AuthenticationService {
     const passwordMatch = await bcrypt.compare(password, user.password)
     if (!passwordMatch) throw new Error("Invalid password")
 
-    return this.generateToken({ sub: user.id, email: user.email })
+    return this.generateToken({ sub: user.id, email: user.email, role: Role.User })
   }
 
   private async generateToken(payload: JWTPayload): Promise<string> {

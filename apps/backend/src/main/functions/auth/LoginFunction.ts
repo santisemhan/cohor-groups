@@ -1,5 +1,3 @@
-import bcrypt from "bcryptjs"
-
 import { APIGatewayProxyEventV2, Context } from "aws-lambda"
 import { HTTPResponse } from "../../support/http/HTTPResponse"
 import { HTTPStatusCode } from "../../support/http/HTTPStatusCode"
@@ -9,8 +7,8 @@ import { Injectable } from "../../support/decorator/Injectable"
 import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
-import { RegisterSchema } from "../../schema/auth/RegisterSchema"
 import { AuthenticationService } from "../../services/AuthenticationService"
+import { LoginSchema } from "../../schema/auth/LoginSchema"
 
 @Injectable()
 export class LoginFunction extends APIServerlessFunction {
@@ -22,7 +20,7 @@ export class LoginFunction extends APIServerlessFunction {
   }
 
   public override async handleAsync(event: APIGatewayProxyEventV2, _context: Context) {
-    const { error, value: body } = this.validationService.validate(RegisterSchema, event.body)
+    const { error, value: body } = this.validationService.validate(LoginSchema, event.body)
     if (error) {
       return new HTTPResponse(MIMEType.JSON)
         .body([new HttpValidationError(error, event.body, HTTPParameterSource.BODY)])
@@ -30,8 +28,7 @@ export class LoginFunction extends APIServerlessFunction {
     }
 
     const { email, password } = body
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const token = await this.authenticationService.registerAsync({ email, password: hashedPassword, name: "Example" })
+    const token = await this.authenticationService.loginAsync(email, password)
 
     return new HTTPResponse(MIMEType.JSON)
       .body({

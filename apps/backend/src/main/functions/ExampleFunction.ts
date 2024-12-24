@@ -19,13 +19,13 @@ export class ExampleFunction extends APIServerlessFunction {
     event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
     _context: Context
   ) {
-    const { error } = this.validationService.validate(AuthorizerContextSchema, event.requestContext.authorizer)
+    const { error, value } = this.validationService.validate(AuthorizerContextSchema, event.requestContext.authorizer)
     if (error) {
       return new HTTPResponse(MIMEType.JSON)
         .body([new HttpValidationError(error, event.body, HTTPParameterSource.BODY)])
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    return new HTTPResponse(MIMEType.JSON).body({ message: "Hola ..nombre.. !" }).statusCode(HTTPStatusCode.Ok)
+    return new HTTPResponse(MIMEType.JSON).body({ message: `Hola ${value.email}!` }).statusCode(HTTPStatusCode.Ok)
   }
 }
