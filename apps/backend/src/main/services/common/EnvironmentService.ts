@@ -1,8 +1,8 @@
-import { Service } from "typedi"
 import { UnknownEnvironmentKeyError } from "../../errors/UnknownEnvironmentKeyError"
 import { Type } from "../../support/language/Type"
+import { Injectable } from "../../support/decorator/Injectable"
 
-@Service()
+@Injectable()
 export class EnvironmentService {
   public constructor() {}
 

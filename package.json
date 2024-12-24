@@ -13,10 +13,12 @@
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",
     "@tamagui/config": "^1.120.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.17.10",
     "prettier": "^3.4.2",
     "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "zod": "^3.24.1"
   },
   "engines": {
     "node": "20.x"

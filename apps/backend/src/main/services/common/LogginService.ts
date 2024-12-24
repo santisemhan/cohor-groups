@@ -1,10 +1,10 @@
-import { Service } from "typedi"
 import { TimeService } from "./TimeService"
 import { LoggingLevel } from "../../support/language/LogginLevel"
 import { Logger } from "../../support/language/Logger"
 import { EnvironmentService } from "./EnvironmentService"
+import { Injectable } from "../../support/decorator/Injectable"
 
-@Service()
+@Injectable()
 export class LoggingService {
   public constructor(
     private readonly environmentService: EnvironmentService,

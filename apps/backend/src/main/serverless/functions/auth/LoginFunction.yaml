@@ -1,6 +1,6 @@
-Example:
-  handler: src/main/support/serverless/Dispatcher.Example
-  description: "Example"
+Login:
+  handler: src/main/support/serverless/Dispatcher.Login
+  description: "Login a user"
   ephemeralStorageSize: 512
   events:
     - http:
@@ -10,8 +10,8 @@ Example:
             - Access-Control-Allow-Origin
             - Content-Type
           origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGIN.${self:custom.stage}}
-        method: "GET"
-        path: "/example"
+        method: "POST"
+        path: "/auth/login"
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30

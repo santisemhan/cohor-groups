@@ -1,9 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client"
-import { Service } from "../../support/decorator/Service"
 import { Logger } from "../../support/language/Logger"
 import { LoggingService } from "../common/LogginService"
 import { PersistenceConfigurationProvider } from "../../configuration/provider/PersistenceConfigurationProvider"
 import { QueryFormatter } from "../../support/language/QueryFormatter"
+import { Injectable } from "../../support/decorator/Injectable"
 
 /**
  * @description
@@ -17,7 +17,7 @@ import { QueryFormatter } from "../../support/language/QueryFormatter"
  * @see https://www.prisma.io/docs/guides/performance-and-optimization/connection-management
  * @see https://node-postgres.com/features/pooling
  */
-@Service()
+@Injectable()
 export class DatabaseService {
   private readonly logger: Logger
 

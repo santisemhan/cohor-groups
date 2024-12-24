@@ -1,17 +1,17 @@
 import { Prisma } from "@prisma/client"
 
-import { Configuration } from "../../support/decorator/Configuration"
 import { ConfigurationProvider } from "../../support/language/ConfigurationProvider"
 import { PersistenceConfiguration } from "../PersistenceConfiguration"
 import { EnvironmentService } from "../../services/common/EnvironmentService"
 import { LoggingService } from "../../services/common/LogginService"
 import { TimeService } from "../../services/common/TimeService"
+import { Injectable } from "../../support/decorator/Injectable"
 
 /**
  * @description
  *Proveedor de configuraciÃ³n para la capa de persistencia.
  */
-@Configuration()
+@Injectable()
 export class PersistenceConfigurationProvider extends ConfigurationProvider<PersistenceConfiguration> {
   public constructor(
     private readonly environmentService: EnvironmentService,
