@@ -38,8 +38,8 @@ export class AuthenticationService {
     const configuration = await this.webConfigurationProvider.getConfigurationAsync()
     await this.mailService.sendMail({
       to: email,
-      subject: "Validate your account",
-      body: `Please validate your account by clicking on the following link: ${configuration.source}/auth/validate/${id}/${token}`
+      subject: "Validá tu cuenta",
+      body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${id}/${token}`
     })
   }
 
