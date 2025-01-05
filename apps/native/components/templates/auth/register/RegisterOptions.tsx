@@ -6,18 +6,18 @@ import MailboxIcon from "../../../icons/Mailbox"
 import GoogleIcon from "../../../icons/GoogleIcon"
 import { Link } from "expo-router"
 
-interface LoginOptionsProps {
+interface RegisterOptionsProps {
   // TODO: Add to context
   setAuthFlow: (value: "login" | "register" | undefined) => void
 }
 
-export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
+export default function RegisterOptions({ setAuthFlow }: RegisterOptionsProps) {
   const theme = useTheme()
 
   return (
     <>
       <SizableText color="$white" size="$headline-small">
-        Iniciar Sesión
+        Crear una cuenta
       </SizableText>
       <YStack gap={24} width="100%">
         <Button backgroundColor="$element-high" icon={<GoogleIcon width={21} height={21} />}>
@@ -38,7 +38,7 @@ export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
             overflow: "hidden"
           }}
         >
-          <Link href="/auth/login" asChild>
+          <Link href="/auth/register" asChild>
             <Button
               type="subtle"
               backgroundColor="transparent"
@@ -50,9 +50,9 @@ export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
           </Link>
         </BlurView>
         <SizableText color="$white-opacity-high" size="$body-small" textAlign="center">
-          ¿No tenes una cuenta?{" "}
-          <SizableText onPress={() => setAuthFlow("register")} color="$white" size="$body-small-w-medium">
-            Crear una cuenta
+          ¿Ya tenes una cuenta?{" "}
+          <SizableText onPress={() => setAuthFlow("login")} color="$white" size="$body-small-w-medium">
+            Iniciar sesión
           </SizableText>
         </SizableText>
       </YStack>

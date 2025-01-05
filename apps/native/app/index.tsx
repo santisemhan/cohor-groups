@@ -3,12 +3,19 @@ import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
 import { YStack, SizableText } from "tamagui"
 import GlassBottomSheet from "../components/GlassBotomSheet"
+import { useFocusEffect } from "expo-router"
 import AuthOptions from "../components/templates/auth/AuthOptions"
 import LoginOptions from "../components/templates/auth/login/LoginOptions"
-import { useFocusEffect } from "expo-router"
+import RegisterOptions from "../components/templates/auth/register/RegisterOptions"
 
 export default function Home() {
-  const [wantLogin, setWantLogin] = useState(false)
+  const [authFlow, setAuthFlow] = useState<"login" | "register" | undefined>(undefined)
+
+  const flowMap = {
+    register: <RegisterOptions setAuthFlow={setAuthFlow} />,
+    login: <LoginOptions setAuthFlow={setAuthFlow} />
+  }
+
   const videoRef = useRef<Video>(null)
 
   useFocusEffect(
@@ -56,7 +63,7 @@ export default function Home() {
           </SizableText>
         </YStack>
         <GlassBottomSheet>
-          {!wantLogin ? <AuthOptions setWantLogin={setWantLogin} /> : <LoginOptions />}
+          {authFlow === undefined ? <AuthOptions setAuthFlow={setAuthFlow} /> : flowMap[authFlow]}
         </GlassBottomSheet>
       </YStack>
     </View>
