@@ -10,10 +10,12 @@ provider:
   stage: local
   environment:
     ENVIRONMENT: ${self:custom.environment.ENVIRONMENT.${self:custom.stage}}
+    COHOR_APPLICATION_FRONTEND_ORIGINS: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
+    COHOR_API_GATEWAY_ENDPOINT_URI: ${self:custom.environment.COHOR_API_GATEWAY_ENDPOINT_URI.${self:custom.stage}}
 
 custom:
   artifact: "Cohor"
-  environment: ${file(./src/main/serverless/configuration/environment.yaml)}
+  environment: ${file(./src/main/serverless/configuration/Environment.yaml)}
   region: "us-east-1"
   stage: ${opt:stage, self:provider.stage}
   roleAuthorizer:
@@ -36,5 +38,6 @@ functions:
   - ${file(./src/main/serverless/functions/ExampleFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/LoginFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/RegisterFunction.yaml)}
+  - ${file(./src/main/serverless/functions/auth/ValidateAccountFunction.yaml)}
 
 useDotenv: true

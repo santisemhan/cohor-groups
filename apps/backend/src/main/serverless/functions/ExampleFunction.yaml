@@ -10,7 +10,7 @@ Example:
           headers:
             - Access-Control-Allow-Origin
             - Content-Type
-          origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGIN.${self:custom.stage}}
+          origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
         method: "GET"
         path: "/protected"
   maximumRetryAttempts: 0
