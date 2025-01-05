@@ -1,4 +1,4 @@
-import { Service } from "../../support/decorator/Service"
+import { Injectable } from "../../support/decorator/Injectable"
 
 /**
  * @description
@@ -14,7 +14,7 @@ import { Service } from "../../support/decorator/Service"
  *  @see https://docs.python.org/3.9/library/datetime.html#aware-and-naive-objects
  *  @see https://www.epochconverter.com/
  */
-@Service()
+@Injectable()
 export class TimeService {
   /**
    * @description

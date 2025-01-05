@@ -1,5 +1,5 @@
 import { Service } from "typedi"
 
-export function Repository<T = unknown>() {
+export function Injectable<T = unknown>() {
   return Service<T>()
 }

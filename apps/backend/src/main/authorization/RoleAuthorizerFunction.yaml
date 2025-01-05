@@ -1,0 +1,7 @@
+RoleAuthorizer:
+  description: "Validate if the user can access to the AWS Lambda with his role."
+  ephemeralStorageSize: 512
+  handler: src/main/support/serverless/Dispatcher.RoleAuthorizer
+  maximumRetryAttempts: 0
+  memorySize: 512
+  timeout: 30

@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from "axios"
 import { HTTPRequest } from "../../support/http/HTTPRequest"
-import { Service } from "../../support/decorator/Service"
 import { Logger } from "../../support/language/Logger"
 import { LoggingService } from "./LogginService"
+import { Injectable } from "../../support/decorator/Injectable"
 
 /**
  * @description
@@ -11,7 +11,7 @@ import { LoggingService } from "./LogginService"
  * @see https://axios-http.com/docs/intro
  */
 
-@Service()
+@Injectable()
 export class HTTPService {
   private readonly logger: Logger
 
