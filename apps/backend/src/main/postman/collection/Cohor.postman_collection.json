@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user@email.com\",\r\n    \"password\": \"tDlpGsqIKYCB\"\r\n}",
+									"raw": "{\r\n    \"email\": \"santisemhan2@gmail.com\",\r\n    \"password\": \"tDlpGsqIKYCB\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -48,7 +48,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user@email.com\",\r\n    \"password\": \"tDlpGsqIKYCB\"\r\n}",
+									"raw": "{\r\n    \"email\": \"santisemhan2@gmail.com\",\r\n    \"password\": \"tDlpGsqIKYCB\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -69,8 +69,70 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "/validate/:userId/:token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{protocol}}://{{hostname}}:{{apiPort}}/auth/validate/:userId/:token",
+									"protocol": "{{protocol}}",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{apiPort}}",
+									"path": [
+										"auth",
+										"validate",
+										":userId",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "7a5fd5ec-f165-42da-b4b8-f9a33ab5edd6"
+										},
+										{
+											"key": "token",
+											"value": "13ea2803-de66-4131-a28f-d36f625ed2bf"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbTUydjVzMTMwMDAwdmllc3RiNW1oNjhnIiwiZW1haWwiOiJzYW50aXNlbWhhbkBnbWFpbC5jb20iLCJpYXQiOjE3MzUwNjg3OTEsImV4cCI6MTczNTA3MjM5MX0.2pvc64kUlyxpWx9EiBLIzymwNHitPHK9McWGSPwlTd0",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
