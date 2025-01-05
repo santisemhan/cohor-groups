@@ -11,6 +11,7 @@ import { LoginFunction } from "../../functions/auth/LoginFunction"
 import { RegisterFunction } from "../../functions/auth/RegisterFunction"
 import { ExampleFunction } from "../../functions/ExampleFunction"
 import { RoleAuthorizerFunction } from "../../authorization/RoleAuthorizerFunction"
+import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFunction"
 
 /**
  * @description
@@ -41,5 +42,6 @@ export const RoleAuthorizer = Dispatcher.of(RoleAuthorizerFunction)
 // Auth
 export const Login = Dispatcher.of(LoginFunction)
 export const Register = Dispatcher.of(RegisterFunction)
+export const ValidateAccount = Dispatcher.of(ValidateAccountFunction)
 
 export const Example = Dispatcher.of(ExampleFunction)

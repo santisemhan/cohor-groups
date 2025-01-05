@@ -7,11 +7,11 @@ import { Injectable } from "../../support/decorator/Injectable"
 import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
-import { RegisterSchema } from "../../schema/auth/RegisterSchema"
 import { AuthenticationService } from "../../services/AuthenticationService"
+import { ValidationAccountSchema } from "../../schema/auth/ValidationAccountSchema"
 
 @Injectable()
-export class RegisterFunction extends APIServerlessFunction {
+export class ValidateAccountFunction extends APIServerlessFunction {
   constructor(
     private readonly validationService: ValidationService,
     private readonly authenticationService: AuthenticationService
@@ -20,15 +20,18 @@ export class RegisterFunction extends APIServerlessFunction {
   }
 
   public override async handleAsync(event: APIGatewayProxyEventV2, _context: Context) {
-    const { error, value: body } = this.validationService.validate(RegisterSchema, event.body)
+    const { error, value: pathParameters } = this.validationService.validate(
+      ValidationAccountSchema,
+      event.pathParameters
+    )
     if (error) {
       return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(error, event.body, HTTPParameterSource.BODY)])
+        .body([new HttpValidationError(error, event.body, HTTPParameterSource.PATH)])
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { email, password } = body
-    await this.authenticationService.registerAsync({ email, password })
+    const { userId, token } = pathParameters
+    await this.authenticationService.validateAccountAsync(userId, token)
 
     return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
   }

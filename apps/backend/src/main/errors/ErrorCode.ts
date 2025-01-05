@@ -11,7 +11,9 @@ export enum ErrorCode {
   ShallNotInstantiateError = "COHOR-0000-0004",
   EndpointCannotBeUndefinedError = "COHOR-0000-0005",
   TimeoutCannotBeNegativeError = "COHOR-0000-0006",
-  UnknownEnvironmentKeyError = "COHOR-0000-0007"
+  UnknownEnvironmentKeyError = "COHOR-0000-0007",
+  CannotSendEmailError = "COHOR-0000-0008",
+  NotValidatedAccountError = "COHOR-0000-0009"
 
   // Agregar más códigos de error, nunca eliminar...
 }

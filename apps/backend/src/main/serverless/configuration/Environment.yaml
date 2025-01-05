@@ -2,6 +2,10 @@ ENVIRONMENT:
   local: "Local"
   production: "Production"
 
-COHOR_APPLICATION_FRONTEND_ORIGIN:
-  local: ${env:COHOR_APPLICATION_FRONTEND_ORIGIN, "http://localhost:8080"}
+COHOR_APPLICATION_FRONTEND_ORIGINS:
+  local: ${env:COHOR_APPLICATION_FRONTEND_ORIGINS, "http://localhost:8080"}
+  production: ""
+
+COHOR_API_GATEWAY_ENDPOINT_URI:
+  local: ${env:COHOR_API_GATEWAY_ENDPOINT_URI, "http://localhost:3000"}
   production: ""
