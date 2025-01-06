@@ -6,77 +6,92 @@ import { Input } from "../../../components/ui/Input"
 import EyeIcon from "../../../components/icons/Eye"
 import EyeSlashIcon from "../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
+import { router } from "expo-router"
 
 export default function Register() {
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
 
+  const onValidate = () => {
+    //HACER LLAMADO AL ENDPOINT PARA VALIDAR EMAIL
+    router.push("auth/register/validation")
+  }
+
   return (
-    <GlassBottomSheet>
-      <SizableText color="$white" size="$headline-small">
-        Crear una cuenta
-      </SizableText>
-      <YStack gap={24} width="100%">
-        <BlurView
-          intensity={60}
-          tint="light"
-          style={{
-            borderRadius: 100,
-            borderColor: theme["white-opacity-mid"].val,
-            borderWidth: 1,
-            overflow: "hidden"
-          }}
-        >
-          <Input
-            borderWidth={0}
-            backgroundColor="transparent"
-            color="$white-opacity-high"
-            placeholder="Email"
-            placeholderTextColor="$white-opacity-high"
-          />
-        </BlurView>
-        <BlurView
-          intensity={60}
-          tint="light"
-          style={{
-            borderRadius: 100,
-            borderColor: theme["white-opacity-mid"].val,
-            borderWidth: 1,
-            overflow: "hidden"
-          }}
-        >
-          <XStack height={50} width="100%" alignItems="center">
+    <YStack gap={40} width="100%">
+      <YStack justifyContent="center" alignItems="center" gap={4}>
+        <SizableText textTransform="uppercase" color="$white" size="$headline-large">
+          Cohor
+        </SizableText>
+      </YStack>
+      <GlassBottomSheet>
+        <SizableText color="$white" size="$headline-small">
+          Crear una cuenta
+        </SizableText>
+        <YStack gap={24} width="100%">
+          <BlurView
+            intensity={60}
+            tint="light"
+            style={{
+              borderRadius: 100,
+              borderColor: theme["white-opacity-mid"].val,
+              borderWidth: 1,
+              overflow: "hidden"
+            }}
+          >
             <Input
-              width="100%"
-              position="absolute"
               borderWidth={0}
               backgroundColor="transparent"
               color="$white-opacity-high"
-              placeholder="Contraseña"
+              placeholder="Email"
               placeholderTextColor="$white-opacity-high"
-              secureTextEntry={!showPassword}
             />
-            <Stack position="absolute" width="100%" paddingRight={16} alignItems="flex-end" justifyContent="center">
-              {showPassword ? (
-                <EyeIcon
-                  color={theme.white.val}
-                  onPress={() => setShowPassword((prev) => !prev)}
-                  height={21}
-                  width={21}
-                />
-              ) : (
-                <EyeSlashIcon
-                  color={theme.white.val}
-                  onPress={() => setShowPassword((prev) => !prev)}
-                  height={21}
-                  width={21}
-                />
-              )}
-            </Stack>
-          </XStack>
-        </BlurView>
-        <Button borderColor="$element-high-opacity-mid">Continuar</Button>
-      </YStack>
-    </GlassBottomSheet>
+          </BlurView>
+          <BlurView
+            intensity={60}
+            tint="light"
+            style={{
+              borderRadius: 100,
+              borderColor: theme["white-opacity-mid"].val,
+              borderWidth: 1,
+              overflow: "hidden"
+            }}
+          >
+            <XStack height={50} width="100%" alignItems="center">
+              <Input
+                width="100%"
+                position="absolute"
+                borderWidth={0}
+                backgroundColor="transparent"
+                color="$white-opacity-high"
+                placeholder="Contraseña"
+                placeholderTextColor="$white-opacity-high"
+                secureTextEntry={!showPassword}
+              />
+              <Stack position="absolute" width="100%" paddingRight={16} alignItems="flex-end" justifyContent="center">
+                {showPassword ? (
+                  <EyeIcon
+                    color={theme.white.val}
+                    onPress={() => setShowPassword((prev) => !prev)}
+                    height={21}
+                    width={21}
+                  />
+                ) : (
+                  <EyeSlashIcon
+                    color={theme.white.val}
+                    onPress={() => setShowPassword((prev) => !prev)}
+                    height={21}
+                    width={21}
+                  />
+                )}
+              </Stack>
+            </XStack>
+          </BlurView>
+          <Button borderColor="$element-high-opacity-mid" onPress={onValidate}>
+            Continuar
+          </Button>
+        </YStack>
+      </GlassBottomSheet>
+    </YStack>
   )
 }

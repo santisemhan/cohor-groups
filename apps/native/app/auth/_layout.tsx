@@ -44,14 +44,7 @@ export default function AuthLayout() {
           keyboardShouldPersistTaps="handled"
           scrollEnabled={false}
         >
-          <YStack gap={40} width="100%">
-            <YStack justifyContent="center" alignItems="center" gap={4}>
-              <SizableText textTransform="uppercase" color="$white" size="$headline-large">
-                Cohor
-              </SizableText>
-            </YStack>
-            <Slot />
-          </YStack>
+          <Slot />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
