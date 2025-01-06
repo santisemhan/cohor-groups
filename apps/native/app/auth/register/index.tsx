@@ -6,7 +6,6 @@ import { Input } from "../../../components/ui/Input"
 import EyeIcon from "../../../components/icons/Eye"
 import EyeSlashIcon from "../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
-import { ActivityIndicator } from "react-native"
 import { router } from "expo-router"
 
 export default function Register() {
@@ -88,7 +87,7 @@ export default function Register() {
               </Stack>
             </XStack>
           </BlurView>
-          <Button borderColor="rgba(255, 255, 255, 0.2)" onPress={onValidate}>
+          <Button borderColor="$element-high-opacity-mid" onPress={onValidate}>
             Continuar
           </Button>
         </YStack>

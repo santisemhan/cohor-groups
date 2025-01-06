@@ -1,5 +1,5 @@
-import { SizableText, useTheme, YStack } from "tamagui"
-import React, { useState } from "react"
+import { SizableText, YStack } from "tamagui"
+import React from "react"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Button } from "../../../../components/ui/Button"
 import { BlurView } from "expo-blur"
@@ -43,7 +43,7 @@ export default function Validation() {
               overflow: "hidden"
             }}
           >
-            <Button type="subtle" backgroundColor="transparent" borderColor="rgba(255, 255, 255, 0.2)">
+            <Button type="subtle" backgroundColor="transparent" borderColor="$element-high-opacity-mid">
               Reenviar email
             </Button>
           </BlurView>
