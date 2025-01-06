@@ -77,7 +77,7 @@ export default function Login() {
             </Stack>
           </XStack>
         </BlurView>
-        <Button borderColor="rgba(255, 255, 255, 0.2)">Continuar</Button>
+        <Button borderColor="$element-high-opacity-mid">Continuar</Button>
       </YStack>
     </GlassBottomSheet>
   )

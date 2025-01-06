@@ -27255,8 +27255,8 @@
     "themes": {
       "light": {
         "element-high": "#1F1F1F",
-        "element-high-opacity-mid": "rgba(255, 255, 255, 0.2)",
-        "element-high-opacity-low": "rgba(255, 255, 255, 0.1)",
+        "element-high-opacity-mid": "rgba(31, 31, 31, 0.12)",
+        "element-high-opacity-low": "rgba(31, 31, 31, 0.03)",
         "element-mid": "#666666",
         "element-low": "#8F8F8F",
         "element-disabled": "#B8B8B8",
@@ -27266,15 +27266,15 @@
         "overlay": "#F7F7F7",
         "surface-accent": "#FAFAFA",
         "surface": "#FFFFFF",
-        "surface-opacity-low": "rgba(56, 56, 56, 1)",
+        "surface-opacity-low": "rgba(255, 255, 255, 0)",
         "background-accent": "#F5F5F5",
         "background": "#FAFAFA",
         "id": "light"
       },
       "dark": {
         "element-high": "#FFFFFF",
-        "element-high-opacity-mid": "rgba(31, 31, 31, 0.12)",
-        "element-high-opacity-low": "rgba(31, 31, 31, 0.03)",
+        "element-high-opacity-mid": "rgba(255, 255, 255, 0.2)",
+        "element-high-opacity-low": "rgba(255, 255, 255, 0.1)",
         "element-mid": "#B8B8B8",
         "element-low": "#858585",
         "element-disabled": "#666666",
@@ -27284,7 +27284,7 @@
         "overlay": "#1F1F1F",
         "surface-accent": "#141414",
         "surface": "#0A0A0A",
-        "surface-opacity-low": "rgba(235, 235, 235, 1)",
+        "surface-opacity-low": "rgba(10, 10, 10, 0)",
         "background-accent": "#050505",
         "background": "#000000",
         "id": "dark"
