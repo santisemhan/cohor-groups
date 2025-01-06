@@ -1,15 +1,15 @@
-import { SizableText, Stack, useTheme, XStack, YStack } from "tamagui"
+import { SizableText, useTheme, YStack } from "tamagui"
 import React, { useState } from "react"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Button } from "../../../../components/ui/Button"
-import { Input } from "../../../../components/ui/Input"
-import EyeIcon from "../../../../components/icons/Eye"
-import EyeSlashIcon from "../../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
+import { openInbox } from "react-native-email-link";
 
 export default function Validation() {
-  const theme = useTheme()
-  const [showPassword, setShowPassword] = useState(false)
+
+  const onOpenMailer = () => {
+    openInbox()
+  }
 
   return (
     <YStack gap={40} width="100%">
@@ -35,7 +35,7 @@ export default function Validation() {
           </SizableText>
         </YStack>
         <YStack width="100%" gap={20}>
-          <Button>Abrir email</Button>
+          <Button onPress={onOpenMailer}>Abrir email</Button>
           <BlurView
             intensity={100}
             tint="dark"
