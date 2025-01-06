@@ -21,11 +21,11 @@ export default function Validation() {
         </SizableText>
       </YStack>
       <GlassBottomSheet>
-        <YStack width="100%" alignItems="center" gap={12}>
+        <YStack width="90%" alignItems="center" gap={12}>
           <SizableText color="$white" size="$headline-small">
             Verificá tu email
           </SizableText>
-          <SizableText color="$white-opacity-high" size="$body-small">
+          <SizableText textAlign="center" color="$white-opacity-high" size="$body-small">
             Te hemos enviado un correo electrónico a{" "}
             <SizableText color="$white" size="$body-medium-w-medium">
               santiventura.96@gmail.com

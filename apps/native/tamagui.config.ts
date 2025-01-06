@@ -120,35 +120,35 @@ const interFont = createFont({
     "label-medium-w-medium": "medium"
   },
   letterSpacing: {
-    "display-large": -2,
-    "display-medium": -2,
-    "display-small": -2,
+    "display-large": 0,
+    "display-medium": 0,
+    "display-small": 0,
 
-    "headline-large": -2,
-    "headline-medium": -2,
-    "headline-small": -2,
+    "headline-large": 0,
+    "headline-medium": 0,
+    "headline-small": 0,
 
-    "title-large": -1,
-    "title-medium": -1,
-    "title-small": -1,
+    "title-large": 0,
+    "title-medium": 0,
+    "title-small": 0,
 
-    "subhead-large": -1,
-    "subhead-medium": -1,
-    "subhead-small": -1,
+    "subhead-large": 0,
+    "subhead-medium": 0,
+    "subhead-small": 0,
 
-    "body-large": -1,
-    "body-medium": -1,
-    "body-small": -1,
+    "body-large": 0,
+    "body-medium": 0,
+    "body-small": 0,
 
-    "body-large-w-medium": -1,
-    "body-medium-w-medium": -1,
-    "body-small-w-medium": -1,
+    "body-large-w-medium": 0,
+    "body-medium-w-medium": 0,
+    "body-small-w-medium": 0,
 
-    "label-large": -1,
-    "label-medium": -1,
-    "label-small": -1,
+    "label-large": 0,
+    "label-medium": 0,
+    "label-small": 0,
 
-    "label-large-w-medium": -1,
+    "label-large-w-medium": 0,
     "label-large-w-bold": 0,
     "label-medium-w-medium": 0
   },
