@@ -42,7 +42,7 @@ export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
             <Button
               type="subtle"
               backgroundColor="transparent"
-              borderColor="rgba(255, 255, 255, 0.2)"
+              borderColor="$element-high-opacity-mid"
               icon={<MailboxIcon width={21} height={21} color={theme.white.val} />}
             >
               Continuar con email

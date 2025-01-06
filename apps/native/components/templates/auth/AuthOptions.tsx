@@ -30,7 +30,7 @@ export default function AuthOptions({ setAuthFlow }: AuthOptionsProps) {
             onPress={() => setAuthFlow("login")}
             type="subtle"
             backgroundColor="transparent"
-            borderColor="rgba(255, 255, 255, 0.2)"
+            borderColor="$element-high-opacity-mid"
           >
             Iniciar sesión
           </Button>
