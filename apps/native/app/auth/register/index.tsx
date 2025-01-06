@@ -15,7 +15,7 @@ export default function Register() {
 
   const onValidate = () => {
     //HACER LLAMADO AL ENDPOINT PARA VALIDAR EMAIL
-    router.push('auth/register/validation')
+    router.push("auth/register/validation")
   }
 
   return (
@@ -88,7 +88,9 @@ export default function Register() {
               </Stack>
             </XStack>
           </BlurView>
-          <Button borderColor="rgba(255, 255, 255, 0.2)" onPress={onValidate}>Continuar</Button>
+          <Button borderColor="rgba(255, 255, 255, 0.2)" onPress={onValidate}>
+            Continuar
+          </Button>
         </YStack>
       </GlassBottomSheet>
     </YStack>

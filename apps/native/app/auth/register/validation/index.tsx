@@ -3,10 +3,9 @@ import React, { useState } from "react"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Button } from "../../../../components/ui/Button"
 import { BlurView } from "expo-blur"
-import { openInbox } from "react-native-email-link";
+import { openInbox } from "react-native-email-link"
 
 export default function Validation() {
-
   const onOpenMailer = () => {
     openInbox()
   }
@@ -19,7 +18,7 @@ export default function Validation() {
         </SizableText>
         <SizableText color="$white" size="$body-medium-w-medium">
           Explorá nuevas conexiones
-        </SizableText> 
+        </SizableText>
       </YStack>
       <GlassBottomSheet>
         <YStack width="100%" alignItems="center" gap={12}>
