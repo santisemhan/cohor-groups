@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "602f46ce-5640-4a0c-afc5-bb8849aa7513",
+		"_postman_id": "dcc895ba-a3fe-454e-ada8-714e723d5f2e",
 		"name": "Cohor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12788345"
+		"_exporter_id": "20659441"
 	},
 	"item": [
 		{
@@ -103,6 +103,39 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "/users",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"name\": \"Agustin\",\r\n    \"birthdate\": \"2000-05-15\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{protocol}}://{{hostname}}:{{apiPort}}/users",
+									"protocol": "{{protocol}}",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{apiPort}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"auth": {
@@ -110,7 +143,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbTUydjVzMTMwMDAwdmllc3RiNW1oNjhnIiwiZW1haWwiOiJzYW50aXNlbWhhbkBnbWFpbC5jb20iLCJpYXQiOjE3MzUwNjg3OTEsImV4cCI6MTczNTA3MjM5MX0.2pvc64kUlyxpWx9EiBLIzymwNHitPHK9McWGSPwlTd0",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZGE0NWZjMS1jNjFmLTRkNjYtYTBiYS0wMDJmMzc0Yjk0ODkiLCJlbWFpbCI6InBydWViYTFAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE3MzYyNjYwMDAsImV4cCI6MTczNjg3MDgwMH0.M9RTxXrFw7oB7_ZiW5K6FOBCPBJFaOTjCKnoGDrI5KY",
 						"type": "string"
 					}
 				]
