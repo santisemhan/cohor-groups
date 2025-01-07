@@ -15,6 +15,17 @@ export class UserRepository {
     return connection.user.create({ data })
   }
 
+  public async updateUserAsync(userId: string, name: string, birthdate: Date) {
+    const connection = await this.databaseService.connectionAsync()
+    return connection.user.update({
+      where: { id: userId },
+      data: {
+        name,
+        birthdate
+      }
+    })
+  }
+
   public async findUserByEmailAsync(email: string) {
     const connection = await this.databaseService.connectionAsync()
     return connection.user.findUnique({ where: { email }, include: { validation: true } })
@@ -22,7 +33,7 @@ export class UserRepository {
 
   public async findUserByIdOrThrowAsync(id: string) {
     const connection = await this.databaseService.connectionAsync()
-    return connection.user.findUnique({ where: { id }, include: { validation: true } })
+    return connection.user.findUniqueOrThrow({ where: { id }, include: { validation: true } })
   }
 
   public async validateUserAsync(userId: string) {
