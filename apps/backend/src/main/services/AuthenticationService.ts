@@ -41,6 +41,7 @@ export class AuthenticationService {
       subject: "Validá tu cuenta",
       body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${id}/${token}`
     })
+    return { id, email }
   }
 
   public async loginAsync(email: string, password: string) {

@@ -25,6 +25,7 @@ export abstract class APIServerlessFunction
       const response = await this.handleAsync(event, context)
       return response.asAPIGatewayResponse(origin)
     } catch (error) {
+      console.error(error)
       if (error instanceof ApplicationError) {
         return new HTTPResponse(MIMEType.JSON)
           .body([error])

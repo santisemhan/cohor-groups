@@ -13,6 +13,7 @@ import { ExampleFunction } from "../../functions/ExampleFunction"
 import { RoleAuthorizerFunction } from "../../authorization/RoleAuthorizerFunction"
 import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFunction"
 import { UpdateUserFunction } from "../../functions/user/UpdateUserFunction"
+import { ValidationAccountSuccessfullyFunction } from "../../functions/auth/ValidationAccountSuccessfullyFunction"
 
 /**
  * @description
@@ -44,6 +45,7 @@ export const RoleAuthorizer = Dispatcher.of(RoleAuthorizerFunction)
 export const Login = Dispatcher.of(LoginFunction)
 export const Register = Dispatcher.of(RegisterFunction)
 export const ValidateAccount = Dispatcher.of(ValidateAccountFunction)
+export const ValidationAccountSuccessfully = Dispatcher.of(ValidationAccountSuccessfullyFunction)
 
 // User
 export const UpdateUser = Dispatcher.of(UpdateUserFunction)

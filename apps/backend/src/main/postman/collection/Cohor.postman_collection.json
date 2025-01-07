@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "dcc895ba-a3fe-454e-ada8-714e723d5f2e",
+		"_postman_id": "534cedaf-b9c8-4698-86dd-7b391e0e5726",
 		"name": "Cohor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20659441"
+		"_exporter_id": "12788345"
 	},
 	"item": [
 		{
@@ -73,7 +73,7 @@
 						{
 							"name": "/validate/:userId/:token",
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"url": {
 									"raw": "{{protocol}}://{{hostname}}:{{apiPort}}/auth/validate/:userId/:token",
