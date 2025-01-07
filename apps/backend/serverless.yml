@@ -39,5 +39,6 @@ functions:
   - ${file(./src/main/serverless/functions/auth/LoginFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/RegisterFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/ValidateAccountFunction.yaml)}
+  - ${file(./src/main/serverless/functions/user/UpdateUserFunction.yaml)}
 
 useDotenv: true

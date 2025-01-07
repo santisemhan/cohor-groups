@@ -9,7 +9,8 @@ export enum Role {
 }
 
 export const Permisions: FunctionPermissionSpecification = {
-  "GET/protected": [Role.User]
+  "GET/protected": [Role.User],
+  "PUT/users": [Role.User]
 }
 
 export class PermissionSpecification {

@@ -12,6 +12,7 @@ model User {
   id               String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   email            String         @unique
   name             String?
+  birthdate        DateTime?      @db.Date
   password         String
   validation       UserValidation @relation(fields: [userValidationId], references: [id])
   userValidationId String         @unique @db.Uuid

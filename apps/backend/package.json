@@ -9,13 +9,16 @@
     "prisma:migration:create": "prisma migrate dev --create-only"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.723.0",
+    "@aws-sdk/s3-request-presigner": "^3.723.0",
     "@cohor/eslint-config": "*",
     "@cohor/types": "*",
     "@types/aws-lambda": "^8.10.146",
     "bcryptjs": "^2.4.3",
     "reflect-metadata": "^0.2.2",
-    "serverless": "^3.40.0",
     "serverless-offline": "^13.9.0",
+    "serverless": "^3.40.0",
+    "sql-formatter": "^15.4.8",
     "typedi": "^0.10.0"
   },
   "dependencies": {
@@ -23,7 +26,6 @@
     "jose": "^5.9.6",
     "prisma": "^6.1.0",
     "resend": "^4.0.1",
-    "serverless-plugin-typescript": "^2.1.5",
-    "sql-formatter": "^15.4.8"
+    "serverless-plugin-typescript": "^2.1.5"
   }
 }
