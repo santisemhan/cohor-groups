@@ -1,4 +1,4 @@
-import { SizableText, View, YStack } from "tamagui"
+import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
 import React, { useRef } from "react"
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"

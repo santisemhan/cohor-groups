@@ -8,6 +8,7 @@ import { Input } from "../../../components/ui/Input"
 import EyeIcon from "../../../components/icons/Eye"
 import EyeSlashIcon from "../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
+import { router } from "expo-router"
 
 export default function Login() {
   const theme = useTheme()
@@ -83,7 +84,15 @@ export default function Login() {
               </Stack>
             </XStack>
           </BlurView>
-          <Button borderColor="$element-high-opacity-mid">Continuar</Button>
+          <Button
+            onPress={() => {
+              router.dismissAll()
+              router.replace("/app")
+            }}
+            borderColor="$element-high-opacity-mid"
+          >
+            Continuar
+          </Button>
         </YStack>
       </GlassBottomSheet>
     </YStack>
