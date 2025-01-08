@@ -14,6 +14,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { LoginForm, LoginFormSchema } from "../../../lib/schema/auth/LoginFormSchema"
 import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/MakeRequest"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Login() {
   const api = useApiClient()
@@ -31,7 +32,8 @@ export default function Login() {
   const onSubmitLogin: SubmitHandler<LoginForm> = async (formValues) => {
     api
       .post<LoginForm, { accessToken: string }>(endpoint.auth.login, formValues)
-      .then((_response) => {
+      .then(async (response) => {
+        await AsyncStorage.setItem("access_token", response.accessToken)
         router.dismissAll()
         router.replace("/app")
       })

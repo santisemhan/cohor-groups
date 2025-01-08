@@ -3,6 +3,8 @@ import { useEffect, useMemo } from "react"
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelTokenSource } from "axios"
 import { HTTPStatusCode } from "./HttpStatusCode"
 import { API_URL } from "../common/Environment"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { router } from "expo-router"
 
 const CancelToken = axios.CancelToken
 
@@ -26,6 +28,12 @@ class ApiClient {
         if (!config.headers["Content-Type"]) {
           config.headers["Content-Type"] = "application/json"
         }
+
+        const accessToken = await AsyncStorage.getItem("access_token")
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`
+        }
+
         return config
       },
       (err) => {
@@ -45,10 +53,12 @@ class ApiClient {
         console.error(err, res.config?.url, res)
         return Promise.reject(err)
       },
-      (err) => {
+      async (err) => {
         if (err.response?.status === HTTPStatusCode.Unauthorized) {
           console.error("Request unauthorized.", err.config?.url, err)
-          throw new Error("Unauthorized")
+          await AsyncStorage.removeItem("access_token")
+          router.replace("/")
+          return
         }
         return Promise.reject(err)
       }
@@ -70,9 +80,9 @@ class ApiClient {
     })
   }
 
-  get(url: string, params?: any, config?: AxiosRequestConfig) {
+  get<O>(url: string, params?: any, config?: AxiosRequestConfig): Promise<O> {
     console.log("GET", url, JSON.stringify(params || {}))
-    return this._exec(
+    return this._exec<undefined, O>(
       this.api.get(url, {
         ...config,
         params
