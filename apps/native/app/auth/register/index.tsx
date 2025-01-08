@@ -28,11 +28,11 @@ export default function Register() {
 
   const onSubmitRegister: SubmitHandler<RegisterForm> = async (formValues) => {
     api
-      .post<RegisterForm, { userId: string; email: string }>(endpoint.auth.register, formValues)
+      .post<RegisterForm, { id: string; email: string }>(endpoint.auth.register, formValues)
       .then((response) =>
         router.push({
           pathname: "auth/register/validation",
-          params: { userId: response.userId, email: response.email }
+          params: { userId: response.id, email: response.email }
         })
       )
       .catch((err) => {

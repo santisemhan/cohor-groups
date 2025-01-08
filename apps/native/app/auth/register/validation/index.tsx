@@ -5,16 +5,24 @@ import { Button } from "../../../../components/ui/Button"
 import { BlurView } from "expo-blur"
 import { openInbox } from "react-native-email-link"
 import { useLocalSearchParams } from "expo-router"
+import { endpoint } from "../../../../lib/common/Endpoint"
+import { useApiClient } from "../../../../lib/http/MakeRequest"
 
 export default function Validation() {
   const { userId, email } = useLocalSearchParams()
+  const api = useApiClient()
 
   const onOpenMailer = () => {
     openInbox()
   }
 
   const resendEmail = () => {
-    console.log("Resend email to", userId)
+    api
+    .post<undefined, undefined>(`${endpoint.auth.resend}/${userId}`)
+    .then(() => {}) //toast
+    .catch((err) => {
+      console.error(err) // toast
+    })
   }
 
   return (
