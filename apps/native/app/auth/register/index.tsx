@@ -1,4 +1,5 @@
 import { SizableText, Stack, useTheme, XStack, YStack } from "tamagui"
+import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useState } from "react"
 import GlassBottomSheet from "../../../components/GlassBotomSheet"
 import { Button } from "../../../components/ui/Button"
@@ -7,14 +8,36 @@ import EyeIcon from "../../../components/icons/Eye"
 import EyeSlashIcon from "../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
 import { router } from "expo-router"
+import { useApiClient } from "../../../lib/http/MakeRequest"
+import { endpoint } from "../../../lib/common/Endpoint"
+import { RegisterForm, RegisterFormSchema } from "../../../lib/schema/auth/RegisterFormSchema"
+import { SubmitHandler, useForm, Controller } from "react-hook-form"
 
 export default function Register() {
+  const api = useApiClient()
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onValidate = () => {
-    //HACER LLAMADO AL ENDPOINT PARA VALIDAR EMAIL
-    router.push("auth/register/validation")
+  const {
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    control
+  } = useForm<RegisterForm>({
+    resolver: zodResolver(RegisterFormSchema)
+  })
+
+  const onSubmitRegister: SubmitHandler<RegisterForm> = async (formValues) => {
+    api
+      .post<RegisterForm, { userId: string; email: string }>(endpoint.auth.register, formValues)
+      .then((response) =>
+        router.push({
+          pathname: "auth/register/validation",
+          params: { userId: response.userId, email: response.email }
+        })
+      )
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   return (
@@ -29,65 +52,109 @@ export default function Register() {
           Crear una cuenta
         </SizableText>
         <YStack gap={24} width="100%">
-          <BlurView
-            intensity={60}
-            tint="light"
-            style={{
-              borderRadius: 100,
-              borderColor: theme["white-opacity-mid"].val,
-              borderWidth: 1,
-              overflow: "hidden"
-            }}
-          >
-            <Input
-              borderWidth={0}
-              backgroundColor="transparent"
-              color="$white-opacity-high"
-              placeholder="Email"
-              placeholderTextColor="$white-opacity-high"
+          <YStack gap={8} width="100%">
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <BlurView
+                  intensity={60}
+                  tint="light"
+                  style={{
+                    borderRadius: 100,
+                    borderColor: theme["white-opacity-mid"].val,
+                    borderWidth: 1,
+                    overflow: "hidden"
+                  }}
+                >
+                  <Input
+                    borderWidth={0}
+                    backgroundColor="transparent"
+                    color="$white-opacity-high"
+                    placeholder="Email"
+                    placeholderTextColor="$white-opacity-high"
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                  />
+                </BlurView>
+              )}
             />
-          </BlurView>
-          <BlurView
-            intensity={60}
-            tint="light"
-            style={{
-              borderRadius: 100,
-              borderColor: theme["white-opacity-mid"].val,
-              borderWidth: 1,
-              overflow: "hidden"
-            }}
+            {errors.email && (
+              <SizableText ml={4} color="red">
+                {errors.email.message}
+              </SizableText>
+            )}
+          </YStack>
+
+          <YStack gap={8} width="100%">
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <BlurView
+                  intensity={60}
+                  tint="light"
+                  style={{
+                    borderRadius: 100,
+                    borderColor: theme["white-opacity-mid"].val,
+                    borderWidth: 1,
+                    overflow: "hidden"
+                  }}
+                >
+                  <XStack height={50} width="100%" alignItems="center">
+                    <Input
+                      width="100%"
+                      position="absolute"
+                      borderWidth={0}
+                      backgroundColor="transparent"
+                      color="$white-opacity-high"
+                      placeholder="Contraseña"
+                      placeholderTextColor="$white-opacity-high"
+                      secureTextEntry={!showPassword}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                    />
+                    <Stack
+                      position="absolute"
+                      width="100%"
+                      paddingRight={16}
+                      alignItems="flex-end"
+                      justifyContent="center"
+                    >
+                      {showPassword ? (
+                        <EyeIcon
+                          color={theme.white.val}
+                          onPress={() => setShowPassword((prev) => !prev)}
+                          height={21}
+                          width={21}
+                        />
+                      ) : (
+                        <EyeSlashIcon
+                          color={theme.white.val}
+                          onPress={() => setShowPassword((prev) => !prev)}
+                          height={21}
+                          width={21}
+                        />
+                      )}
+                    </Stack>
+                  </XStack>
+                </BlurView>
+              )}
+            />
+            {errors.password && (
+              <SizableText ml={4} color="red">
+                {errors.password.message}
+              </SizableText>
+            )}
+          </YStack>
+
+          <Button
+            borderColor="$element-high-opacity-mid"
+            disabled={isSubmitting}
+            onPress={handleSubmit(onSubmitRegister)}
           >
-            <XStack height={50} width="100%" alignItems="center">
-              <Input
-                width="100%"
-                position="absolute"
-                borderWidth={0}
-                backgroundColor="transparent"
-                color="$white-opacity-high"
-                placeholder="Contraseña"
-                placeholderTextColor="$white-opacity-high"
-                secureTextEntry={!showPassword}
-              />
-              <Stack position="absolute" width="100%" paddingRight={16} alignItems="flex-end" justifyContent="center">
-                {showPassword ? (
-                  <EyeIcon
-                    color={theme.white.val}
-                    onPress={() => setShowPassword((prev) => !prev)}
-                    height={21}
-                    width={21}
-                  />
-                ) : (
-                  <EyeSlashIcon
-                    color={theme.white.val}
-                    onPress={() => setShowPassword((prev) => !prev)}
-                    height={21}
-                    width={21}
-                  />
-                )}
-              </Stack>
-            </XStack>
-          </BlurView>
-          <Button borderColor="$element-high-opacity-mid" onPress={onValidate}>
             Continuar
           </Button>
         </YStack>

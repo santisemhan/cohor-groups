@@ -4,10 +4,17 @@ import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Button } from "../../../../components/ui/Button"
 import { BlurView } from "expo-blur"
 import { openInbox } from "react-native-email-link"
+import { useLocalSearchParams } from "expo-router"
 
 export default function Validation() {
+  const { userId, email } = useLocalSearchParams()
+
   const onOpenMailer = () => {
     openInbox()
+  }
+
+  const resendEmail = () => {
+    console.log("Resend email to", userId)
   }
 
   return (
@@ -28,7 +35,7 @@ export default function Validation() {
           <SizableText textAlign="center" color="$white-opacity-high" size="$body-small">
             Te hemos enviado un correo electrónico a{" "}
             <SizableText color="$white" size="$body-medium-w-medium">
-              santiventura.96@gmail.com
+              {email}
             </SizableText>{" "}
             Haz clic en el enlace dentro para comenzar.
           </SizableText>
@@ -43,7 +50,12 @@ export default function Validation() {
               overflow: "hidden"
             }}
           >
-            <Button type="subtle" backgroundColor="transparent" borderColor="$element-high-opacity-mid">
+            <Button
+              onPress={resendEmail}
+              type="subtle"
+              backgroundColor="transparent"
+              borderColor="$element-high-opacity-mid"
+            >
               Reenviar email
             </Button>
           </BlurView>
