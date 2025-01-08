@@ -28,8 +28,8 @@ export class RegisterFunction extends APIServerlessFunction {
     }
 
     const { email, password } = body
-    await this.authenticationService.registerAsync({ email, password })
+    const newUser = await this.authenticationService.registerAsync({ email, password })
 
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
+    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.Ok).body(newUser)
   }
 }

@@ -8,20 +8,22 @@ import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
 import { AuthenticationService } from "../../services/AuthenticationService"
-import { ValidationAccountSchema } from "../../schema/auth/ValidationAccountSchema"
+import { ValidateAccountSchema } from "../../schema/auth/ValidateAccountSchema"
+import { WebConfigurationProvider } from "../../configuration/provider/WebConfigurationProvider"
 
 @Injectable()
 export class ValidateAccountFunction extends APIServerlessFunction {
   constructor(
     private readonly validationService: ValidationService,
-    private readonly authenticationService: AuthenticationService
+    private readonly authenticationService: AuthenticationService,
+    private readonly webConfigurationProvider: WebConfigurationProvider
   ) {
     super()
   }
 
   public override async handleAsync(event: APIGatewayProxyEventV2, _context: Context) {
     const { error, value: pathParameters } = this.validationService.validate(
-      ValidationAccountSchema,
+      ValidateAccountSchema,
       event.pathParameters
     )
     if (error) {
@@ -33,6 +35,9 @@ export class ValidateAccountFunction extends APIServerlessFunction {
     const { userId, token } = pathParameters
     await this.authenticationService.validateAccountAsync(userId, token)
 
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
+    const configuration = await this.webConfigurationProvider.getConfigurationAsync()
+    return new HTTPResponse(MIMEType.JSON)
+      .header("Location", `${configuration.source}/auth/validate/success`)
+      .statusCode(HTTPStatusCode.PermanentRedirect)
   }
 }

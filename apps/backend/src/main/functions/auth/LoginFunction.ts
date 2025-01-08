@@ -28,11 +28,11 @@ export class LoginFunction extends APIServerlessFunction {
     }
 
     const { email, password } = body
-    const token = await this.authenticationService.loginAsync(email, password)
+    const accessToken = await this.authenticationService.loginAsync(email, password)
 
     return new HTTPResponse(MIMEType.JSON)
       .body({
-        token
+        accessToken
       })
       .statusCode(HTTPStatusCode.Created)
   }

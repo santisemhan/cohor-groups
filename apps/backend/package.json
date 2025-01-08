@@ -5,8 +5,8 @@
     "dev": "serverless offline --noPrependStageInUrl --reloadHandler --stage local",
     "lint": "eslint \"src/**/*.{ts,js}\"",
     "prisma:build": "prisma format && prisma generate",
-    "prisma:migration:apply": "prisma migrate dev",
-    "prisma:migration:create": "prisma migrate dev --create-only"
+    "prisma:migration:apply": "npm run prisma:build && prisma migrate dev",
+    "prisma:migration:create": "npm run prisma:build && prisma migrate dev --create-only"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.723.0",
