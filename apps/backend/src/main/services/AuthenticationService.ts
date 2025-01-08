@@ -13,6 +13,7 @@ import { NotValidatedAccount } from "../errors/NotValidatedAccount"
 import { MailerRepository } from "../repository/MailRepository"
 import { TooManyRequestError } from "../errors/TooManyRequestError"
 import { EmailRateLimitError } from "../errors/EmailRateLimitError"
+import { UserValidatedError } from "../errors/UserValidatedError"
 
 @Injectable()
 export class AuthenticationService {
@@ -52,21 +53,25 @@ export class AuthenticationService {
     const INITIAL_MS = 60 * 1000 // 1 min
     const MULTIPLIER = 2
     const currentTime = new Date()
+    let attemptMs = 0
     try {
       const user = await this.userRepository.findUserByIdOrThrowAsync(id)
-      const lastAttempt = await this.mailerRepository.findLastAttempByUserIdOrThrowAsync(user.id)
-
+      //PAST TO DYNAMO TTL
+      if (user.validation.validatedAt !== null) {
+        throw new UserValidatedError()
+      }
+      const lastAttempt = await this.mailerRepository.findLastAttempByUserIdAsync(user.id)
       if (lastAttempt) {
         const elapsedTime = currentTime.getTime() - new Date(lastAttempt.createdAt).getTime()
         const nextAttempMs = lastAttempt.attemptMs * MULTIPLIER
-
         if (elapsedTime < nextAttempMs) {
           throw new TooManyRequestError()
         }
-
         await this.mailerRepository.updateLastAttemptByIdAsync(lastAttempt.id, nextAttempMs)
+        attemptMs += nextAttempMs
       } else {
         await this.mailerRepository.createFirstAttempAsync(user.id, INITIAL_MS)
+        attemptMs += INITIAL_MS
       }
       const configuration = await this.webConfigurationProvider.getConfigurationAsync()
       const token = randomUUID()
@@ -75,6 +80,7 @@ export class AuthenticationService {
         subject: "Validá tu cuenta",
         body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${user.id}/${token}`
       })
+      return attemptMs
     } catch (error) {
       throw new EmailRateLimitError(error)
     }

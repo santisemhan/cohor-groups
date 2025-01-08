@@ -11,7 +11,7 @@ ResendEmail:
             - Content-Type
           origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
         method: "POST"
-        path: "/auth/resendEmail/{userId}"
+        path: "/auth/resend/{userId}"
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30

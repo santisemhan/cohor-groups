@@ -1,17 +1,13 @@
 import { DatabaseService } from "../services/database/DatabaseService"
 import { Injectable } from "../support/decorator/Injectable"
-import { TimeService } from "../services/common/TimeService"
 
 @Injectable()
 export class MailerRepository {
-  constructor(
-    private readonly databaseService: DatabaseService,
-    private readonly timeService: TimeService
-  ) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
-  public async findLastAttempByUserIdOrThrowAsync(userId: string) {
+  public async findLastAttempByUserIdAsync(userId: string) {
     const connection = await this.databaseService.connectionAsync()
-    return connection.mailRateLimit.findFirstOrThrow({ where: { userId }, orderBy: { createdAt: "desc" } })
+    return connection.mailRateLimit.findFirst({ where: { userId }, orderBy: { createdAt: "desc" } })
   }
 
   public async updateLastAttemptByIdAsync(id: string, attemptMs: number) {

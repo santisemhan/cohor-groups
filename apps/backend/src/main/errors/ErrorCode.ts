@@ -15,7 +15,8 @@ export enum ErrorCode {
   CannotSendEmailError = "COHOR-0000-0008",
   NotValidatedAccountError = "COHOR-0000-0009",
   TooManyRequestError = "COHOR-0000-0010",
-  EmailRateLimitError = "COHOR-0000-0011"
+  EmailRateLimitError = "COHOR-0000-0011",
+  UserValidatedError = "COHOR-0000-0012"
 
   // Agregar más códigos de error, nunca eliminar...
 }
