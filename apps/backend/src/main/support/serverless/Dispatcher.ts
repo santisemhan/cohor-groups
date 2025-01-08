@@ -14,6 +14,7 @@ import { RoleAuthorizerFunction } from "../../authorization/RoleAuthorizerFuncti
 import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFunction"
 import { UpdateUserFunction } from "../../functions/user/UpdateUserFunction"
 import { ValidationAccountSuccessfullyFunction } from "../../functions/auth/ValidationAccountSuccessfullyFunction"
+import { ResendEmailFunction } from "../../functions/auth/ResendEmailFunction"
 
 /**
  * @description
@@ -45,6 +46,7 @@ export const RoleAuthorizer = Dispatcher.of(RoleAuthorizerFunction)
 export const Login = Dispatcher.of(LoginFunction)
 export const Register = Dispatcher.of(RegisterFunction)
 export const ValidateAccount = Dispatcher.of(ValidateAccountFunction)
+export const ResendEmail = Dispatcher.of(ResendEmailFunction)
 export const ValidationAccountSuccessfully = Dispatcher.of(ValidationAccountSuccessfullyFunction)
 
 // User

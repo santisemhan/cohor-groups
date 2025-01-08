@@ -10,13 +10,20 @@ import { Role } from "../authorization/Permission"
 import { MailService } from "./MailService"
 import { WebConfigurationProvider } from "../configuration/provider/WebConfigurationProvider"
 import { NotValidatedAccount } from "../errors/NotValidatedAccount"
+import { MailerRepository } from "../repository/MailRepository"
+import { TooManyRequestError } from "../errors/TooManyRequestError"
+import { EmailRateLimitError } from "../errors/EmailRateLimitError"
+import { UserValidatedError } from "../errors/UserValidatedError"
+import { TimeService } from "./common/TimeService"
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly mailerRepository: MailerRepository,
     private readonly authenticationConfigurationProvider: AuthenticationConfigurationProvider,
     private readonly mailService: MailService,
+    private readonly timeService: TimeService,
     private readonly webConfigurationProvider: WebConfigurationProvider
   ) {}
 
@@ -42,6 +49,39 @@ export class AuthenticationService {
       body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${id}/${token}`
     })
     return { id, email }
+  }
+
+  public async revalidateEmail(id: string) {
+    const INITIAL_MS = 60 * 1000 // 1 min
+    const MULTIPLIER = 2
+    const currentTime = this.timeService.now()
+    try {
+      const user = await this.userRepository.findUserByIdOrThrowAsync(id)
+      //PAST TO DYNAMO TTL
+      if (user.validation.validatedAt !== null) {
+        throw new UserValidatedError()
+      }
+      const lastAttempt = await this.mailerRepository.findLastAttempByUserIdAsync(user.id)
+      if (lastAttempt) {
+        const elapsedTime = currentTime.getTime() - lastAttempt.createdAt.getTime()
+        const nextAttempMs = lastAttempt.attemptMs * MULTIPLIER
+        if (elapsedTime < nextAttempMs) {
+          throw new TooManyRequestError()
+        }
+        await this.mailerRepository.updateLastAttemptByIdAsync(lastAttempt.id, nextAttempMs)
+      } else {
+        await this.mailerRepository.createFirstAttempAsync(user.id, INITIAL_MS)
+      }
+      const configuration = await this.webConfigurationProvider.getConfigurationAsync()
+      const token = randomUUID()
+      await this.mailService.sendMail({
+        to: user.email,
+        subject: "Validá tu cuenta",
+        body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${user.id}/${token}`
+      })
+    } catch (error) {
+      throw new EmailRateLimitError(error)
+    }
   }
 
   public async loginAsync(email: string, password: string) {

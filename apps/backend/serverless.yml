@@ -38,6 +38,7 @@ functions:
   - ${file(./src/main/serverless/functions/ExampleFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/LoginFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/RegisterFunction.yaml)}
+  - ${file(./src/main/serverless/functions/auth/ResendEmailFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/ValidateAccountFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/ValidationAccountSuccessfullyFunction.yaml)}
   - ${file(./src/main/serverless/functions/user/UpdateUserFunction.yaml)}

@@ -29,3 +29,12 @@ model UserValidation {
 
   @@map("UserValidations")
 }
+
+model MailRateLimit {
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId    String   @unique @db.Uuid
+  attemptMs Int
+  createdAt DateTime
+
+  @@map("MailRateLimit")
+}
