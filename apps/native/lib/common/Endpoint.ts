@@ -5,6 +5,7 @@ export const endpoint = {
   auth: {
     login: `${API_URL}/auth/login`,
     register: `${API_URL}/auth/register`,
-    validate: `${API_URL}/auth/validate`
+    validate: `${API_URL}/auth/validate`,
+    resend: `${API_URL}/auth/resend`
   }
 }
