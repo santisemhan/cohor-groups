@@ -7,6 +7,8 @@ import { useEffect } from "react"
 import { tamaguiConfig } from "../tamagui.config"
 import { StatusBar } from "expo-status-bar"
 
+import { AuthProvider } from "../lib/context/AuthContext"
+
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
@@ -29,8 +31,10 @@ export default function RootLayout() {
 
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
-      <StatusBar style="light" />
-      <Stack screenOptions={{ headerShown: false }} />
+      <AuthProvider>
+        <StatusBar style="light" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </AuthProvider>
     </TamaguiProvider>
   )
 }

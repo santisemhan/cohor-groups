@@ -15,6 +15,7 @@ import { TooManyRequestError } from "../errors/TooManyRequestError"
 import { EmailRateLimitError } from "../errors/EmailRateLimitError"
 import { UserValidatedError } from "../errors/UserValidatedError"
 import { TimeService } from "./common/TimeService"
+import { User } from "@cohor/types"
 
 @Injectable()
 export class AuthenticationService {
@@ -84,7 +85,7 @@ export class AuthenticationService {
     }
   }
 
-  public async loginAsync(email: string, password: string) {
+  public async loginAsync(email: string, password: string): Promise<{ user: User; accessToken: string }> {
     const user = await this.userRepository.findUserByEmailAsync(email)
     if (!user) throw new Error("User not found")
 
@@ -93,7 +94,9 @@ export class AuthenticationService {
 
     if (!user.validation.validatedAt) throw new NotValidatedAccount()
 
-    return this.generateToken({ sub: user.id, email: user.email, role: Role.User })
+    const { id, email: userEmail, name, birthdate } = user
+    const accessToken = await this.generateToken({ sub: id, email: userEmail, role: Role.User })
+    return { user: { id, email: userEmail, name, birthdate }, accessToken }
   }
 
   private async generateToken(payload: JWTPayload): Promise<string> {

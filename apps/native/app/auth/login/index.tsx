@@ -15,10 +15,13 @@ import { LoginForm, LoginFormSchema } from "../../../lib/schema/auth/LoginFormSc
 import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useAuth } from "../../../lib/context/AuthContext"
+import { User } from "@cohor/types"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../lib/Toast/config"
 
 export default function Login() {
+  const { setUser } = useAuth()
   const api = useApiClient()
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
@@ -33,9 +36,10 @@ export default function Login() {
 
   const onSubmitLogin: SubmitHandler<LoginForm> = async (formValues) => {
     api
-      .post<LoginForm, { accessToken: string }>(endpoint.auth.login, formValues)
-      .then(async (response) => {
+      .post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
+      .then(async (response: { user: User; accessToken: string }) => {
         await AsyncStorage.setItem("access_token", response.accessToken)
+        setUser(response.user)
         router.dismissAll()
         router.replace("/app")
       })
