@@ -29,6 +29,6 @@ export class ResendEmailFunction extends APIServerlessFunction {
 
     await this.authenticationService.revalidateEmail(pathParameters.userId)
 
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.Ok)
+    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
   }
 }
