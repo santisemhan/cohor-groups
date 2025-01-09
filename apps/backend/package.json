@@ -9,15 +9,15 @@
     "prisma:migration:create": "npm run prisma:build && prisma migrate dev --create-only"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.723.0",
     "@aws-sdk/s3-request-presigner": "^3.723.0",
     "@cohor/eslint-config": "*",
     "@cohor/types": "*",
     "@types/aws-lambda": "^8.10.146",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "reflect-metadata": "^0.2.2",
-    "serverless-offline": "^13.9.0",
     "serverless": "^3.40.0",
+    "serverless-offline": "^13.9.0",
     "sql-formatter": "^15.4.8",
     "typedi": "^0.10.0"
   },
