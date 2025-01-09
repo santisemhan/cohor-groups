@@ -6,7 +6,7 @@ import { BlurView } from "expo-blur"
 import { openInbox } from "react-native-email-link"
 import { useLocalSearchParams } from "expo-router"
 import { endpoint } from "../../../../lib/common/Endpoint"
-import { useApiClient } from "../../../../lib/http/MakeRequest"
+import { useApiClient } from "../../../../lib/http/useApiClient"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../../lib/Toast/config"
 
@@ -27,12 +27,11 @@ export default function Validation() {
           text1: "Email sended!"
         })
       })
-      .catch((err) => {
+      .catch(() => {
         Toast.show({
           type: "error",
           text1: "Please wait a few minutes"
         })
-        console.log(err)
       })
   }
 

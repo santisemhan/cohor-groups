@@ -7,14 +7,14 @@ export const toastConfig = {
       style={{
         width: "65%",
         height: 60,
-        backgroundColor: "white",
+        backgroundColor: "#10B981",
         borderRadius: "10%",
         display: "flex",
         alignItems: "center",
         padding: 10
       }}
     >
-      <Text style={{ fontSize: 14, marginTop: 10 }}>{text1}</Text>
+      <Text style={{ fontSize: 14, marginTop: 10, color: "white" }}>{text1}</Text>
     </View>
   ),
   error: ({ text1 }: ToastConfigParams<BaseToastProps>) => (
@@ -22,14 +22,14 @@ export const toastConfig = {
       style={{
         width: "65%",
         height: 60,
-        backgroundColor: "white",
+        backgroundColor: "#ED5A46",
         borderRadius: "10%",
         display: "flex",
         alignItems: "center",
         padding: 10
       }}
     >
-      <Text style={{ fontSize: 14, marginTop: 10 }}>{text1}</Text>
+      <Text style={{ fontSize: 14, marginTop: 10, color: "white" }}>{text1}</Text>
     </View>
   )
 }

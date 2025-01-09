@@ -8,7 +8,7 @@ import EyeIcon from "../../../components/icons/Eye"
 import EyeSlashIcon from "../../../components/icons/EyeSlash"
 import { BlurView } from "expo-blur"
 import { router } from "expo-router"
-import { useApiClient } from "../../../lib/http/MakeRequest"
+import { useApiClient } from "../../../lib/http/useApiClient"
 import { endpoint } from "../../../lib/common/Endpoint"
 import { RegisterForm, RegisterFormSchema } from "../../../lib/schema/auth/RegisterFormSchema"
 import { SubmitHandler, useForm, Controller } from "react-hook-form"
@@ -37,10 +37,10 @@ export default function Register() {
           params: { userId: response.id, email: response.email }
         })
       )
-      .catch((err) => {
+      .catch(() => {
         Toast.show({
           type: "error",
-          text1: "Register fail!"
+          text1: "Error al registrar el usuario"
         })
       })
   }

@@ -4,8 +4,9 @@ import { YStack, SizableText } from "tamagui"
 import { Button } from "../../components/ui/Button"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { router } from "expo-router"
-import { useApiClient } from "../../lib/http/MakeRequest"
+import { useApiClient } from "../../lib/http/useApiClient"
 import { endpoint } from "../../lib/common/Endpoint"
+import Toast from "react-native-toast-message"
 
 export default function Home() {
   const api = useApiClient()
@@ -18,7 +19,10 @@ export default function Home() {
         setMessage(response.message)
       })
       .catch((error) => {
-        console.log(error)
+        Toast.show({
+          type: "error",
+          text1: error.message
+        })
       })
   }, [])
 

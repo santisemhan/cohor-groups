@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { LoginForm, LoginFormSchema } from "../../../lib/schema/auth/LoginFormSchema"
 import { endpoint } from "../../../lib/common/Endpoint"
-import { useApiClient } from "../../../lib/http/MakeRequest"
+import { useApiClient } from "../../../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../lib/Toast/config"
@@ -39,12 +39,11 @@ export default function Login() {
         router.dismissAll()
         router.replace("/app")
       })
-      .catch((err) => {
+      .catch(() => {
         Toast.show({
           type: "error",
-          text1: "Unauthenticated"
+          text1: "Email o contraseña incorrectos"
         })
-        console.log(err)
       })
   }
 
