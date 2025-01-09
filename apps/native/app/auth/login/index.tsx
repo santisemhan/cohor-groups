@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useAuth } from "../../../lib/context/AuthContext"
 import { User } from "@cohor/types"
 import Toast from "react-native-toast-message"
-import { toastConfig } from "../../../lib/Toast/config"
+import { toastConfig } from "../../../components/ui/Toast"
 
 export default function Login() {
   const { setUser } = useAuth()

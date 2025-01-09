@@ -8,7 +8,7 @@ import { useLocalSearchParams } from "expo-router"
 import { endpoint } from "../../../../lib/common/Endpoint"
 import { useApiClient } from "../../../../lib/http/useApiClient"
 import Toast from "react-native-toast-message"
-import { toastConfig } from "../../../../lib/Toast/config"
+import { toastConfig } from "../../../../components/ui/Toast"
 
 export default function Validation() {
   const { userId, email } = useLocalSearchParams()

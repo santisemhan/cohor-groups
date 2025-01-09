@@ -13,7 +13,7 @@ import { endpoint } from "../../../lib/common/Endpoint"
 import { RegisterForm, RegisterFormSchema } from "../../../lib/schema/auth/RegisterFormSchema"
 import { SubmitHandler, useForm, Controller } from "react-hook-form"
 import Toast from "react-native-toast-message"
-import { toastConfig } from "../../../lib/Toast/config"
+import { toastConfig } from "../../../components/ui/Toast"
 
 export default function Register() {
   const api = useApiClient()
