@@ -6,9 +6,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { router } from "expo-router"
 import { useApiClient } from "../../lib/http/MakeRequest"
 import { endpoint } from "../../lib/common/Endpoint"
+import { useAuth } from "../../lib/context/AuthContext"
 
 export default function Home() {
   const api = useApiClient()
+  const { user } = useAuth()
   const [message, setMessage] = React.useState("App")
 
   useEffect(() => {
@@ -40,6 +42,9 @@ export default function Home() {
         <YStack justifyContent="center" alignItems="center" gap={4}>
           <SizableText color="$black" size="$headline-large">
             {message}
+          </SizableText>
+          <SizableText color="$black" size="$headline-large">
+            {JSON.stringify(user)}
           </SizableText>
           <Button onPress={() => signOut()}>Cerrar Sesion</Button>
         </YStack>
