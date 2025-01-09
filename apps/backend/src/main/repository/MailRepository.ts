@@ -4,7 +4,8 @@ import { Injectable } from "../support/decorator/Injectable"
 
 @Injectable()
 export class MailerRepository {
-  constructor(private readonly databaseService: DatabaseService,
+  constructor(
+    private readonly databaseService: DatabaseService,
     private readonly timeService: TimeService
   ) {}
 

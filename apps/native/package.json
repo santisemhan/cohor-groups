@@ -10,15 +10,16 @@
     "@react-native-async-storage/async-storage": "^2.1.0",
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
-    "expo": "~52.0.23",
+    "expo": "~52.0.24",
     "expo-av": "^15.0.1",
     "expo-blur": "^14.0.1",
-    "expo-router": "^4.0.15",
-    "expo-splash-screen": "^0.29.18",
+    "expo-router": "^4.0.16",
+    "expo-splash-screen": "^0.29.19",
     "expo-status-bar": "^2.0.0",
     "react": "18.3.1",
     "react-native": "0.76.5",
-    "react-native-email-link": "^1.16.1"
+    "react-native-email-link": "^1.16.1",
+    "react-native-toast-message": "^2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -29,7 +30,7 @@
     "@tamagui/config": "^1.121.6",
     "@types/react": "~18.3.18",
     "react-hook-form": "^7.54.2",
-    "react-native-svg": "^15.10.1",
+    "react-native-svg": "15.8.0",
     "tamagui": "^1.121.6"
   },
   "private": true
