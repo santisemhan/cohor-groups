@@ -1,5 +1,6 @@
 {
   "expo": {
+    "originalFullName": "@cohor/mobile",
     "name": "cohor",
     "slug": "cohor",
     "version": "1.0.0",
@@ -13,9 +14,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cohor.io",
+      "infoPlist": {
+      "CFBundleURLTypes": [
+        {
+          "CFBundleURLSchemes": ["com.googleusercontent.apps.300195889471-lka9cqqind6u4hloqdcsl4vne93nt5gg"]
+        }
+      ]
+    }
     },
     "android": {
+      "package": "com.cohor.io",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +34,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "cohor"
+    "scheme": "cohor",
+    "extra": {
+      "eas": {
+        "projectId": "bb04d1c5-9c75-48cf-a79d-61365b156d14"
+      }
+    }
   }
 }
