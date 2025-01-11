@@ -7,7 +7,6 @@ import GoogleIcon from "../../../icons/GoogleIcon"
 import { Link } from "expo-router"
 import * as WebBrowser from "expo-web-browser"
 import * as Google from "expo-auth-session/providers/google"
-import * as AuthSession from "expo-auth-session"
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -20,14 +19,14 @@ export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
   const [request, response, promptAsync] = Google.useAuthRequest({
     webClientId: "300195889471-o655ub38lc5e0obfh9hicqpecundh0hg.apps.googleusercontent.com",
     iosClientId: "300195889471-lka9cqqind6u4hloqdcsl4vne93nt5gg.apps.googleusercontent.com",
-    androidClientId: "300195889471-gebukno7f83ouj36me59bghuuquf4onj.apps.googleusercontent.com",
-    redirectUri: AuthSession.makeRedirectUri({ native: "https://auth.expo.io/cohor/mobile" })
+    androidClientId: "300195889471-gebukno7f83ouj36me59bghuuquf4onj.apps.googleusercontent.com"
   })
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [user, setUser] = useState()
   const theme = useTheme()
 
   useEffect(() => {
+    console.log("Response:", response)
     if (response && response?.type === "success") {
       const { authentication } = response
       if (authentication) {
