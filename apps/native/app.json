@@ -7,15 +7,20 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cohor.io"
     },
     "android": {
+      "package": "com.cohor.io",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +29,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "cohor"
+    "scheme": "cohor",
+    "extra": {
+      "eas": {
+        "projectId": "51700b08-ff14-496a-b30f-54569671cb7e"
+      }
+    }
   }
 }

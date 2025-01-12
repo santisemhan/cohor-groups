@@ -29,6 +29,10 @@ class ApiClient {
           config.headers["Content-Type"] = "application/json"
         }
 
+        if (!config.headers["Idtoken"]) {
+          config.headers["Idtoken"] = ""
+        }
+
         const accessToken = await AsyncStorage.getItem("access_token")
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`

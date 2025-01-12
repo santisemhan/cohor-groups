@@ -4,4 +4,4 @@ export const ResendEmailSchema = z.object({
   userId: z.string().uuid()
 })
 
-export type RegisterRequest = z.infer<typeof ResendEmailSchema>
+export type ResendEmailRequest = z.infer<typeof ResendEmailSchema>

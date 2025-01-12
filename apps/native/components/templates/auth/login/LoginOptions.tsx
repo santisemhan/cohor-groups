@@ -3,8 +3,8 @@ import { Separator, SizableText, useTheme, XStack, YStack } from "tamagui"
 import { Button } from "../../../ui/Button"
 import { BlurView } from "expo-blur"
 import MailboxIcon from "../../../icons/Mailbox"
-import GoogleIcon from "../../../icons/GoogleIcon"
 import { Link } from "expo-router"
+import LoginWithGoogle from "../../../auth/LoginWithGoogle"
 
 interface LoginOptionsProps {
   // TODO: Add to context
@@ -20,9 +20,7 @@ export default function LoginOptions({ setAuthFlow }: LoginOptionsProps) {
         Iniciar Sesión
       </SizableText>
       <YStack gap={24} width="100%">
-        <Button backgroundColor="$element-high" icon={<GoogleIcon width={21} height={21} />}>
-          Continuar con Google
-        </Button>
+        <LoginWithGoogle />
         <XStack justifyContent="center" alignItems="center" gap={8}>
           <Separator borderColor="$white-opacity-mid" />
           <SizableText color="$white" size="$body-small" marginBottom={4}>
