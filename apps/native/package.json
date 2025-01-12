@@ -4,7 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "dev": "expo start",
-    "lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\" --no-error-on-unmatched-pattern"
+    "lint": "eslint \"src/**/*.{ts,js,tsx,jsx}\" --no-error-on-unmatched-pattern",
+    "apk": "eas build -p android --profile development"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.23.1",
