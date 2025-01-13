@@ -9,20 +9,20 @@ datasource db {
 }
 
 model User {
-  id               String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email            String         @unique
-  name             String?
-  birthdate        DateTime?      @db.Date
-  password         String
-  validation       UserValidation @relation(fields: [userValidationId], references: [id])
-  userValidationId String         @unique @db.Uuid
+  id           String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email        String          @unique
+  name         String?
+  birthdate    DateTime?       @db.Date
+  password     String?
+  isThirdParty Boolean         @default(false)
+  validation   UserValidation?
 
   @@map("Users")
 }
 
 model UserValidation {
   id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  user        User?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String    @unique @db.Uuid
   token       String    @db.Uuid
   validatedAt DateTime?

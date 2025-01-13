@@ -16,6 +16,7 @@ import { EmailRateLimitError } from "../errors/EmailRateLimitError"
 import { UserValidatedError } from "../errors/UserValidatedError"
 import { TimeService } from "./common/TimeService"
 import { User } from "@cohor/types"
+import { RegisterRequest } from "../schema/auth/RegisterSchema"
 
 @Injectable()
 export class AuthenticationService {
@@ -28,20 +29,32 @@ export class AuthenticationService {
     private readonly webConfigurationProvider: WebConfigurationProvider
   ) {}
 
-  public async registerAsync(data: Prisma.UserCreateWithoutValidationInput) {
+  public async registerAsync(data: RegisterRequest) {
+    const userExists = await this.userRepository.findUserByEmailAsync(data.email)
+    if (
+      userExists &&
+      ((userExists.password !== null && data.isThirdParty) || (userExists.password === null && !data.isThirdParty))
+    ) {
+      throw new Error("User already exists")
+    }
+    if (userExists) return { id: userExists.email, email: userExists.email }
+
     const userId = randomUUID()
     const token = randomUUID()
     const user: Prisma.UserCreateInput = {
       ...data,
       id: userId,
-      password: await bcrypt.hash(data.password, 10),
-      validation: {
-        create: {
-          userId,
-          token
-        }
-      }
+      password: data.password ? await bcrypt.hash(data.password, 10) : undefined,
+      isThirdParty: data.isThirdParty,
+      validation: data.isThirdParty
+        ? undefined
+        : {
+            create: {
+              token
+            }
+          }
     }
+
     const { id, email } = await this.userRepository.createUserAsync(user)
     const configuration = await this.webConfigurationProvider.getConfigurationAsync()
     await this.mailService.sendMail({
@@ -58,8 +71,8 @@ export class AuthenticationService {
     const currentTime = this.timeService.now()
     try {
       const user = await this.userRepository.findUserByIdOrThrowAsync(id)
-      //PAST TO DYNAMO TTL
-      if (user.validation.validatedAt !== null) {
+      //PASS TO DYNAMO TTL
+      if (!user.validation || user.validation.validatedAt !== null) {
         throw new UserValidatedError()
       }
       const lastAttempt = await this.mailerRepository.findLastAttempByUserIdAsync(user.id)
@@ -85,14 +98,18 @@ export class AuthenticationService {
     }
   }
 
-  public async loginAsync(email: string, password: string): Promise<{ user: User; accessToken: string }> {
+  public async loginAsync(email: string, password?: string): Promise<{ user: User; accessToken: string }> {
     const user = await this.userRepository.findUserByEmailAsync(email)
     if (!user) throw new Error("User not found")
+    if (user.isThirdParty && password) throw new Error("Invalid login method")
+    if (!user.isThirdParty && !password) throw new Error("Invalid login method")
 
-    const passwordMatch = await bcrypt.compare(password, user.password)
-    if (!passwordMatch) throw new Error("Invalid password")
+    if (!user.isThirdParty) {
+      const passwordMatch = await bcrypt.compare(password as string, user.password as string)
+      if (!passwordMatch) throw new Error("Invalid password")
 
-    if (!user.validation.validatedAt) throw new NotValidatedAccount()
+      if (!user.validation?.validatedAt) throw new NotValidatedAccount()
+    }
 
     const { id, email: userEmail, name, birthdate } = user
     const accessToken = await this.generateToken({ sub: id, email: userEmail, role: Role.User })
@@ -122,7 +139,7 @@ export class AuthenticationService {
     const user = await this.userRepository.findUserByIdOrThrowAsync(userId)
     if (!user) throw new Error("User not found")
 
-    if (user.validation.token !== token) throw new Error("Invalid token")
+    if (user.validation?.token !== token) throw new Error("Invalid token")
 
     await this.userRepository.validateUserAsync(userId)
   }

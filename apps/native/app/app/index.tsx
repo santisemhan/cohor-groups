@@ -8,13 +8,19 @@ import { useApiClient } from "../../lib/http/useApiClient"
 import { endpoint } from "../../lib/common/Endpoint"
 import { useAuth } from "../../lib/context/AuthContext"
 import Toast from "react-native-toast-message"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { User } from "@cohor/types"
 
 export default function Home() {
   const api = useApiClient()
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
   const [message, setMessage] = React.useState("App")
 
   useEffect(() => {
+    api.get<{ user: User }>(endpoint.auth.loggedUser).then((response) => {
+      setUser(response.user)
+    })
+
     api
       .get<{ message: string }>(endpoint.example)
       .then((response) => {
@@ -29,6 +35,13 @@ export default function Home() {
   }, [])
 
   const signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess()
+      await GoogleSignin.signOut()
+    } catch {
+      /* empty */
+    }
+
     await AsyncStorage.removeItem("access_token")
     router.replace("/")
   }

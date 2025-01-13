@@ -5,4 +5,4 @@ export const ValidateAccountSchema = z.object({
   token: z.string().uuid()
 })
 
-export type RegisterRequest = z.infer<typeof ValidateAccountSchema>
+export type ValidateAccountRequest = z.infer<typeof ValidateAccountSchema>

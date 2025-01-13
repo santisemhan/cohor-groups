@@ -1,18 +1,18 @@
-Register:
-  handler: src/main/support/serverless/Dispatcher.Register
-  description: "Register a new user"
+GetLoggedUser:
+  handler: src/main/support/serverless/Dispatcher.GetLoggedUser
+  description: "Get logged user"
   ephemeralStorageSize: 512
   events:
     - http:
-        authorizer: ${self:custom.googleAuthorizer}
+        authorizer: ${self:custom.roleAuthorizer}
         cors:
           allowCredentials: true
           headers:
             - Access-Control-Allow-Origin
             - Content-Type
           origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
-        method: "POST"
-        path: "/auth/register"
+        method: "GET"
+        path: "/auth/logged-user"
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30

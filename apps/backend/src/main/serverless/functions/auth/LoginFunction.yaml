@@ -4,6 +4,7 @@ Login:
   ephemeralStorageSize: 512
   events:
     - http:
+        authorizer: ${self:custom.googleAuthorizer}
         cors:
           allowCredentials: true
           headers:

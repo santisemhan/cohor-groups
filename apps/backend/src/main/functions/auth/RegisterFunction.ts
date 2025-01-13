@@ -27,8 +27,8 @@ export class RegisterFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { email, password } = body
-    const newUser = await this.authenticationService.registerAsync({ email, password })
+    const { email, password, isThirdParty } = body
+    const newUser = await this.authenticationService.registerAsync({ email, password, isThirdParty })
 
     return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.Ok).body(newUser)
   }

@@ -15,6 +15,8 @@ import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFun
 import { UpdateUserFunction } from "../../functions/user/UpdateUserFunction"
 import { ValidationAccountSuccessfullyFunction } from "../../functions/auth/ValidationAccountSuccessfullyFunction"
 import { ResendEmailFunction } from "../../functions/auth/ResendEmailFunction"
+import { GoogleAuthorizerFunction } from "../../authorization/GoogleAuthorizerFuncion"
+import { GetLoggedUserFunction } from "../../functions/auth/GetLoggedUser"
 
 /**
  * @description
@@ -41,8 +43,10 @@ export class Dispatcher {
 
 // Authorizer
 export const RoleAuthorizer = Dispatcher.of(RoleAuthorizerFunction)
+export const GoogleAuthorizer = Dispatcher.of(GoogleAuthorizerFunction)
 
 // Auth
+export const GetLoggedUser = Dispatcher.of(GetLoggedUserFunction)
 export const Login = Dispatcher.of(LoginFunction)
 export const Register = Dispatcher.of(RegisterFunction)
 export const ValidateAccount = Dispatcher.of(ValidateAccountFunction)
