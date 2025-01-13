@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "24e946a2-9545-43b4-8e70-0270ecfcca10",
+		"_postman_id": "4225a72c-9344-4722-aa62-053548d2efa7",
 		"name": "Cohor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18438132"
+		"_exporter_id": "12788345"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 					"name": "Authentication",
 					"item": [
 						{
-							"name": "/login",
+							"name": "/auth/login",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -42,10 +42,16 @@
 							"response": []
 						},
 						{
-							"name": "/register",
+							"name": "/auth/register",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Idtoken",
+										"value": "",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"email\": \"santisemhan2@gmail.com\",\r\n    \"password\": \"tDlpGsqIKYCB\"\r\n}",
@@ -71,7 +77,7 @@
 							"response": []
 						},
 						{
-							"name": "/resend/:userId",
+							"name": "/auth/resend/:userId",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -98,7 +104,7 @@
 							"response": []
 						},
 						{
-							"name": "/validate/:userId/:token",
+							"name": "/auth/validate/:userId/:token",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -124,6 +130,26 @@
 											"key": "token",
 											"value": "13ea2803-de66-4131-a28f-d36f625ed2bf"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/logged-user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{protocol}}://{{hostname}}:{{apiPort}}/auth/logged-user",
+									"protocol": "{{protocol}}",
+									"host": [
+										"{{hostname}}"
+									],
+									"port": "{{apiPort}}",
+									"path": [
+										"auth",
+										"logged-user"
 									]
 								}
 							},
