@@ -7,9 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
-    "plugins": [
-      "@react-native-google-signin/google-signin"
-    ],
+    "plugins": ["@react-native-google-signin/google-signin", "expo-image-picker"],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -32,7 +30,7 @@
     "scheme": "cohor",
     "extra": {
       "eas": {
-        "projectId": "bb04d1c5-9c75-48cf-a79d-61365b156d14"
+        "projectId": "7d8f4ad1-2e03-4316-8016-6f064983778b"
       }
     }
   }

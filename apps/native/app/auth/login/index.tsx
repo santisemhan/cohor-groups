@@ -41,7 +41,11 @@ export default function Login() {
         await AsyncStorage.setItem("access_token", response.accessToken)
         setUser(response.user)
         router.dismissAll()
-        router.replace("/app")
+        if (response.user?.name) {
+          router.replace("/app")
+        } else {
+          router.replace("/onboarding/user")
+        }
       })
       .catch(() => {
         Toast.show({

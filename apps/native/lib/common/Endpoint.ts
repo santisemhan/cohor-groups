@@ -8,5 +8,8 @@ export const endpoint = {
     register: `${API_URL}/auth/register`,
     validate: `${API_URL}/auth/validate`,
     resend: `${API_URL}/auth/resend`
+  },
+  user: {
+    userOnobarding: `${API_URL}/users`
   }
 }

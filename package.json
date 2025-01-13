@@ -8,7 +8,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "co": "sui-mono commit",
-    "check": "sui-mono check"
+    "check": "sui-mono check",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",
@@ -27,5 +29,14 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^8.2.0",
+    "expo-image-picker": "~16.0.4",
+    "react-native-modal-datetime-picker": "^18.0.0",
+    "expo": "~52.0.25",
+    "react": "18.3.1",
+    "react-native": "0.76.6"
+  },
+  "version": "1.0.0"
 }
