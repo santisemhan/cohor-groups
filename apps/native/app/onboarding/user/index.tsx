@@ -19,7 +19,6 @@ import DateTimePicker from "../../../components/ui/DatePicker"
 import UploadIcon from "../../../components/icons/Upload"
 import { useAuth } from "../../../lib/context/AuthContext"
 import * as ImagePicker from "expo-image-picker"
-import { StyleSheet } from "react-native"
 import { User } from "@cohor/types"
 import { toastConfig } from "../../../components/ui/Toast"
 
@@ -30,6 +29,7 @@ export default function CreateUserProfile() {
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<string | null>(null)
 
+  // valores de google pueden venir por default en el form (se le permite editarlos)
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -39,8 +39,9 @@ export default function CreateUserProfile() {
   })
 
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
+    // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
     api
-      .put(endpoint.user.userOnobarding, formValues)
+      .put(endpoint.user.onboarding, formValues)
       .then(() => {
         setShowStepTwo(true)
         const userToUpdate: User = {
@@ -67,8 +68,6 @@ export default function CreateUserProfile() {
       quality: 1
     })
 
-    console.log(result)
-
     if (!result.canceled) {
       setImage(result.assets[0].uri)
     }
@@ -81,18 +80,6 @@ export default function CreateUserProfile() {
     return userId
   }
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center"
-    },
-    image: {
-      width: 200,
-      height: 200
-    }
-  })
-
   return (
     <>
       <YStack gap={40} width="100%">
@@ -103,7 +90,7 @@ export default function CreateUserProfile() {
         </YStack>
         {!showStepTwo ? (
           <GlassBottomSheet>
-            <SizableText color="$white" size="$headline-small">
+            <SizableText color="$white" size="$subhead-medium">
               Contanos quién sos
             </SizableText>
             <YStack gap={16} width="100%">
@@ -173,53 +160,41 @@ export default function CreateUserProfile() {
           </GlassBottomSheet>
         ) : (
           <GlassBottomSheet>
-            <SizableText color="$white" size="$headline-small">
+            <SizableText color="$white" size="$subhead-medium">
               Elegí tu mejor foto
             </SizableText>
-            <YStack gap={16} width="100%" height={400} justifyContent="flex-end">
+            <YStack gap={32} justifyContent="flex-end">
               <BlurView
                 intensity={60}
                 tint="light"
                 style={{
                   borderRadius: 999,
-                  borderColor: theme["white-opacity-mid"].val,
-                  borderWidth: 1,
                   overflow: "hidden"
                 }}
               >
-                {image ? (
-                  <YStack
-                    gap={8}
-                    width="100px"
-                    height={350}
-                    borderRadius={999}
-                    alignItems="center"
-                    justifyContent="center"
-                    borderWidth={2}
-                    borderStyle="dashed"
-                    borderColor="$white"
-                  >
-                    <Image source={{ uri: image }} style={styles.image} />
-                  </YStack>
-                ) : (
-                  <YStack
-                    gap={8}
-                    width="100px"
-                    height={350}
-                    borderRadius={999}
-                    alignItems="center"
-                    justifyContent="center"
-                    borderWidth={2}
-                    borderStyle="dashed"
-                    borderColor="$white"
-                    onPress={pickImage}
-                  >
-                    <UploadIcon color="$white" />
-                    <Button borderWidth={0} backgroundColor="transparent" color="$white">
-                      Elegí desde tu galería
-                    </Button>
-                  </YStack>
-                )}
+                {/* NO TIENE DASH el border */}
+                <YStack
+                  gap={8}
+                  width={280}
+                  height={280}
+                  borderRadius={999}
+                  alignItems="center"
+                  justifyContent="center"
+                  borderWidth={2}
+                  borderColor="$white-opacity-mid"
+                  onPress={pickImage}
+                >
+                  {image ? (
+                    <Image source={{ uri: image }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
+                  ) : (
+                    <YStack alignItems="center" justifyContent="center">
+                      <UploadIcon color={theme.white.val} width={52} height={52} />
+                      <Button borderWidth={0} backgroundColor="transparent" color="$white" size="$body-small-w-medium">
+                        Elegí desde tu galería
+                      </Button>
+                    </YStack>
+                  )}
+                </YStack>
               </BlurView>
               <Button
                 disabled={isSubmitting}

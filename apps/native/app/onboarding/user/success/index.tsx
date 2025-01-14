@@ -1,18 +1,20 @@
-import { Button, SizableText, YStack } from "tamagui"
+import { SizableText, YStack } from "tamagui"
 
 import React from "react"
 
 import { useAuth } from "../../../../lib/context/AuthContext"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { BlurView } from "expo-blur"
+import { Button } from "../../../../components/ui/Button"
 
+// Este usa otro video
 export default function UserProfileSuccess() {
   const { user } = useAuth()
   return (
     <>
       <YStack gap={40} width="100%">
         <YStack justifyContent="center" alignItems="center" gap={4}>
-          <SizableText color="$white" size="$headline-large">
+          <SizableText color="$white" size="$headline-small">
             Bienvenid@ {user?.name}!
           </SizableText>
         </YStack>
@@ -34,6 +36,7 @@ export default function UserProfileSuccess() {
             >
               <Button
                 onPress={() => console.log("hola")}
+                type="subtle"
                 backgroundColor="transparent"
                 borderColor="$element-high-opacity-mid"
               >

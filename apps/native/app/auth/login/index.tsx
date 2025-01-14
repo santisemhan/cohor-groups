@@ -44,6 +44,8 @@ export default function Login() {
         if (response.user?.name) {
           router.replace("/app")
         } else {
+          // que pasa si tiene nombre pero no tiene foto subida? para mi tiene que mandar todas las request al final y no una por pantalla.
+          // o tener un campo que pregunte si se termino el onboarding.
           router.replace("/onboarding/user")
         }
       })

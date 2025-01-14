@@ -53,6 +53,7 @@ export default function LoginWithGoogle() {
             .then(async (res) => {
               setUser(res.user)
               await AsyncStorage.setItem("access_token", res.accessToken)
+              // VALIDAR SI TIENE QUE MANDAR AL ONBOARDING o unirse/crear un grupo, llamar al get logged user para determinarlo.
               router.dismissAll()
               router.replace("/app")
             })

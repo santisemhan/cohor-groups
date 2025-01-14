@@ -23,6 +23,7 @@ export default function Home() {
     const checkLoginStatus = async () => {
       const token = await AsyncStorage.getItem("access_token")
       if (token) {
+        // VALIDAR SI TIENE QUE MANDAR AL ONBOARDING o unirse/crear un grupo, llamar al get logged user para determinarlo.
         router.replace("/app")
       }
     }

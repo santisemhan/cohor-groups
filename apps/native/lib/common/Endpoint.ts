@@ -10,6 +10,6 @@ export const endpoint = {
     resend: `${API_URL}/auth/resend`
   },
   user: {
-    userOnobarding: `${API_URL}/users`
+    onboarding: `${API_URL}/users`
   }
 }

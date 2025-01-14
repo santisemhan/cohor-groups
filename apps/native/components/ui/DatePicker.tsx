@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Pressable } from "react-native"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
-import { XStack, Input } from "tamagui"
+import { XStack } from "tamagui"
+import { Input } from "./Input"
 
 interface DatePickerProps {
   date?: Date
@@ -69,6 +70,8 @@ const DateTimePicker = function DatePicker(props: DatePickerProps) {
         buttonTextColorIOS={props.buttonTextColorIOS}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
+        themeVariant="dark"
+        locale="es-AR"
       />
     </Pressable>
   )
