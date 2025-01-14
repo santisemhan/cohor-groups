@@ -19,6 +19,8 @@ import { useAuth } from "../../../lib/context/AuthContext"
 import { User } from "@cohor/types"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../components/ui/Toast"
+import XCircleIcon from "../../../components/icons/XCircle"
+import FormError from "../../../components/FormError"
 
 export default function Login() {
   const { setUser } = useAuth()
@@ -98,9 +100,7 @@ export default function Login() {
                 )}
               />
               {errors.email && (
-                <SizableText ml={4} color="$error">
-                  {errors.email.message}
-                </SizableText>
+                <FormError message={errors.email.message!} />
               )}
             </YStack>
             <YStack gap={8} width="100%">
@@ -161,9 +161,7 @@ export default function Login() {
                 )}
               />
               {errors.password && (
-                <SizableText ml={4} color="$error">
-                  {errors.password.message}
-                </SizableText>
+                <FormError message={errors.password.message!} />
               )}
             </YStack>
             <Button

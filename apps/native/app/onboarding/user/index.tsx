@@ -21,6 +21,7 @@ import { useAuth } from "../../../lib/context/AuthContext"
 import * as ImagePicker from "expo-image-picker"
 import { User } from "@cohor/types"
 import { toastConfig } from "../../../components/ui/Toast"
+import FormError from "../../../components/FormError"
 
 export default function CreateUserProfile() {
   const { user, setUser } = useAuth()
@@ -121,9 +122,7 @@ export default function CreateUserProfile() {
                 )}
               />
               {errors.name && (
-                <SizableText ml={4} color="$error">
-                  {errors.name.message}
-                </SizableText>
+                <FormError message={errors.name.message!} />
               )}
               <Controller
                 name="birthdate"
@@ -144,9 +143,7 @@ export default function CreateUserProfile() {
                 )}
               />
               {errors.birthdate && (
-                <SizableText ml={4} color="$error">
-                  {errors.birthdate.message}
-                </SizableText>
+                <FormError message={errors.birthdate.message!} />
               )}
               <Button
                 isDisabled={!isValid}
