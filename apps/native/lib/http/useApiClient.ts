@@ -99,9 +99,9 @@ class ApiClient {
     return this._exec<O, I>(this.api.post(url, data, config))
   }
 
-  put(url: string, data?: any, config?: AxiosRequestConfig) {
+  put<I, O>(url: string, data?: any, config?: AxiosRequestConfig): Promise<O> {
     console.log("PUT", url, JSON.stringify(data || {}))
-    return this._exec(this.api.put(url, data, config))
+    return this._exec<O, I>(this.api.put(url, data, config))
   }
 
   patch(url: string, data?: any, config?: AxiosRequestConfig) {

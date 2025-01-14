@@ -21,7 +21,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     control
   } = useForm<RegisterForm>({
@@ -29,20 +29,18 @@ export default function Register() {
   })
 
   const onSubmitRegister: SubmitHandler<RegisterForm> = async (formValues) => {
-    api
-      .post<RegisterForm, { id: string; email: string }>(endpoint.auth.register, formValues)
-      .then((response) =>
-        router.push({
-          pathname: "auth/register/validation",
-          params: { userId: response.id, email: response.email }
-        })
-      )
-      .catch(() => {
-        Toast.show({
-          type: "error",
-          text1: "Error al registrar el usuario"
-        })
+    try {
+      const response = await api.post<RegisterForm, { id: string; email: string }>(endpoint.auth.register, formValues)
+      router.push({
+        pathname: "auth/register/validation",
+        params: { userId: response.id, email: response.email }
       })
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Error al registrar el usuario"
+      })
+    }
   }
 
   return (
@@ -82,12 +80,13 @@ export default function Register() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      hasError={!!errors.email}
                     />
                   </BlurView>
                 )}
               />
               {errors.email && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.email.message}
                 </SizableText>
               )}
@@ -121,6 +120,7 @@ export default function Register() {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
+                        hasError={!!errors.password}
                       />
                       <Stack
                         position="absolute"
@@ -150,7 +150,7 @@ export default function Register() {
                 )}
               />
               {errors.password && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.password.message}
                 </SizableText>
               )}
@@ -158,7 +158,8 @@ export default function Register() {
 
             <Button
               borderColor="$element-high-opacity-mid"
-              disabled={isSubmitting}
+              loading={isSubmitting}
+              isDisabled={!isValid}
               onPress={handleSubmit(onSubmitRegister)}
             >
               Continuar

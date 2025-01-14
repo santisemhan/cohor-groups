@@ -31,7 +31,7 @@ export default function CreateUserProfile() {
 
   // valores de google pueden venir por default en el form (se le permite editarlos)
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     control
   } = useForm<CreateUserProfileForm>({
@@ -40,24 +40,22 @@ export default function CreateUserProfile() {
 
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
     // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
-    api
-      .put(endpoint.user.onboarding, formValues)
-      .then(() => {
-        setShowStepTwo(true)
-        const userToUpdate: User = {
-          id: user?.id ?? "",
-          name: formValues.name,
-          email: user?.email ?? "",
-          birthdate: new Date(formValues.birthdate)
-        }
-        setUser(userToUpdate)
+    try {
+      await api.put<CreateUserProfileForm, undefined>(endpoint.user.onboarding, formValues)
+      setShowStepTwo(true)
+      const userToUpdate: User = {
+        id: user?.id ?? "",
+        name: formValues.name,
+        email: user?.email ?? "",
+        birthdate: new Date(formValues.birthdate)
+      }
+      setUser(userToUpdate)
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Error al registrar el usuario"
       })
-      .catch(() => {
-        Toast.show({
-          type: "error",
-          text1: "Nombre y/o fecha de nacimiento incorrectos"
-        })
-      })
+    }
   }
 
   const pickImage = async () => {
@@ -117,12 +115,13 @@ export default function CreateUserProfile() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      hasError={!!errors.name}
                     />
                   </BlurView>
                 )}
               />
               {errors.name && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.name.message}
                 </SizableText>
               )}
@@ -145,14 +144,15 @@ export default function CreateUserProfile() {
                 )}
               />
               {errors.birthdate && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.birthdate.message}
                 </SizableText>
               )}
               <Button
-                disabled={isSubmitting}
+                isDisabled={!isValid}
                 onPress={handleSubmit(onCreateAccount)}
                 borderColor="$element-high-opacity-mid"
+                loading={isSubmitting}
               >
                 Continuar
               </Button>
@@ -196,11 +196,7 @@ export default function CreateUserProfile() {
                   )}
                 </YStack>
               </BlurView>
-              <Button
-                disabled={isSubmitting}
-                onPress={handleSubmit(onUpdateImage)}
-                borderColor="$element-high-opacity-mid"
-              >
+              <Button disabled={!image} onPress={handleSubmit(onUpdateImage)} borderColor="$element-high-opacity-mid">
                 Siguiente
               </Button>
             </YStack>

@@ -27430,6 +27430,13 @@
           "name": "c-white-opacity-low",
           "val": "rgba(255, 255, 255, 0.12)",
           "variable": ""
+        },
+        "error": {
+          "isVar": true,
+          "key": "$error",
+          "name": "c-error",
+          "val": "#ED5A46",
+          "variable": ""
         }
       },
       "radius": {
@@ -28344,6 +28351,13 @@
         "key": "$white-opacity-low",
         "name": "c-white-opacity-low",
         "val": "rgba(255, 255, 255, 0.12)",
+        "variable": ""
+      },
+      "$color.error": {
+        "isVar": true,
+        "key": "$error",
+        "name": "c-error",
+        "val": "#ED5A46",
         "variable": ""
       },
       "$radius.0": {

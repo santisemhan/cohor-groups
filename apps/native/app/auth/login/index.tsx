@@ -27,7 +27,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     control
   } = useForm<LoginForm>({
@@ -35,26 +35,24 @@ export default function Login() {
   })
 
   const onSubmitLogin: SubmitHandler<LoginForm> = async (formValues) => {
-    api
-      .post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
-      .then(async (response: { user: User; accessToken: string }) => {
-        await AsyncStorage.setItem("access_token", response.accessToken)
-        setUser(response.user)
-        router.dismissAll()
-        if (response.user?.name) {
-          router.replace("/app")
-        } else {
-          // que pasa si tiene nombre pero no tiene foto subida? para mi tiene que mandar todas las request al final y no una por pantalla.
-          // o tener un campo que pregunte si se termino el onboarding.
-          router.replace("/onboarding/user")
-        }
+    try {
+      const response = await api.post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
+      await AsyncStorage.setItem("access_token", response.accessToken)
+      setUser(response.user)
+      router.dismissAll()
+      if (response.user?.name) {
+        router.replace("/app")
+      } else {
+        // que pasa si tiene nombre pero no tiene foto subida? para mi tiene que mandar todas las request al final y no una por pantalla.
+        // o tener un campo que pregunte si se termino el onboarding.
+        router.replace("/onboarding/user")
+      }
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Email o contraseña incorrectos"
       })
-      .catch(() => {
-        Toast.show({
-          type: "error",
-          text1: "Email o contraseña incorrectos"
-        })
-      })
+    }
   }
 
   return (
@@ -94,12 +92,13 @@ export default function Login() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      hasError={!!errors.email}
                     />
                   </BlurView>
                 )}
               />
               {errors.email && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.email.message}
                 </SizableText>
               )}
@@ -132,6 +131,7 @@ export default function Login() {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
+                        hasError={!!errors.password}
                       />
                       <Stack
                         position="absolute"
@@ -161,13 +161,14 @@ export default function Login() {
                 )}
               />
               {errors.password && (
-                <SizableText ml={4} color="red">
+                <SizableText ml={4} color="$error">
                   {errors.password.message}
                 </SizableText>
               )}
             </YStack>
             <Button
-              disabled={isSubmitting}
+              isDisabled={!isValid}
+              loading={isSubmitting}
               onPress={handleSubmit(onSubmitLogin)}
               borderColor="$element-high-opacity-mid"
             >
