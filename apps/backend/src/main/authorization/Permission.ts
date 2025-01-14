@@ -17,7 +17,7 @@ export const Permisions: FunctionPermissionSpecification = {
 
   "POST/groups": [Role.User],
 
-  "POST/groups/join": [Role.User],
+  "POST/groups/join": [Role.User]
 }
 
 export class PermissionSpecification {

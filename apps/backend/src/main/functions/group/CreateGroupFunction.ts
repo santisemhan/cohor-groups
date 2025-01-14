@@ -24,6 +24,16 @@ export class CreateGroupFunction extends APIServerlessFunction {
     event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
     _context: Context
   ) {
+    const { error: authorizerError, value: contextValue } = this.validationService.validate(
+      AuthorizerContextSchema,
+      event.requestContext.authorizer
+    )
+    if (authorizerError) {
+      return new HTTPResponse(MIMEType.JSON)
+        .body([new HttpValidationError(authorizerError, event.requestContext.authorizer, HTTPParameterSource.CLAIMS)])
+        .statusCode(HTTPStatusCode.BadRequest)
+    }
+
     const { error: createGroupError, value: body } = this.validationService.validate(CreateGroupSchema, event.body)
     if (createGroupError) {
       return new HTTPResponse(MIMEType.JSON)
@@ -31,7 +41,7 @@ export class CreateGroupFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    await this.groupService.createAsync(body.name)
+    await this.groupService.createAsync(body.name, contextValue.id)
     return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
   }
 }
