@@ -13,7 +13,11 @@ export const Permisions: FunctionPermissionSpecification = {
 
   "GET/auth/logged-user": [Role.User],
 
-  "PUT/users": [Role.User]
+  "PUT/users": [Role.User],
+
+  "POST/groups": [Role.User],
+
+  "POST/groups/join": [Role.User]
 }
 
 export class PermissionSpecification {

@@ -17,6 +17,8 @@ import { ValidationAccountSuccessfullyFunction } from "../../functions/auth/Vali
 import { ResendEmailFunction } from "../../functions/auth/ResendEmailFunction"
 import { GoogleAuthorizerFunction } from "../../authorization/GoogleAuthorizerFuncion"
 import { GetLoggedUserFunction } from "../../functions/auth/GetLoggedUser"
+import { CreateGroupFunction } from "../../functions/group/CreateGroupFunction"
+import { JoinGroupFunction } from "../../functions/group/JoinGroupFunction"
 
 /**
  * @description
@@ -55,5 +57,9 @@ export const ValidationAccountSuccessfully = Dispatcher.of(ValidationAccountSucc
 
 // User
 export const UpdateUser = Dispatcher.of(UpdateUserFunction)
+
+// Group
+export const CreateGroup = Dispatcher.of(CreateGroupFunction)
+export const JoinGroup = Dispatcher.of(JoinGroupFunction)
 
 export const Example = Dispatcher.of(ExampleFunction)

@@ -49,5 +49,7 @@ functions:
   - ${file(./src/main/serverless/functions/auth/ValidateAccountFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/ValidationAccountSuccessfullyFunction.yaml)}
   - ${file(./src/main/serverless/functions/user/UpdateUserFunction.yaml)}
+  - ${file(./src/main/serverless/functions/group/CreateGroupFunction.yaml)}
+  - ${file(./src/main/serverless/functions/group/JoinGroupFunction.yaml)}
 
 useDotenv: true
