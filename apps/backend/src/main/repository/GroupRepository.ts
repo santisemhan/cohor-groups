@@ -14,7 +14,7 @@ export class GroupRepository {
         name,
         users: {
           create: {
-            userId,
+            userId
           }
         }
       }
@@ -31,7 +31,7 @@ export class GroupRepository {
         userId
       }
     })
-    if(group) {
+    if (group) {
       throw new UserInGroupError()
     }
     return connection.userGroups.create({
