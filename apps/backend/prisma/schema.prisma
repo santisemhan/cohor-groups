@@ -8,14 +8,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OnboardingStep {
+  STEP_ONE
+  STEP_TWO
+  STEP_THREE
+  COMPLETED
+}
+
 model User {
-  id           String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email        String          @unique
-  name         String?
-  birthdate    DateTime?       @db.Date
-  password     String?
-  isThirdParty Boolean         @default(false)
-  validation   UserValidation?
+  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email          String          @unique
+  name           String?
+  birthdate      DateTime?       @db.Date
+  password       String?
+  isThirdParty   Boolean         @default(false)
+  validation     UserValidation?
+  onboardingStep OnboardingStep?
 
   @@map("Users")
 }

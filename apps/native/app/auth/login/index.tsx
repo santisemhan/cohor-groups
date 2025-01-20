@@ -16,7 +16,7 @@ import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useAuth } from "../../../lib/context/AuthContext"
-import { User } from "@cohor/types"
+import { OnboardingStep, User } from "@cohor/types"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../components/ui/Toast"
 
@@ -39,13 +39,22 @@ export default function Login() {
       const response = await api.post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
       await AsyncStorage.setItem("access_token", response.accessToken)
       setUser(response.user)
+      const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+
       router.dismissAll()
-      if (response.user?.name) {
-        router.replace("/app")
-      } else {
-        // que pasa si tiene nombre pero no tiene foto subida? para mi tiene que mandar todas las request al final y no una por pantalla.
-        // o tener un campo que pregunte si se termino el onboarding.
-        router.replace("/onboarding/user")
+      switch (loggedUserResponse.user.onboardingStep) {
+        case OnboardingStep.STEP_ONE:
+        case OnboardingStep.STEP_TWO:
+          router.replace("/onboarding/user")
+          break
+        case OnboardingStep.STEP_THREE:
+          router.replace("/onboarding/user/success")
+          break
+        case OnboardingStep.COMPLETED:
+          router.replace("/app")
+          break
+        default:
+          router.replace("/auth/login")
       }
     } catch {
       Toast.show({

@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
 import { YStack, SizableText } from "tamagui"
 import GlassBottomSheet from "../components/GlassBotomSheet"
-import { router, useFocusEffect } from "expo-router"
+import { useFocusEffect } from "expo-router"
 import AuthOptions from "../components/templates/auth/AuthOptions"
 import LoginOptions from "../components/templates/auth/login/LoginOptions"
 import RegisterOptions from "../components/templates/auth/register/RegisterOptions"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Home() {
   const [authFlow, setAuthFlow] = useState<"login" | "register" | undefined>(undefined)
@@ -18,18 +17,6 @@ export default function Home() {
   }
 
   const videoRef = useRef<Video>(null)
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = await AsyncStorage.getItem("access_token")
-      if (token) {
-        // VALIDAR SI TIENE QUE MANDAR AL ONBOARDING o unirse/crear un grupo, llamar al get logged user para determinarlo.
-        router.replace("/app")
-      }
-    }
-
-    checkLoginStatus()
-  }, [])
 
   useFocusEffect(
     React.useCallback(() => {

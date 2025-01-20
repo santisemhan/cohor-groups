@@ -1,6 +1,6 @@
 import { Image, SizableText, useTheme, YStack } from "tamagui"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import GlassBottomSheet from "../../../components/GlassBotomSheet"
 import { Button } from "../../../components/ui/Button"
@@ -19,7 +19,7 @@ import DateTimePicker from "../../../components/ui/DatePicker"
 import UploadIcon from "../../../components/icons/Upload"
 import { useAuth } from "../../../lib/context/AuthContext"
 import * as ImagePicker from "expo-image-picker"
-import { User } from "@cohor/types"
+import { OnboardingStep, User } from "@cohor/types"
 import { toastConfig } from "../../../components/ui/Toast"
 
 export default function CreateUserProfile() {
@@ -28,6 +28,12 @@ export default function CreateUserProfile() {
   const theme = useTheme()
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (user?.onboardingStep === OnboardingStep.STEP_TWO) {
+      setShowStepTwo(true)
+    }
+  }, [])
 
   // valores de google pueden venir por default en el form (se le permite editarlos)
   const {
@@ -41,13 +47,17 @@ export default function CreateUserProfile() {
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
     // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
     try {
-      await api.put<CreateUserProfileForm, undefined>(endpoint.user.onboarding, formValues)
+      await api.put<CreateUserProfileForm, undefined>(endpoint.user.onboarding, {
+        ...formValues,
+        onboardingStep: OnboardingStep.STEP_TWO
+      })
       setShowStepTwo(true)
       const userToUpdate: User = {
         id: user?.id ?? "",
         name: formValues.name,
         email: user?.email ?? "",
-        birthdate: new Date(formValues.birthdate)
+        birthdate: new Date(formValues.birthdate),
+        onboardingStep: user?.onboardingStep ?? null
       }
       setUser(userToUpdate)
     } catch {
@@ -71,11 +81,24 @@ export default function CreateUserProfile() {
     }
   }
 
-  const onUpdateImage = () => {
-    const userId = user?.id
-    // se sube con S3 al bucket del userId la imagen seleccionada
-    router.replace("/onboarding/user/success")
-    return userId
+  const onUpdateImage = async () => {
+    try {
+      await api.put<undefined, undefined>(endpoint.user.onboarding, {
+        name: user?.name,
+        birthdate: user?.birthdate,
+        onboardingStep: OnboardingStep.STEP_THREE
+      })
+
+      // Se guarda imagen en algun servicio externo y se guarda en el bucket con el user.Id (el user lo sacamos del context)
+      const userId = user?.id
+      router.replace("/onboarding/user/success")
+      return userId
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Error al cargar la imagen del usuario"
+      })
+    }
   }
 
   return (
@@ -172,7 +195,6 @@ export default function CreateUserProfile() {
                   overflow: "hidden"
                 }}
               >
-                {/* NO TIENE DASH el border */}
                 <YStack
                   gap={8}
                   width={280}
@@ -196,7 +218,7 @@ export default function CreateUserProfile() {
                   )}
                 </YStack>
               </BlurView>
-              <Button disabled={!image} onPress={handleSubmit(onUpdateImage)} borderColor="$element-high-opacity-mid">
+              <Button isDisabled={!image} onPress={onUpdateImage} borderColor="$element-high-opacity-mid">
                 Siguiente
               </Button>
             </YStack>

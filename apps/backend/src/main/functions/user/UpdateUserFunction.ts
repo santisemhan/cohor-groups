@@ -11,6 +11,8 @@ import { UserService } from "../../services/UserService"
 import { UpdateUserSchema } from "../../schema/user/UpdateUserSchema"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
 
+import { OnboardingStep } from "@cohor/types"
+
 @Injectable()
 export class UpdateUserFunction extends APIServerlessFunction {
   constructor(
@@ -35,14 +37,16 @@ export class UpdateUserFunction extends APIServerlessFunction {
     }
 
     const { error, value: body } = this.validationService.validate(UpdateUserSchema, event.body)
+
     if (error) {
       return new HTTPResponse(MIMEType.JSON)
         .body([new HttpValidationError(error, event.body, HTTPParameterSource.BODY)])
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { name, birthdate } = body
-    await this.userService.updateAsync(contextValue.id, name, birthdate)
+    const { name, birthdate, onboardingStep } = body
+
+    await this.userService.updateAsync(contextValue.id, name, birthdate, onboardingStep as OnboardingStep)
 
     return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
   }

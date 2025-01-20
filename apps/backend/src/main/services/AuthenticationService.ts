@@ -15,7 +15,7 @@ import { TooManyRequestError } from "../errors/TooManyRequestError"
 import { EmailRateLimitError } from "../errors/EmailRateLimitError"
 import { UserValidatedError } from "../errors/UserValidatedError"
 import { TimeService } from "./common/TimeService"
-import { User } from "@cohor/types"
+import { User, OnboardingStep } from "@cohor/types"
 import { RegisterRequest } from "../schema/auth/RegisterSchema"
 
 @Injectable()
@@ -111,9 +111,19 @@ export class AuthenticationService {
       if (!user.validation?.validatedAt) throw new NotValidatedAccount()
     }
 
-    const { id, email: userEmail, name, birthdate } = user
+    const { id, email: userEmail, name, birthdate, onboardingStep } = user
+
     const accessToken = await this.generateToken({ sub: id, email: userEmail, role: Role.User })
-    return { user: { id, email: userEmail, name, birthdate }, accessToken }
+    return {
+      user: {
+        id,
+        email: userEmail,
+        name,
+        birthdate,
+        onboardingStep: onboardingStep as OnboardingStep
+      },
+      accessToken
+    }
   }
 
   private async generateToken(payload: JWTPayload): Promise<string> {

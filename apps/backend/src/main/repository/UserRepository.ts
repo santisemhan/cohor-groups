@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client"
+import { OnboardingStep, Prisma } from "@prisma/client"
 import { DatabaseService } from "../services/database/DatabaseService"
 import { Injectable } from "../support/decorator/Injectable"
 import { TimeService } from "../services/common/TimeService"
@@ -12,16 +12,22 @@ export class UserRepository {
 
   public async createUserAsync(data: Prisma.UserCreateInput) {
     const connection = await this.databaseService.connectionAsync()
-    return connection.user.create({ data })
+    return connection.user.create({
+      data: {
+        ...data,
+        onboardingStep: OnboardingStep.STEP_ONE
+      }
+    })
   }
 
-  public async updateUserAsync(userId: string, name: string, birthdate: Date) {
+  public async updateUserAsync(userId: string, name: string, birthdate: Date, onboardingStep: OnboardingStep) {
     const connection = await this.databaseService.connectionAsync()
     return connection.user.update({
       where: { id: userId },
       data: {
         name,
-        birthdate
+        birthdate,
+        onboardingStep
       }
     })
   }
