@@ -14,6 +14,7 @@ import { RegisterForm, RegisterFormSchema } from "../../../lib/schema/auth/Regis
 import { SubmitHandler, useForm, Controller } from "react-hook-form"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../components/ui/Toast"
+import FormError from "../../../components/FormError"
 
 export default function Register() {
   const api = useApiClient()
@@ -86,9 +87,7 @@ export default function Register() {
                 )}
               />
               {errors.email && (
-                <SizableText ml={4} color="$error">
-                  {errors.email.message}
-                </SizableText>
+                <FormError message={errors.email.message!} />
               )}
             </YStack>
 
@@ -150,9 +149,7 @@ export default function Register() {
                 )}
               />
               {errors.password && (
-                <SizableText ml={4} color="$error">
-                  {errors.password.message}
-                </SizableText>
+                <FormError message={errors.password.message!} />
               )}
             </YStack>
 
