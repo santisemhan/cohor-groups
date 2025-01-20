@@ -19,7 +19,6 @@ import { useAuth } from "../../../lib/context/AuthContext"
 import { OnboardingStep, User } from "@cohor/types"
 import Toast from "react-native-toast-message"
 import { toastConfig } from "../../../components/ui/Toast"
-import XCircleIcon from "../../../components/icons/XCircle"
 import FormError from "../../../components/FormError"
 
 export default function Login() {
@@ -108,9 +107,7 @@ export default function Login() {
                   </BlurView>
                 )}
               />
-              {errors.email && (
-                <FormError message={errors.email.message!} />
-              )}
+              {errors.email && <FormError message={errors.email.message!} />}
             </YStack>
             <YStack gap={8} width="100%">
               <Controller
@@ -169,9 +166,7 @@ export default function Login() {
                   </BlurView>
                 )}
               />
-              {errors.password && (
-                <FormError message={errors.password.message!} />
-              )}
+              {errors.password && <FormError message={errors.password.message!} />}
             </YStack>
             <Button
               isDisabled={!isValid}
