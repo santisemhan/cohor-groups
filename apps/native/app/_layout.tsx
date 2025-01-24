@@ -8,6 +8,7 @@ import { tamaguiConfig } from "../tamagui.config"
 import { StatusBar } from "expo-status-bar"
 
 import { AuthProvider } from "../lib/context/AuthContext"
+import CustomToast from "../components/toast"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -35,6 +36,7 @@ export default function RootLayout() {
         <StatusBar style="light" />
         <Stack screenOptions={{ headerShown: false }} />
       </AuthProvider>
+      <CustomToast />
     </TamaguiProvider>
   )
 }

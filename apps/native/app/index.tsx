@@ -8,6 +8,7 @@ import AuthOptions from "../components/templates/auth/AuthOptions"
 import LoginOptions from "../components/templates/auth/login/LoginOptions"
 import RegisterOptions from "../components/templates/auth/register/RegisterOptions"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { ToastProvider } from "@tamagui/toast"
 
 export default function Home() {
   const [authFlow, setAuthFlow] = useState<"login" | "register" | undefined>(undefined)
