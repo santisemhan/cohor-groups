@@ -7,12 +7,13 @@ import { router } from "expo-router"
 import { useApiClient } from "../../lib/http/useApiClient"
 import { endpoint } from "../../lib/common/Endpoint"
 import { useAuth } from "../../lib/context/AuthContext"
-import Toast from "react-native-toast-message"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { User } from "@cohor/types"
+import { useToastController } from "@tamagui/toast"
 
 export default function Home() {
   const api = useApiClient()
+  const toast = useToastController()
   const { user, setUser } = useAuth()
   const [message, setMessage] = React.useState("App")
 
@@ -27,9 +28,11 @@ export default function Home() {
         setMessage(response.message)
       })
       .catch((error) => {
-        Toast.show({
-          type: "error",
-          text1: error.message
+        toast.show("Error!", {
+          message: error.message,
+          customData: {
+            backgroundColor: "$color.red"
+          }
         })
       })
   }, [])

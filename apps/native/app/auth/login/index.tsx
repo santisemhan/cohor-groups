@@ -17,10 +17,10 @@ import { useApiClient } from "../../../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useAuth } from "../../../lib/context/AuthContext"
 import { User } from "@cohor/types"
-import Toast from "react-native-toast-message"
-import { toastConfig } from "../../../components/ui/Toast"
+import { useToastController } from "@tamagui/toast"
 
 export default function Login() {
+  const toast = useToastController()
   const { setUser } = useAuth()
   const api = useApiClient()
   const theme = useTheme()
@@ -44,133 +44,128 @@ export default function Login() {
         router.replace("/app")
       })
       .catch(() => {
-        Toast.show({
-          type: "error",
-          text1: "Email o contraseña incorrectos"
+        toast.show("Error!", {
+          message: "Email o contraseña incorrectos",
+          customData: {
+            backgroundColor: "$color.red"
+          }
         })
       })
   }
 
   return (
-    <>
-      <YStack gap={40} width="100%">
-        <YStack justifyContent="center" alignItems="center" gap={4}>
-          <SizableText textTransform="uppercase" color="$white" size="$headline-large">
-            Cohor
-          </SizableText>
-        </YStack>
-        <GlassBottomSheet>
-          <SizableText color="$white" size="$headline-small">
-            Iniciar Sesión
-          </SizableText>
-          <YStack gap={24} width="100%">
-            <YStack gap={8} width="100%">
-              <Controller
-                name="email"
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <BlurView
-                    intensity={60}
-                    tint="light"
-                    style={{
-                      borderRadius: 100,
-                      borderColor: theme["white-opacity-mid"].val,
-                      borderWidth: 1,
-                      overflow: "hidden"
-                    }}
-                  >
+    <YStack gap={40} width="100%">
+      <YStack justifyContent="center" alignItems="center" gap={4}>
+        <SizableText textTransform="uppercase" color="$white" size="$headline-large">
+          Cohor
+        </SizableText>
+      </YStack>
+      <GlassBottomSheet>
+        <SizableText color="$white" size="$headline-small">
+          Iniciar Sesión
+        </SizableText>
+        <YStack gap={24} width="100%">
+          <YStack gap={8} width="100%">
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <BlurView
+                  intensity={60}
+                  tint="light"
+                  style={{
+                    borderRadius: 100,
+                    borderColor: theme["white-opacity-mid"].val,
+                    borderWidth: 1,
+                    overflow: "hidden"
+                  }}
+                >
+                  <Input
+                    borderWidth={0}
+                    backgroundColor="transparent"
+                    color="$white-opacity-high"
+                    placeholder="Email"
+                    placeholderTextColor="$white-opacity-high"
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                  />
+                </BlurView>
+              )}
+            />
+            {errors.email && (
+              <SizableText ml={4} color="red">
+                {errors.email.message}
+              </SizableText>
+            )}
+          </YStack>
+          <YStack gap={8} width="100%">
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <BlurView
+                  intensity={60}
+                  tint="light"
+                  style={{
+                    borderRadius: 100,
+                    borderColor: theme["white-opacity-mid"].val,
+                    borderWidth: 1,
+                    overflow: "hidden"
+                  }}
+                >
+                  <XStack height={50} width="100%" alignItems="center">
                     <Input
+                      width="100%"
+                      position="absolute"
                       borderWidth={0}
                       backgroundColor="transparent"
                       color="$white-opacity-high"
-                      placeholder="Email"
+                      placeholder="Contraseña"
                       placeholderTextColor="$white-opacity-high"
+                      secureTextEntry={!showPassword}
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
                     />
-                  </BlurView>
-                )}
-              />
-              {errors.email && (
-                <SizableText ml={4} color="red">
-                  {errors.email.message}
-                </SizableText>
+                    <Stack
+                      position="absolute"
+                      width="100%"
+                      paddingRight={16}
+                      alignItems="flex-end"
+                      justifyContent="center"
+                    >
+                      {showPassword ? (
+                        <EyeIcon
+                          color={theme.white.val}
+                          onPress={() => setShowPassword((prev) => !prev)}
+                          height={21}
+                          width={21}
+                        />
+                      ) : (
+                        <EyeSlashIcon
+                          color={theme.white.val}
+                          onPress={() => setShowPassword((prev) => !prev)}
+                          height={21}
+                          width={21}
+                        />
+                      )}
+                    </Stack>
+                  </XStack>
+                </BlurView>
               )}
-            </YStack>
-            <YStack gap={8} width="100%">
-              <Controller
-                name="password"
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <BlurView
-                    intensity={60}
-                    tint="light"
-                    style={{
-                      borderRadius: 100,
-                      borderColor: theme["white-opacity-mid"].val,
-                      borderWidth: 1,
-                      overflow: "hidden"
-                    }}
-                  >
-                    <XStack height={50} width="100%" alignItems="center">
-                      <Input
-                        width="100%"
-                        position="absolute"
-                        borderWidth={0}
-                        backgroundColor="transparent"
-                        color="$white-opacity-high"
-                        placeholder="Contraseña"
-                        placeholderTextColor="$white-opacity-high"
-                        secureTextEntry={!showPassword}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                      />
-                      <Stack
-                        position="absolute"
-                        width="100%"
-                        paddingRight={16}
-                        alignItems="flex-end"
-                        justifyContent="center"
-                      >
-                        {showPassword ? (
-                          <EyeIcon
-                            color={theme.white.val}
-                            onPress={() => setShowPassword((prev) => !prev)}
-                            height={21}
-                            width={21}
-                          />
-                        ) : (
-                          <EyeSlashIcon
-                            color={theme.white.val}
-                            onPress={() => setShowPassword((prev) => !prev)}
-                            height={21}
-                            width={21}
-                          />
-                        )}
-                      </Stack>
-                    </XStack>
-                  </BlurView>
-                )}
-              />
-              {errors.password && (
-                <SizableText ml={4} color="red">
-                  {errors.password.message}
-                </SizableText>
-              )}
-            </YStack>
-            <Button
-              disabled={isSubmitting}
-              onPress={handleSubmit(onSubmitLogin)}
-              borderColor="$element-high-opacity-mid"
-            >
-              Continuar
-            </Button>
+            />
+            {errors.password && (
+              <SizableText ml={4} color="red">
+                {errors.password.message}
+              </SizableText>
+            )}
           </YStack>
-        </GlassBottomSheet>
-      </YStack>
-      <Toast config={toastConfig} />
-    </>
+          <Button disabled={isSubmitting} onPress={handleSubmit(onSubmitLogin)} borderColor="$element-high-opacity-mid">
+            Continuar
+          </Button>
+        </YStack>
+      </GlassBottomSheet>
+    </YStack>
   )
 }
