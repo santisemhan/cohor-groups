@@ -42,7 +42,7 @@ export default function Register() {
         toast.show("Error!", {
           message: "Error al registrar el usuario",
           customData: {
-            backgroundColor: "$color.red"
+            backgroundColor: "$error"
           }
         })
       })

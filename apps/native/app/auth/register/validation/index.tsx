@@ -25,7 +25,7 @@ export default function Validation() {
         toast.show("Success!", {
           message: "Email sended!",
           customData: {
-            backgroundColor: "$color.green"
+            backgroundColor: "$success"
           }
         })
       })
@@ -33,7 +33,7 @@ export default function Validation() {
         toast.show("Error!", {
           message: "Please wait a few minutes",
           customData: {
-            backgroundColor: "$color.red"
+            backgroundColor: "$error"
           }
         })
       })

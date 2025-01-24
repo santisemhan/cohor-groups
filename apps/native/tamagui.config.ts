@@ -11,14 +11,8 @@ const tokens = createTokens({
     "white-opacity-high": "rgba(255, 255, 255, 0.8)",
     "white-opacity-mid": "rgba(255, 255, 255, 0.32)",
     "white-opacity-low": "rgba(255, 255, 255, 0.12)",
-    green: "#28A745",
-    "green-opacity-high": "rgba(40, 167, 69, 0.8)",
-    "green-opacity-mid": "rgba(40, 167, 69, 0.32)",
-    "green-opacity-low": "rgba(40, 167, 69, 0.12)",
-    red: "#DC3545",
-    "red-opacity-high": "rgba(220, 53, 69, 0.8)",
-    "red-opacity-mid": "rgba(220, 53, 69, 0.32)",
-    "red-opacity-low": "rgba(220, 53, 69, 0.12)"
+    success: "#10B981",
+    error: "#ED5A46"
   },
   space: {},
   size: {},

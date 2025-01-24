@@ -31,7 +31,7 @@ export default function Home() {
         toast.show("Error!", {
           message: error.message,
           customData: {
-            backgroundColor: "$color.red"
+            backgroundColor: "$error"
           }
         })
       })

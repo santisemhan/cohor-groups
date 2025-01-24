@@ -61,7 +61,7 @@ export default function LoginWithGoogle() {
               toast.show("Error!", {
                 message: "Error al iniciar sesión con Google",
                 customData: {
-                  backgroundColor: "$color.red"
+                  backgroundColor: "$error"
                 }
               })
             })
@@ -70,7 +70,7 @@ export default function LoginWithGoogle() {
           toast.show("Error!", {
             message: "Error al registrar el usuario de Google",
             customData: {
-              backgroundColor: "$color.red"
+              backgroundColor: "$error"
             }
           })
         })
@@ -80,7 +80,7 @@ export default function LoginWithGoogle() {
       toast.show("Error!", {
         message: "Error al iniciar sesión",
         customData: {
-          backgroundColor: "$color.red"
+          backgroundColor: "$error"
         }
       })
     }
