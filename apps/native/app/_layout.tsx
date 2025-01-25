@@ -12,7 +12,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { endpoint } from "../lib/common/Endpoint"
 import { OnboardingStep, User } from "@cohor/types"
 import { useApiClient } from "../lib/http/useApiClient"
-import CustomToast from "../components/toast"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -72,7 +71,6 @@ export default function RootLayout() {
         <StatusBar style="light" />
         <Stack screenOptions={{ headerShown: false }} />
       </AuthProvider>
-      <CustomToast />
     </TamaguiProvider>
   )
 }
