@@ -27431,6 +27431,13 @@
           "val": "rgba(255, 255, 255, 0.12)",
           "variable": ""
         },
+        "success": {
+          "isVar": true,
+          "key": "$success",
+          "name": "c-success",
+          "val": "#10B981",
+          "variable": ""
+        },
         "error": {
           "isVar": true,
           "key": "$error",
@@ -28351,6 +28358,13 @@
         "key": "$white-opacity-low",
         "name": "c-white-opacity-low",
         "val": "rgba(255, 255, 255, 0.12)",
+        "variable": ""
+      },
+      "$color.success": {
+        "isVar": true,
+        "key": "$success",
+        "name": "c-success",
+        "val": "#10B981",
         "variable": ""
       },
       "$color.error": {

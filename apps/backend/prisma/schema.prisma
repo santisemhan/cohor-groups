@@ -16,13 +16,14 @@ enum OnboardingStep {
 }
 
 model User {
-  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email          String          @unique
-  name           String?
-  birthdate      DateTime?       @db.Date
-  password       String?
-  isThirdParty   Boolean         @default(false)
-  validation     UserValidation?
+  id           String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email        String          @unique
+  name         String?
+  birthdate    DateTime?       @db.Date
+  password     String?
+  isThirdParty Boolean         @default(false)
+  validation   UserValidation?
+  groups       UserGroups[]
   onboardingStep OnboardingStep?
 
   @@map("Users")
@@ -45,4 +46,23 @@ model MailRateLimit {
   createdAt DateTime
 
   @@map("MailRateLimit")
+}
+
+model UserGroups {
+  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId  String @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String @db.Uuid
+
+  @@map("UserGroups")
+}
+
+model Group {
+  id        String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  groupCode Int          @unique @default(autoincrement())
+  name      String
+  users     UserGroups[]
+
+  @@map("Group")
 }

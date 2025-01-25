@@ -7,5 +7,5 @@ COHOR_APPLICATION_FRONTEND_ORIGINS:
   production: ""
 
 COHOR_API_GATEWAY_ENDPOINT_URI:
-  local: ${env:COHOR_API_GATEWAY_ENDPOINT_URI, "http://localhost:3000"}
+  local: ${env:COHOR_API_GATEWAY_ENDPOINT_URI, "https://ecbb-2800-40-3c-2eff-4cda-61c0-e489-3f3f.ngrok-free.app"}
   production: ""

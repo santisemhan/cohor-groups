@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useApiClient } from "../../lib/http/useApiClient"
 import { Button } from "../ui/Button"
-import Toast from "react-native-toast-message"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { router } from "expo-router"
 import { endpoint } from "../../lib/common/Endpoint"
@@ -9,9 +8,11 @@ import { User } from "@cohor/types"
 import { GoogleSignin, SignInResponse } from "@react-native-google-signin/google-signin"
 import { useAuth } from "../../lib/context/AuthContext"
 import GoogleIcon from "../icons/GoogleIcon"
+import { useToastController } from "@tamagui/toast"
 
 export default function LoginWithGoogle() {
   const api = useApiClient()
+  const toast = useToastController()
   const { setUser } = useAuth()
   useEffect(() => {
     GoogleSignin.configure({
@@ -58,24 +59,28 @@ export default function LoginWithGoogle() {
               router.replace("/app")
             })
             .catch(() => {
-              Toast.show({
-                type: "error",
-                text1: "Error al iniciar sesión con Google"
+              toast.show("Error!", {
+                message: "Error al iniciar sesión con Google",
+                customData: {
+                  backgroundColor: "$error"
+                }
               })
             })
         })
         .catch(() => {
-          Toast.show({
-            type: "error",
-            text1: "Error al registrar el usuario de Google"
+          toast.show("Error!", {
+            message: "Error al registrar el usuario de Google",
+            customData: {
+              backgroundColor: "$error"
+            }
           })
         })
-    } catch (error) {
-      console.log("Error", JSON.stringify(error))
-      console.log("Error2", error)
-      Toast.show({
-        type: "error",
-        text1: "Error al iniciar sesión"
+    } catch {
+      toast.show("Error!", {
+        message: "Error al iniciar sesión",
+        customData: {
+          backgroundColor: "$error"
+        }
       })
     }
   }
