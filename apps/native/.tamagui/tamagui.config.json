@@ -26702,60 +26702,18 @@
           "val": "rgba(255, 255, 255, 0.12)",
           "variable": ""
         },
-        "green": {
+        "success": {
           "isVar": true,
-          "key": "$green",
-          "name": "c-green",
-          "val": "#28A745",
+          "key": "$success",
+          "name": "c-success",
+          "val": "#10B981",
           "variable": ""
         },
-        "green-opacity-high": {
+        "error": {
           "isVar": true,
-          "key": "$green-opacity-high",
-          "name": "c-green-opacity-high",
-          "val": "rgba(40, 167, 69, 0.8)",
-          "variable": ""
-        },
-        "green-opacity-mid": {
-          "isVar": true,
-          "key": "$green-opacity-mid",
-          "name": "c-green-opacity-mid",
-          "val": "rgba(40, 167, 69, 0.32)",
-          "variable": ""
-        },
-        "green-opacity-low": {
-          "isVar": true,
-          "key": "$green-opacity-low",
-          "name": "c-green-opacity-low",
-          "val": "rgba(40, 167, 69, 0.12)",
-          "variable": ""
-        },
-        "red": {
-          "isVar": true,
-          "key": "$red",
-          "name": "c-red",
-          "val": "#DC3545",
-          "variable": ""
-        },
-        "red-opacity-high": {
-          "isVar": true,
-          "key": "$red-opacity-high",
-          "name": "c-red-opacity-high",
-          "val": "rgba(220, 53, 69, 0.8)",
-          "variable": ""
-        },
-        "red-opacity-mid": {
-          "isVar": true,
-          "key": "$red-opacity-mid",
-          "name": "c-red-opacity-mid",
-          "val": "rgba(220, 53, 69, 0.32)",
-          "variable": ""
-        },
-        "red-opacity-low": {
-          "isVar": true,
-          "key": "$red-opacity-low",
-          "name": "c-red-opacity-low",
-          "val": "rgba(220, 53, 69, 0.12)",
+          "key": "$error",
+          "name": "c-error",
+          "val": "#ED5A46",
           "variable": ""
         }
       },
@@ -27673,60 +27631,18 @@
         "val": "rgba(255, 255, 255, 0.12)",
         "variable": ""
       },
-      "$color.green": {
+      "$color.success": {
         "isVar": true,
-        "key": "$green",
-        "name": "c-green",
-        "val": "#28A745",
+        "key": "$success",
+        "name": "c-success",
+        "val": "#10B981",
         "variable": ""
       },
-      "$color.green-opacity-high": {
+      "$color.error": {
         "isVar": true,
-        "key": "$green-opacity-high",
-        "name": "c-green-opacity-high",
-        "val": "rgba(40, 167, 69, 0.8)",
-        "variable": ""
-      },
-      "$color.green-opacity-mid": {
-        "isVar": true,
-        "key": "$green-opacity-mid",
-        "name": "c-green-opacity-mid",
-        "val": "rgba(40, 167, 69, 0.32)",
-        "variable": ""
-      },
-      "$color.green-opacity-low": {
-        "isVar": true,
-        "key": "$green-opacity-low",
-        "name": "c-green-opacity-low",
-        "val": "rgba(40, 167, 69, 0.12)",
-        "variable": ""
-      },
-      "$color.red": {
-        "isVar": true,
-        "key": "$red",
-        "name": "c-red",
-        "val": "#DC3545",
-        "variable": ""
-      },
-      "$color.red-opacity-high": {
-        "isVar": true,
-        "key": "$red-opacity-high",
-        "name": "c-red-opacity-high",
-        "val": "rgba(220, 53, 69, 0.8)",
-        "variable": ""
-      },
-      "$color.red-opacity-mid": {
-        "isVar": true,
-        "key": "$red-opacity-mid",
-        "name": "c-red-opacity-mid",
-        "val": "rgba(220, 53, 69, 0.32)",
-        "variable": ""
-      },
-      "$color.red-opacity-low": {
-        "isVar": true,
-        "key": "$red-opacity-low",
-        "name": "c-red-opacity-low",
-        "val": "rgba(220, 53, 69, 0.12)",
+        "key": "$error",
+        "name": "c-error",
+        "val": "#ED5A46",
         "variable": ""
       },
       "$radius.0": {

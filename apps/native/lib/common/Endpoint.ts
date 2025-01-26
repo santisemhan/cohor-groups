@@ -8,5 +8,9 @@ export const endpoint = {
     register: `${API_URL}/auth/register`,
     validate: `${API_URL}/auth/validate`,
     resend: `${API_URL}/auth/resend`
+  },
+  user: {
+    onboarding: `${API_URL}/users`,
+    imagePresignedParams: `${API_URL}/users/image-presigned-params`
   }
 }

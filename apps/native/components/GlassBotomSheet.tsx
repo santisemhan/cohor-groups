@@ -11,7 +11,7 @@ export default function GlassBottomSheet({ children }: { children: React.ReactNo
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
-        gap: 40,
+        gap: 32,
         paddingVertical: 40,
         paddingHorizontal: 28,
         borderTopStartRadius: 40,

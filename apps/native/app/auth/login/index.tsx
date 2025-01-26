@@ -16,18 +16,20 @@ import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useAuth } from "../../../lib/context/AuthContext"
-import { User } from "@cohor/types"
+import { OnboardingStep, User } from "@cohor/types"
+import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 
 export default function Login() {
   const toast = useToastController()
   const { setUser } = useAuth()
+  const toast = useToastController()
   const api = useApiClient()
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     control
   } = useForm<LoginForm>({
@@ -35,22 +37,35 @@ export default function Login() {
   })
 
   const onSubmitLogin: SubmitHandler<LoginForm> = async (formValues) => {
-    api
-      .post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
-      .then(async (response: { user: User; accessToken: string }) => {
-        await AsyncStorage.setItem("access_token", response.accessToken)
-        setUser(response.user)
-        router.dismissAll()
-        router.replace("/app")
+    try {
+      const response = await api.post<LoginForm, { accessToken: string; user: User }>(endpoint.auth.login, formValues)
+      await AsyncStorage.setItem("access_token", response.accessToken)
+      setUser(response.user)
+      const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+
+      router.dismissAll()
+      switch (loggedUserResponse.user.onboardingStep) {
+        case OnboardingStep.STEP_ONE:
+        case OnboardingStep.STEP_TWO:
+          router.replace("/onboarding/user")
+          break
+        case OnboardingStep.STEP_THREE:
+          router.replace("/onboarding/user/success")
+          break
+        case OnboardingStep.COMPLETED:
+          router.replace("/app")
+          break
+        default:
+          router.replace("/auth/login")
+      }
+    } catch {
+      toast.show("Error!", {
+        message: "Email o contraseña incorrectos",
+        customData: {
+          backgroundColor: "$error"
+        }
       })
-      .catch(() => {
-        toast.show("Error!", {
-          message: "Email o contraseña incorrectos",
-          customData: {
-            backgroundColor: "$color.red"
-          }
-        })
-      })
+    }
   }
 
   return (
@@ -89,15 +104,12 @@ export default function Login() {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
+                    hasError={!!errors.email}
                   />
                 </BlurView>
               )}
             />
-            {errors.email && (
-              <SizableText ml={4} color="red">
-                {errors.email.message}
-              </SizableText>
-            )}
+            {errors.email && <FormError message={errors.email.message!} />}
           </YStack>
           <YStack gap={8} width="100%">
             <Controller
@@ -127,6 +139,7 @@ export default function Login() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      hasError={!!errors.password}
                     />
                     <Stack
                       position="absolute"
@@ -155,13 +168,14 @@ export default function Login() {
                 </BlurView>
               )}
             />
-            {errors.password && (
-              <SizableText ml={4} color="red">
-                {errors.password.message}
-              </SizableText>
-            )}
+            {errors.password && <FormError message={errors.password.message!} />}
           </YStack>
-          <Button disabled={isSubmitting} onPress={handleSubmit(onSubmitLogin)} borderColor="$element-high-opacity-mid">
+          <Button
+            isDisabled={!isValid}
+            loading={isSubmitting}
+            onPress={handleSubmit(onSubmitLogin)}
+            borderColor="$element-high-opacity-mid"
+          >
             Continuar
           </Button>
         </YStack>

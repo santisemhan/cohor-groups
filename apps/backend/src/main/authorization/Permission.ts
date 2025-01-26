@@ -14,6 +14,7 @@ export const Permisions: FunctionPermissionSpecification = {
   "GET/auth/logged-user": [Role.User],
 
   "PUT/users": [Role.User],
+  "GET/users/image-presigned-params": [Role.User],
 
   "POST/groups": [Role.User],
 

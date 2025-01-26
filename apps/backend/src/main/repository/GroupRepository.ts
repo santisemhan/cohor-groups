@@ -8,7 +8,6 @@ export class GroupRepository {
 
   public async createGroupAsync(name: string, userId: string) {
     const connection = await this.databaseService.connectionAsync()
-    console.log
     return await connection.group.create({
       data: {
         name,

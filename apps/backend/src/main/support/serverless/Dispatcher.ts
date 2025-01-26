@@ -19,6 +19,7 @@ import { GoogleAuthorizerFunction } from "../../authorization/GoogleAuthorizerFu
 import { GetLoggedUserFunction } from "../../functions/auth/GetLoggedUser"
 import { CreateGroupFunction } from "../../functions/group/CreateGroupFunction"
 import { JoinGroupFunction } from "../../functions/group/JoinGroupFunction"
+import { GetProfileImagePresignedParamsFunction } from "../../functions/user/GetProfileImagePresignedParamsFunction"
 
 /**
  * @description
@@ -57,6 +58,7 @@ export const ValidationAccountSuccessfully = Dispatcher.of(ValidationAccountSucc
 
 // User
 export const UpdateUser = Dispatcher.of(UpdateUserFunction)
+export const GetProfileImagePresignedParams = Dispatcher.of(GetProfileImagePresignedParamsFunction)
 
 // Group
 export const CreateGroup = Dispatcher.of(CreateGroupFunction)

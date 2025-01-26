@@ -7,17 +7,14 @@ import { Injectable } from "../../support/decorator/Injectable"
 import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
-import { UserService } from "../../services/UserService"
-import { UpdateUserSchema } from "../../schema/user/UpdateUserSchema"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
-
-import { OnboardingStep } from "@cohor/types"
+import { CloudinaryService } from "../../services/storage/CloudinaryService"
 
 @Injectable()
-export class UpdateUserFunction extends APIServerlessFunction {
+export class GetProfileImagePresignedParamsFunction extends APIServerlessFunction {
   constructor(
     private readonly validationService: ValidationService,
-    private readonly userService: UserService
+    private readonly cloudinaryService: CloudinaryService
   ) {
     super()
   }
@@ -26,7 +23,7 @@ export class UpdateUserFunction extends APIServerlessFunction {
     event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
     _context: Context
   ) {
-    const { error: authorizerError, value: contextValue } = this.validationService.validate(
+    const { error: authorizerError, value } = this.validationService.validate(
       AuthorizerContextSchema,
       event.requestContext.authorizer
     )
@@ -36,18 +33,8 @@ export class UpdateUserFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { error, value: body } = this.validationService.validate(UpdateUserSchema, event.body)
+    const { signature, timestamp } = await this.cloudinaryService.putPresignedUrlAsync("profile", value.id)
 
-    if (error) {
-      return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(error, event.body, HTTPParameterSource.BODY)])
-        .statusCode(HTTPStatusCode.BadRequest)
-    }
-
-    const { name, birthdate, onboardingStep } = body
-
-    await this.userService.updateAsync(contextValue.id, name, birthdate, onboardingStep as OnboardingStep)
-
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
+    return new HTTPResponse(MIMEType.JSON).body({ signature, timestamp }).statusCode(HTTPStatusCode.Ok)
   }
 }

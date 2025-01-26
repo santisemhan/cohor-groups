@@ -8,7 +8,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "co": "sui-mono commit",
-    "check": "sui-mono check"
+    "check": "sui-mono check",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",
@@ -16,7 +18,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.17.10",
     "prettier": "^3.4.2",
-    "turbo": "^2.3.3",
+    "turbo": "^2.3.4",
     "typescript": "^5.7.2",
     "zod": "^3.24.1"
   },
@@ -27,5 +29,6 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "version": "1.0.0"
 }

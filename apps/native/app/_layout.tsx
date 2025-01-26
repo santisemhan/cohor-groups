@@ -1,5 +1,5 @@
 import { TamaguiProvider } from "tamagui"
-import { Stack } from "expo-router"
+import { router, Stack } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
@@ -8,7 +8,12 @@ import { tamaguiConfig } from "../tamagui.config"
 import { StatusBar } from "expo-status-bar"
 
 import { AuthProvider } from "../lib/context/AuthContext"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { endpoint } from "../lib/common/Endpoint"
+import { OnboardingStep, User } from "@cohor/types"
+import { useApiClient } from "../lib/http/useApiClient"
 import CustomToast from "../components/toast"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -20,10 +25,51 @@ export default function RootLayout() {
     "OpenSauceOne-Bold": require("../assets/fonts/OpenSauceOne-Bold.ttf")
   })
 
+  const api = useApiClient()
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: "300195889471-o655ub38lc5e0obfh9hicqpecundh0hg.apps.googleusercontent.com",
+      iosClientId: "300195889471-lka9cqqind6u4hloqdcsl4vne93nt5gg.apps.googleusercontent.com"
+    })
+  }, [])
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync()
     }
+  }, [loaded])
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      if (loaded) {
+        const token = await AsyncStorage.getItem("access_token")
+        if (token) {
+          SplashScreen.hideAsync()
+          const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+
+          switch (loggedUserResponse.user.onboardingStep) {
+            case OnboardingStep.STEP_ONE:
+            case OnboardingStep.STEP_TWO:
+              router.replace("/onboarding/user")
+              break
+            case OnboardingStep.STEP_THREE:
+              router.replace("/onboarding/user/success")
+              break
+            case OnboardingStep.COMPLETED:
+              router.replace("/app")
+              break
+            default:
+              router.replace("/auth/login")
+          }
+        } else {
+          SplashScreen.hideAsync()
+          router.replace("/app")
+        }
+      }
+    }
+
+    checkLoginStatus()
   }, [loaded])
 
   if (!loaded) {

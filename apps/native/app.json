@@ -9,6 +9,7 @@
     "newArchEnabled": true,
     "plugins": [
       "@react-native-google-signin/google-signin",
+      "expo-image-picker",
       [
         "expo-build-properties",
         {

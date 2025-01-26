@@ -12,8 +12,8 @@ import { useApiClient } from "../../../lib/http/useApiClient"
 import { endpoint } from "../../../lib/common/Endpoint"
 import { RegisterForm, RegisterFormSchema } from "../../../lib/schema/auth/RegisterFormSchema"
 import { SubmitHandler, useForm, Controller } from "react-hook-form"
-import { toastConfig } from "../../../components/ui/Toast"
 import { useToastController } from "@tamagui/toast"
+import FormError from "../../../components/FormError"
 
 export default function Register() {
   const api = useApiClient()
@@ -22,7 +22,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     control
   } = useForm<RegisterForm>({
@@ -30,22 +30,20 @@ export default function Register() {
   })
 
   const onSubmitRegister: SubmitHandler<RegisterForm> = async (formValues) => {
-    api
-      .post<RegisterForm, { id: string; email: string }>(endpoint.auth.register, formValues)
-      .then((response) =>
-        router.push({
-          pathname: "auth/register/validation",
-          params: { userId: response.id, email: response.email }
-        })
-      )
-      .catch(() => {
-        toast.show("Error!", {
-          message: "Error al registrar el usuario",
-          customData: {
-            backgroundColor: "$error"
-          }
-        })
+    try {
+      const response = await api.post<RegisterForm, { id: string; email: string }>(endpoint.auth.register, formValues)
+      router.push({
+        pathname: "auth/register/validation",
+        params: { userId: response.id, email: response.email }
       })
+    } catch {
+      toast.show("Error!", {
+        message: "Error al registrar el usuario",
+        customData: {
+          backgroundColor: "$error"
+        }
+      })
+    }
   }
 
   return (
@@ -84,15 +82,12 @@ export default function Register() {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
+                    hasError={!!errors.email}
                   />
                 </BlurView>
               )}
             />
-            {errors.email && (
-              <SizableText ml={4} color="red">
-                {errors.email.message}
-              </SizableText>
-            )}
+            {errors.email && <FormError message={errors.email.message!} />}
           </YStack>
 
           <YStack gap={8} width="100%">
@@ -123,6 +118,7 @@ export default function Register() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
+                      hasError={!!errors.password}
                     />
                     <Stack
                       position="absolute"
@@ -151,16 +147,13 @@ export default function Register() {
                 </BlurView>
               )}
             />
-            {errors.password && (
-              <SizableText ml={4} color="red">
-                {errors.password.message}
-              </SizableText>
-            )}
+            {errors.password && <FormError message={errors.password.message!} />}
           </YStack>
 
           <Button
             borderColor="$element-high-opacity-mid"
-            disabled={isSubmitting}
+            loading={isSubmitting}
+            isDisabled={!isValid}
             onPress={handleSubmit(onSubmitRegister)}
           >
             Continuar
