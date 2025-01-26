@@ -13,6 +13,7 @@ import { endpoint } from "../lib/common/Endpoint"
 import { OnboardingStep, User } from "@cohor/types"
 import { useApiClient } from "../lib/http/useApiClient"
 import CustomToast from "../components/toast"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -23,7 +24,15 @@ export default function RootLayout() {
     "OpenSauceOne-SemiBold": require("../assets/fonts/OpenSauceOne-SemiBold.ttf"),
     "OpenSauceOne-Bold": require("../assets/fonts/OpenSauceOne-Bold.ttf")
   })
+
   const api = useApiClient()
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: "300195889471-o655ub38lc5e0obfh9hicqpecundh0hg.apps.googleusercontent.com",
+      iosClientId: "300195889471-lka9cqqind6u4hloqdcsl4vne93nt5gg.apps.googleusercontent.com"
+    })
+  }, [])
 
   useEffect(() => {
     if (loaded) {
@@ -53,9 +62,10 @@ export default function RootLayout() {
             default:
               router.replace("/auth/login")
           }
+        } else {
+          SplashScreen.hideAsync()
+          router.replace("/app")
         }
-        SplashScreen.hideAsync()
-        router.replace("/app")
       }
     }
 

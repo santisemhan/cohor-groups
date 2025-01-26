@@ -1,10 +1,9 @@
-import { useEffect } from "react"
 import { useApiClient } from "../../lib/http/useApiClient"
 import { Button } from "../ui/Button"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { router } from "expo-router"
 import { endpoint } from "../../lib/common/Endpoint"
-import { User } from "@cohor/types"
+import { OnboardingStep, User } from "@cohor/types"
 import { GoogleSignin, SignInResponse } from "@react-native-google-signin/google-signin"
 import { useAuth } from "../../lib/context/AuthContext"
 import GoogleIcon from "../icons/GoogleIcon"
@@ -14,12 +13,6 @@ export default function LoginWithGoogle() {
   const api = useApiClient()
   const toast = useToastController()
   const { setUser } = useAuth()
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: "300195889471-o655ub38lc5e0obfh9hicqpecundh0hg.apps.googleusercontent.com",
-      iosClientId: "300195889471-lka9cqqind6u4hloqdcsl4vne93nt5gg.apps.googleusercontent.com"
-    })
-  }, [])
 
   const signIn = async () => {
     try {
@@ -54,9 +47,22 @@ export default function LoginWithGoogle() {
             .then(async (res) => {
               setUser(res.user)
               await AsyncStorage.setItem("access_token", res.accessToken)
-              // VALIDAR SI TIENE QUE MANDAR AL ONBOARDING o unirse/crear un grupo, llamar al get logged user para determinarlo.
-              router.dismissAll()
-              router.replace("/app")
+              const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+
+              switch (loggedUserResponse.user.onboardingStep) {
+                case OnboardingStep.STEP_ONE:
+                case OnboardingStep.STEP_TWO:
+                  router.replace("/onboarding/user")
+                  break
+                case OnboardingStep.STEP_THREE:
+                  router.replace("/onboarding/user/success")
+                  break
+                case OnboardingStep.COMPLETED:
+                  router.replace("/app")
+                  break
+                default:
+                  router.replace("/auth/login")
+              }
             })
             .catch(() => {
               toast.show("Error!", {

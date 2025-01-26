@@ -22,6 +22,7 @@ import { OnboardingStep, User } from "@cohor/types"
 import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 
 export default function CreateUserProfile() {
   const toast = useToastController()
@@ -37,14 +38,29 @@ export default function CreateUserProfile() {
     }
   }, [])
 
-  // valores de google pueden venir por default en el form (se le permite editarlos)
   const {
     formState: { errors, isSubmitting, isValid },
     handleSubmit,
-    control
+    control,
+    setValue
   } = useForm<CreateUserProfileForm>({
     resolver: zodResolver(CreateUserProfileSchema)
   })
+
+  useEffect(() => {
+    async function fetchGoogleUser() {
+      try {
+        const googleUser = await GoogleSignin.getCurrentUser()
+        if (googleUser) {
+          setValue("name", googleUser.user.name || "")
+        }
+      } catch (error) {
+        console.error("Failed to fetch Google user", error)
+      }
+    }
+
+    fetchGoogleUser()
+  }, [])
 
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
     // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
