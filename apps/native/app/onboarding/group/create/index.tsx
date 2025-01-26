@@ -1,90 +1,36 @@
-import { Image, ScrollView, SizableText, useTheme, YStack } from "tamagui"
-
-import React, { useEffect, useState } from "react"
-
-import GlassBottomSheet from "../../../components/GlassBotomSheet"
-import { Button } from "../../../components/ui/Button"
-import { Input } from "../../../components/ui/Input"
-
-import { BlurView } from "expo-blur"
-import { router } from "expo-router"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { CreateUserProfileSchema, CreateUserProfileForm } from "../../../lib/schema/onboarding/CreateUserProfileSchema"
-import { endpoint } from "../../../lib/common/Endpoint"
-import { useApiClient } from "../../../lib/http/useApiClient"
-
-import DateTimePicker from "../../../components/ui/DatePicker"
-import UploadIcon from "../../../components/icons/Upload"
-import { useAuth } from "../../../lib/context/AuthContext"
-import * as ImagePicker from "expo-image-picker"
-import { OnboardingStep, User } from "@cohor/types"
-import FormError from "../../../components/FormError"
-import { useToastController } from "@tamagui/toast"
-import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
-import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { useState } from "react"
 import { KeyboardAvoidingView, Platform } from "react-native"
+import { Image, ScrollView, SizableText, useTheme, XStack, YStack } from "tamagui"
+import GlassBottomSheet from "../../../../components/GlassBotomSheet"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { BlurView } from "expo-blur"
+import { Input } from "../../../../components/ui/Input"
+import FormError from "../../../../components/FormError"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button } from "../../../../components/ui/Button"
+import * as ImagePicker from "expo-image-picker"
+import UploadIcon from "../../../../components/icons/Upload"
+import MapPinIcon from "../../../../components/icons/MapPin"
+import { CreateGroupForm, CreateGroupSchema } from "../../../../lib/schema/onboarding/group/CreateGroupSchema"
+import { router } from "expo-router"
 
-export default function CreateUserProfile() {
-  const toast = useToastController()
-  const { user, setUser } = useAuth()
-  const api = useApiClient()
-  const theme = useTheme()
+// Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
+export default function CreateGroup() {
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
-
-  useEffect(() => {
-    if (user?.onboardingStep === OnboardingStep.STEP_TWO) {
-      setShowStepTwo(true)
-    }
-  }, [])
+  const theme = useTheme()
 
   const {
     formState: { errors, isSubmitting, isValid },
     handleSubmit,
-    control,
-    setValue
-  } = useForm<CreateUserProfileForm>({
-    resolver: zodResolver(CreateUserProfileSchema)
+    control
+  } = useForm<CreateGroupForm>({
+    resolver: zodResolver(CreateGroupSchema)
   })
 
-  useEffect(() => {
-    async function fetchGoogleUser() {
-      try {
-        const googleUser = await GoogleSignin.getCurrentUser()
-        if (googleUser) {
-          setValue("name", googleUser.user.name || "")
-        }
-      } catch (error) {
-        console.error("Failed to fetch Google user", error)
-      }
-    }
-
-    fetchGoogleUser()
-  }, [])
-
-  const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
-    // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
-    try {
-      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
-        ...formValues,
-        onboardingStep: OnboardingStep.STEP_TWO
-      })
-      setShowStepTwo(true)
-      const userToUpdate: User = {
-        ...user!,
-        name: formValues.name,
-        birthdate: new Date(formValues.birthdate)
-      }
-      setUser(userToUpdate)
-    } catch {
-      toast.show("Error!", {
-        message: "Error al registrar el usuario",
-        customData: {
-          backgroundColor: "$error"
-        }
-      })
-    }
+  const onCreateGroup: SubmitHandler<CreateGroupForm> = async (data) => {
+    console.log(data)
+    setShowStepTwo(true)
   }
 
   const pickImage = async () => {
@@ -101,45 +47,8 @@ export default function CreateUserProfile() {
   }
 
   const onUpdateImage = async () => {
-    try {
-      const { signature, timestamp } = await api.get<{ signature: string; timestamp: string }>(
-        endpoint.user.imagePresignedParams
-      )
-      const form = new FormData()
-
-      // @ts-ignore
-      form.append("file", {
-        uri: image!.uri,
-        name: user!.id,
-        type: image!.mimeType
-      })
-
-      form.append("api_key", CLOUDINARY_API_KEY)
-      form.append("timestamp", timestamp)
-      form.append("signature", signature)
-      form.append("folder", "profile")
-      form.append("public_id", user!.id)
-
-      await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-        method: "POST",
-        body: form
-      })
-
-      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
-        name: user?.name,
-        birthdate: user?.birthdate,
-        onboardingStep: OnboardingStep.STEP_THREE
-      })
-
-      router.replace("/onboarding/user/success")
-    } catch {
-      toast.show("Error!", {
-        message: "Error al cargar la imagen del usuario",
-        customData: {
-          backgroundColor: "$error"
-        }
-      })
-    }
+    console.log("Update image")
+    router.replace("/onboarding/group/create/success")
   }
 
   return (
@@ -161,7 +70,7 @@ export default function CreateUserProfile() {
           {!showStepTwo ? (
             <GlassBottomSheet>
               <SizableText color="$white" size="$subhead-medium">
-                Contanos quién sos
+                Iniciar un grupo
               </SizableText>
               <YStack gap={16} width="100%">
                 <Controller
@@ -182,7 +91,7 @@ export default function CreateUserProfile() {
                         borderWidth={0}
                         backgroundColor="transparent"
                         color="$white-opacity-high"
-                        placeholder="Tu nombre"
+                        placeholder="Nombre del grupo"
                         placeholderTextColor="$white-opacity-high"
                         onChangeText={onChange}
                         onBlur={onBlur}
@@ -194,7 +103,7 @@ export default function CreateUserProfile() {
                 />
                 {errors.name && <FormError message={errors.name.message!} />}
                 <Controller
-                  name="birthdate"
+                  name="description"
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <BlurView
@@ -207,14 +116,58 @@ export default function CreateUserProfile() {
                         overflow: "hidden"
                       }}
                     >
-                      <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} />
+                      <Input
+                        borderWidth={0}
+                        backgroundColor="transparent"
+                        color="$white-opacity-high"
+                        placeholder="Describe al grupo en una linea"
+                        placeholderTextColor="$white-opacity-high"
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        hasError={!!errors.name}
+                      />
                     </BlurView>
                   )}
                 />
-                {errors.birthdate && <FormError message={errors.birthdate.message!} />}
+                {errors.description && <FormError message={errors.description.message!} />}
+                <Controller
+                  name="location"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <BlurView
+                      intensity={60}
+                      tint="light"
+                      style={{
+                        borderRadius: 100,
+                        borderColor: theme["white-opacity-mid"].val,
+                        borderWidth: 1,
+                        overflow: "hidden"
+                      }}
+                    >
+                      <XStack alignItems="center" ml={16}>
+                        <MapPinIcon color={theme.white.val} width={20} height={20} />
+                        <Input
+                          borderWidth={0}
+                          pl={4}
+                          backgroundColor="transparent"
+                          color="$white-opacity-high"
+                          placeholder="Ubicación"
+                          placeholderTextColor="$white-opacity-high"
+                          onChangeText={onChange}
+                          onBlur={onBlur}
+                          value={value}
+                          hasError={!!errors.name}
+                        />
+                      </XStack>
+                    </BlurView>
+                  )}
+                />
+                {errors.location && <FormError message={errors.location.message!} />}
+
                 <Button
                   isDisabled={!isValid}
-                  onPress={handleSubmit(onCreateAccount)}
+                  onPress={handleSubmit(onCreateGroup)}
                   borderColor="$element-high-opacity-mid"
                   loading={isSubmitting}
                 >
@@ -225,22 +178,22 @@ export default function CreateUserProfile() {
           ) : (
             <GlassBottomSheet>
               <SizableText color="$white" size="$subhead-medium">
-                Elegí tu mejor foto
+                Seleccioná una foto para tu grupo
               </SizableText>
-              <YStack gap={32} justifyContent="flex-end">
+              <YStack gap={32} justifyContent="flex-end" width="100%">
                 <BlurView
                   intensity={30}
                   tint="light"
                   style={{
-                    borderRadius: 999,
+                    borderRadius: 32,
                     overflow: "hidden"
                   }}
                 >
                   <YStack
                     gap={8}
-                    width={280}
-                    height={280}
-                    borderRadius={999}
+                    width="100%"
+                    height={480}
+                    borderRadius={32}
                     alignItems="center"
                     justifyContent="center"
                     borderWidth={2}
@@ -248,9 +201,9 @@ export default function CreateUserProfile() {
                     onPress={pickImage}
                   >
                     {image ? (
-                      <Image source={{ uri: image.uri }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
+                      <Image source={{ uri: image.uri }} style={{ width: "100%", height: "100%", borderRadius: 32 }} />
                     ) : (
-                      <YStack alignItems="center" justifyContent="center">
+                      <YStack alignItems="center" justifyContent="center" width="100%">
                         <UploadIcon color={theme.white.val} width={52} height={52} />
                         <Button
                           borderWidth={0}
@@ -264,7 +217,7 @@ export default function CreateUserProfile() {
                     )}
                   </YStack>
                 </BlurView>
-                <Button isDisabled={!image} onPress={onUpdateImage} borderColor="$element-high-opacity-mid">
+                <Button isDisabled={!image} borderColor="$element-high-opacity-mid" onPress={onUpdateImage}>
                   Siguiente
                 </Button>
               </YStack>
