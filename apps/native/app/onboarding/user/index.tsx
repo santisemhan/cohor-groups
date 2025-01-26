@@ -1,4 +1,4 @@
-import { Image, SizableText, useTheme, YStack } from "tamagui"
+import { Image, ScrollView, SizableText, useTheme, YStack } from "tamagui"
 
 import React, { useEffect, useState } from "react"
 
@@ -10,7 +10,7 @@ import { BlurView } from "expo-blur"
 import { router } from "expo-router"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { CreateUserProfileSchema, CreateUserProfileForm } from "../../../lib/schema/auth/CreateUserProfileSchema"
+import { CreateUserProfileSchema, CreateUserProfileForm } from "../../../lib/schema/onboarding/CreateUserProfileSchema"
 import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/useApiClient"
 
@@ -23,6 +23,7 @@ import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { KeyboardAvoidingView, Platform } from "react-native"
 
 export default function CreateUserProfile() {
   const toast = useToastController()
@@ -142,119 +143,135 @@ export default function CreateUserProfile() {
   }
 
   return (
-    <YStack gap={40} width="100%">
-      <YStack justifyContent="center" alignItems="center" gap={4}>
-        <SizableText textTransform="uppercase" color="$white" size="$headline-large">
-          Cohor
-        </SizableText>
-      </YStack>
-      {!showStepTwo ? (
-        <GlassBottomSheet>
-          <SizableText color="$white" size="$subhead-medium">
-            Contanos quién sos
-          </SizableText>
-          <YStack gap={16} width="100%">
-            <Controller
-              name="name"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <BlurView
-                  intensity={60}
-                  tint="light"
-                  style={{
-                    borderRadius: 100,
-                    borderColor: theme["white-opacity-mid"].val,
-                    borderWidth: 1,
-                    overflow: "hidden"
-                  }}
-                >
-                  <Input
-                    borderWidth={0}
-                    backgroundColor="transparent"
-                    color="$white-opacity-high"
-                    placeholder="Tu nombre"
-                    placeholderTextColor="$white-opacity-high"
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    hasError={!!errors.name}
-                  />
-                </BlurView>
-              )}
-            />
-            {errors.name && <FormError message={errors.name.message!} />}
-            <Controller
-              name="birthdate"
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <BlurView
-                  intensity={60}
-                  tint="light"
-                  style={{
-                    borderRadius: 100,
-                    borderColor: theme["white-opacity-mid"].val,
-                    borderWidth: 1,
-                    overflow: "hidden"
-                  }}
-                >
-                  <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} />
-                </BlurView>
-              )}
-            />
-            {errors.birthdate && <FormError message={errors.birthdate.message!} />}
-            <Button
-              isDisabled={!isValid}
-              onPress={handleSubmit(onCreateAccount)}
-              borderColor="$element-high-opacity-mid"
-              loading={isSubmitting}
-            >
-              Continuar
-            </Button>
+    <KeyboardAvoidingView style={{ flex: 1, width: "100%" }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "flex-end"
+        }}
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={false}
+      >
+        <YStack gap={40} width="100%">
+          <YStack justifyContent="center" alignItems="center" gap={4}>
+            <SizableText textTransform="uppercase" color="$white" size="$headline-large">
+              Cohor
+            </SizableText>
           </YStack>
-        </GlassBottomSheet>
-      ) : (
-        <GlassBottomSheet>
-          <SizableText color="$white" size="$subhead-medium">
-            Elegí tu mejor foto
-          </SizableText>
-          <YStack gap={32} justifyContent="flex-end">
-            <BlurView
-              intensity={60}
-              tint="light"
-              style={{
-                borderRadius: 999,
-                overflow: "hidden"
-              }}
-            >
-              <YStack
-                gap={8}
-                width={280}
-                height={280}
-                borderRadius={999}
-                alignItems="center"
-                justifyContent="center"
-                borderWidth={2}
-                borderColor="$white-opacity-mid"
-                onPress={pickImage}
-              >
-                {image ? (
-                  <Image source={{ uri: image.uri }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
-                ) : (
-                  <YStack alignItems="center" justifyContent="center">
-                    <UploadIcon color={theme.white.val} width={52} height={52} />
-                    <Button borderWidth={0} backgroundColor="transparent" color="$white" size="$body-small-w-medium">
-                      Elegí desde tu galería
-                    </Button>
-                  </YStack>
-                )}
+          {!showStepTwo ? (
+            <GlassBottomSheet>
+              <SizableText color="$white" size="$subhead-medium">
+                Contanos quién sos
+              </SizableText>
+              <YStack gap={16} width="100%">
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <BlurView
+                      intensity={60}
+                      tint="light"
+                      style={{
+                        borderRadius: 100,
+                        borderColor: theme["white-opacity-mid"].val,
+                        borderWidth: 1,
+                        overflow: "hidden"
+                      }}
+                    >
+                      <Input
+                        borderWidth={0}
+                        backgroundColor="transparent"
+                        color="$white-opacity-high"
+                        placeholder="Tu nombre"
+                        placeholderTextColor="$white-opacity-high"
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        hasError={!!errors.name}
+                      />
+                    </BlurView>
+                  )}
+                />
+                {errors.name && <FormError message={errors.name.message!} />}
+                <Controller
+                  name="birthdate"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <BlurView
+                      intensity={60}
+                      tint="light"
+                      style={{
+                        borderRadius: 100,
+                        borderColor: theme["white-opacity-mid"].val,
+                        borderWidth: 1,
+                        overflow: "hidden"
+                      }}
+                    >
+                      <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} />
+                    </BlurView>
+                  )}
+                />
+                {errors.birthdate && <FormError message={errors.birthdate.message!} />}
+                <Button
+                  isDisabled={!isValid}
+                  onPress={handleSubmit(onCreateAccount)}
+                  borderColor="$element-high-opacity-mid"
+                  loading={isSubmitting}
+                >
+                  Continuar
+                </Button>
               </YStack>
-            </BlurView>
-            <Button isDisabled={!image} onPress={onUpdateImage} borderColor="$element-high-opacity-mid">
-              Siguiente
-            </Button>
-          </YStack>
-        </GlassBottomSheet>
-      )}
-    </YStack>
+            </GlassBottomSheet>
+          ) : (
+            <GlassBottomSheet>
+              <SizableText color="$white" size="$subhead-medium">
+                Elegí tu mejor foto
+              </SizableText>
+              <YStack gap={32} justifyContent="flex-end">
+                <BlurView
+                  intensity={60}
+                  tint="light"
+                  style={{
+                    borderRadius: 999,
+                    overflow: "hidden"
+                  }}
+                >
+                  <YStack
+                    gap={8}
+                    width={280}
+                    height={280}
+                    borderRadius={999}
+                    alignItems="center"
+                    justifyContent="center"
+                    borderWidth={2}
+                    borderColor="$white-opacity-mid"
+                    onPress={pickImage}
+                  >
+                    {image ? (
+                      <Image source={{ uri: image.uri }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
+                    ) : (
+                      <YStack alignItems="center" justifyContent="center">
+                        <UploadIcon color={theme.white.val} width={52} height={52} />
+                        <Button
+                          borderWidth={0}
+                          backgroundColor="transparent"
+                          color="$white"
+                          size="$body-small-w-medium"
+                        >
+                          Elegí desde tu galería
+                        </Button>
+                      </YStack>
+                    )}
+                  </YStack>
+                </BlurView>
+                <Button isDisabled={!image} onPress={onUpdateImage} borderColor="$element-high-opacity-mid">
+                  Siguiente
+                </Button>
+              </YStack>
+            </GlassBottomSheet>
+          )}
+        </YStack>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
