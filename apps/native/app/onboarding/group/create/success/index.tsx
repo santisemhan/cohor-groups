@@ -2,28 +2,36 @@ import { SizableText, YStack } from "tamagui"
 
 import React from "react"
 
-import { useAuth } from "../../../../lib/context/AuthContext"
-import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { BlurView } from "expo-blur"
-import { Button } from "../../../../components/ui/Button"
 import { router } from "expo-router"
+import GlassBottomSheet from "../../../../../components/GlassBotomSheet"
+import { Button } from "../../../../../components/ui/Button"
+import { Share } from "react-native"
 
-export default function UserProfileSuccess() {
-  const { user } = useAuth()
+export default function GroupCreatedSuccess() {
+  const shareCode = async () => {
+    await Share.share({
+      message: "¡Unite a mi grupo en Cohor! Código de invitación: 123456"
+    })
+  }
+
   return (
     <YStack gap={40} width="100%">
-      <YStack justifyContent="center" alignItems="center" gap={4}>
+      <YStack justifyContent="center" alignItems="center" gap={8}>
+        <SizableText color="$white-opacity-high" size="$body-small-w-medium">
+          ¡Listo para conectar!
+        </SizableText>
         <SizableText color="$white" size="$headline-small">
-          Bienvenid@ {user?.name}!
+          Dios, Patria y Familia!
         </SizableText>
       </YStack>
       <GlassBottomSheet>
         <SizableText color="$white" size="$body-medium-w-medium">
-          ¿Listo para conectar?
+          Invitá a quienes querés sumar
         </SizableText>
         <YStack gap={20} width="100%">
-          <Button onPress={() => router.push("/onboarding/group/create")} backgroundColor="$element-high">
-            Iniciar un grupo
+          <Button backgroundColor="$element-high" onPress={shareCode}>
+            Compartir codigo de invitación
           </Button>
           <BlurView
             intensity={100}
@@ -34,12 +42,12 @@ export default function UserProfileSuccess() {
             }}
           >
             <Button
-              onPress={() => router.push("/onboarding/group/join")}
+              onPress={() => router.replace("/app")}
               type="subtle"
               backgroundColor="transparent"
               borderColor="$element-high-opacity-mid"
             >
-              Unirme a un grupo
+              Continuar
             </Button>
           </BlurView>
         </YStack>

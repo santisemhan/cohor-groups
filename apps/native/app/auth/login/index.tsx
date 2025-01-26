@@ -21,7 +21,6 @@ import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 
 export default function Login() {
-  const toast = useToastController()
   const { setUser } = useAuth()
   const toast = useToastController()
   const api = useApiClient()

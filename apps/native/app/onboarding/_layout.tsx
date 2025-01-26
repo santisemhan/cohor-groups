@@ -1,7 +1,6 @@
 import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
 import React, { useEffect, useRef } from "react"
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
 import { Slot, useFocusEffect } from "expo-router"
 import { useAuth } from "../../lib/context/AuthContext"
 import { endpoint } from "../../lib/common/Endpoint"
@@ -50,18 +49,7 @@ export default function OnboardingLayout() {
           height: "100%"
         }}
       />
-      <KeyboardAvoidingView style={{ flex: 1, width: "100%" }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: "flex-end"
-          }}
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled={false}
-        >
-          <Slot />
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <Slot />
     </View>
   )
 }
