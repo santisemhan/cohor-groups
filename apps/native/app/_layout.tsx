@@ -1,5 +1,4 @@
 import { TamaguiProvider } from "tamagui"
-import { ToastProvider } from "@tamagui/toast"
 import { router, Stack } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from "expo-font"

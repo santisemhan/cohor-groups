@@ -1,11 +1,26 @@
 import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
 import { Slot, useFocusEffect } from "expo-router"
+import { useAuth } from "../../lib/context/AuthContext"
+import { endpoint } from "../../lib/common/Endpoint"
+import { useApiClient } from "../../lib/http/useApiClient"
+import { User } from "@cohor/types"
 
 export default function OnboardingLayout() {
   const videoRef = useRef<Video>(null)
+  const api = useApiClient()
+  const { setUser } = useAuth()
+
+  useEffect(() => {
+    const setUserLoggedIn = async () => {
+      const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+      setUser(loggedUserResponse.user)
+    }
+
+    setUserLoggedIn()
+  }, [])
 
   useFocusEffect(
     React.useCallback(() => {

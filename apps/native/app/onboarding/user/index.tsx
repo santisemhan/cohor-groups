@@ -21,6 +21,7 @@ import * as ImagePicker from "expo-image-picker"
 import { OnboardingStep, User } from "@cohor/types"
 import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
 
 export default function CreateUserProfile() {
   const toast = useToastController()
@@ -28,7 +29,7 @@ export default function CreateUserProfile() {
   const api = useApiClient()
   const theme = useTheme()
   const [showStepTwo, setShowStepTwo] = useState(false)
-  const [image, setImage] = useState<string | null>(null)
+  const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
 
   useEffect(() => {
     if (user?.onboardingStep === OnboardingStep.STEP_TWO) {
@@ -48,17 +49,15 @@ export default function CreateUserProfile() {
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
     // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
     try {
-      await api.put<CreateUserProfileForm, undefined>(endpoint.user.onboarding, {
+      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
         ...formValues,
         onboardingStep: OnboardingStep.STEP_TWO
       })
       setShowStepTwo(true)
       const userToUpdate: User = {
-        id: user?.id ?? "",
+        ...user!,
         name: formValues.name,
-        email: user?.email ?? "",
-        birthdate: new Date(formValues.birthdate),
-        onboardingStep: user?.onboardingStep ?? null
+        birthdate: new Date(formValues.birthdate)
       }
       setUser(userToUpdate)
     } catch {
@@ -80,22 +79,42 @@ export default function CreateUserProfile() {
     })
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri)
+      setImage(result.assets[0])
     }
   }
 
   const onUpdateImage = async () => {
     try {
-      await api.put<undefined, undefined>(endpoint.user.onboarding, {
+      const { signature, timestamp } = await api.get<{ signature: string; timestamp: string }>(
+        endpoint.user.imagePresignedParams
+      )
+      const form = new FormData()
+
+      // @ts-ignore
+      form.append("file", {
+        uri: image!.uri,
+        name: user!.id,
+        type: image!.mimeType
+      })
+
+      form.append("api_key", CLOUDINARY_API_KEY)
+      form.append("timestamp", timestamp)
+      form.append("signature", signature)
+      form.append("folder", "profile")
+      form.append("public_id", user!.id)
+
+      await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: form
+      })
+
+      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
         name: user?.name,
         birthdate: user?.birthdate,
         onboardingStep: OnboardingStep.STEP_THREE
       })
 
-      // Se guarda imagen en algun servicio externo y se guarda en el bucket con el user.Id (el user lo sacamos del context)
-      const userId = user?.id
       router.replace("/onboarding/user/success")
-      return userId
     } catch {
       toast.show("Error!", {
         message: "Error al cargar la imagen del usuario",
@@ -203,7 +222,7 @@ export default function CreateUserProfile() {
                 onPress={pickImage}
               >
                 {image ? (
-                  <Image source={{ uri: image }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
+                  <Image source={{ uri: image.uri }} style={{ width: "100%", height: "100%", borderRadius: 999 }} />
                 ) : (
                   <YStack alignItems="center" justifyContent="center">
                     <UploadIcon color={theme.white.val} width={52} height={52} />
