@@ -9,7 +9,7 @@ import { Button } from "../../../../../components/ui/Button"
 import { Share } from "react-native"
 
 export default function GroupCreatedSuccess() {
-  const { code } = useLocalSearchParams()
+  const { code, name } = useLocalSearchParams()
   const shareCode = async () => {
     await Share.share({
       message: `¡Unite a mi grupo en Cohor! Código de invitación: ${code.toString().padStart(5, "0")}`
@@ -23,7 +23,7 @@ export default function GroupCreatedSuccess() {
           ¡Listo para conectar!
         </SizableText>
         <SizableText color="$white" size="$headline-small">
-          Dios, Patria y Familia!
+          {name}
         </SizableText>
       </YStack>
       <GlassBottomSheet>

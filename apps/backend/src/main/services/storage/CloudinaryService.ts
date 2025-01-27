@@ -37,4 +37,9 @@ export class CloudinaryService {
     )
     return { signature, timestamp }
   }
+
+  public async getUrlAsync(folder: string, fileName: string) {
+    const client = await this.getClientAsync()
+    return client.url(`${folder}/${fileName}`)
+  }
 }

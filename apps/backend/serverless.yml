@@ -52,5 +52,7 @@ functions:
   - ${file(./src/main/serverless/functions/user/GetProfileImagePresignedParamsFunction.yaml)}
   - ${file(./src/main/serverless/functions/group/CreateGroupFunction.yaml)}
   - ${file(./src/main/serverless/functions/group/JoinGroupFunction.yaml)}
+  - ${file(./src/main/serverless/functions/group/GetGroupFunction.yaml)}
+  - ${file(./src/main/serverless/functions/group/GetGroupImagePresignedParamsFunction.yaml)}
 
 useDotenv: true

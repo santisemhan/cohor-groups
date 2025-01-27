@@ -12,4 +12,8 @@ export class GroupService {
   public async joinGroupOrThrowAsync(groupCode: number, userId: string) {
     return this.groupRepository.joinGroupOrThrowAsync(groupCode, userId)
   }
+
+  public async getUserGroup(userId: string) {
+    return this.groupRepository.getUserGroup(userId)
+  }
 }

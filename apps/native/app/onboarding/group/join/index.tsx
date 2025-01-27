@@ -10,6 +10,7 @@ import { KeyboardAvoidingView, Platform } from "react-native"
 import { useToastController } from "@tamagui/toast"
 import { useApiClient } from "../../../../lib/http/useApiClient"
 import { endpoint } from "../../../../lib/common/Endpoint"
+import { Group } from "@cohor/types"
 
 export default function JoinGroup() {
   const toast = useToastController()
@@ -24,11 +25,14 @@ export default function JoinGroup() {
 
   const onSumbitJoinGroup: SubmitHandler<JoinGroupForm> = async (formValues) => {
     try {
-      console.log(parseInt("00009040", 10))
-      await api.post<JoinGroupForm, undefined>(endpoint.group.join, { code: parseInt(formValues.code, 10) })
-      router.replace("/onboarding/group/join/success")
-    } catch (error) {
-      console.log(error)
+      const { name, imageUrl } = await api.post<JoinGroupForm, Group>(endpoint.group.join, {
+        code: parseInt(formValues.code, 10)
+      })
+      router.replace({
+        pathname: "/onboarding/group/join/success",
+        params: { name: name, imageURL: imageUrl }
+      })
+    } catch {
       toast.show("Error!", {
         message: "Error al entrar al grupo",
         customData: {

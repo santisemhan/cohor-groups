@@ -66,7 +66,7 @@ export default function CreateUserProfile() {
   const onCreateAccount: SubmitHandler<CreateUserProfileForm> = async (formValues) => {
     // si mando una fecha en el futuro me la toma igual. Tiene que validar en el front y en el back
     try {
-      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
+      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.root, {
         ...formValues,
         onboardingStep: OnboardingStep.STEP_TWO
       })
@@ -106,7 +106,6 @@ export default function CreateUserProfile() {
         endpoint.user.imagePresignedParams
       )
       const form = new FormData()
-
       // @ts-ignore
       form.append("file", {
         uri: image!.uri,
@@ -125,7 +124,7 @@ export default function CreateUserProfile() {
         body: form
       })
 
-      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.onboarding, {
+      await api.put<CreateUserProfileForm & { onboardingStep: OnboardingStep }, undefined>(endpoint.user.root, {
         name: user?.name,
         birthdate: user?.birthdate,
         onboardingStep: OnboardingStep.STEP_THREE

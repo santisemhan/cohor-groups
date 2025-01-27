@@ -16,6 +16,7 @@ import { router } from "expo-router"
 import { useToastController } from "@tamagui/toast"
 import { useApiClient } from "../../../../lib/http/useApiClient"
 import { endpoint } from "../../../../lib/common/Endpoint"
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../../lib/common/Environment"
 
 // Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
 export default function CreateGroup() {
@@ -53,13 +54,39 @@ export default function CreateGroup() {
   const onUpdateImage: SubmitHandler<CreateGroupForm> = async (data) => {
     try {
       //despues mandamos las otras cosas cuando definamos todo
-      const response = await api.post<CreateGroupForm, { code: number }>(endpoint.group.create, { name: data.name })
+      const response = await api.post<CreateGroupForm, { id: string; code: number; name: string }>(
+        endpoint.group.root,
+        {
+          name: data.name
+        }
+      )
+
+      const { signature, timestamp } = await api.get<{ signature: string; timestamp: string }>(
+        endpoint.group.imagePresignedParams
+      )
+      const form = new FormData()
+      // @ts-ignore
+      form.append("file", {
+        uri: image!.uri,
+        name: response.id,
+        type: image!.mimeType
+      })
+
+      form.append("api_key", CLOUDINARY_API_KEY)
+      form.append("timestamp", timestamp)
+      form.append("signature", signature)
+      form.append("folder", "group-profile")
+      form.append("public_id", response.id)
+
+      await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: form
+      })
       router.replace({
         pathname: "/onboarding/group/create/success",
-        params: { code: response.code }
+        params: { code: response.code, name: response.name }
       })
-    } catch (error) {
-      console.log(error)
+    } catch {
       toast.show("Error!", {
         message: "Error al crear el grupo",
         customData: {

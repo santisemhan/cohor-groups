@@ -27,7 +27,7 @@ export class GroupRepository {
         onboardingStep: OnboardingStep.COMPLETED
       }
     })
-    return group.code
+    return { id: group.id, code: group.code, name: group.name }
   }
 
   public async joinGroupOrThrowAsync(code: number, userId: string) {
@@ -54,7 +54,14 @@ export class GroupRepository {
         }
       }
     })
-    await connection.user.update({
+    return connection.user.update({
+      include: {
+        groups: {
+          include: {
+            group: true
+          }
+        }
+      },
       where: {
         id: userId
       },
@@ -62,5 +69,20 @@ export class GroupRepository {
         onboardingStep: OnboardingStep.COMPLETED
       }
     })
+  }
+
+  public async getUserGroup(userId: string) {
+    const connection = await this.databaseService.connectionAsync()
+    return (
+      await connection.group.findMany({
+        where: {
+          users: {
+            some: {
+              userId
+            }
+          }
+        }
+      })
+    )[0]
   }
 }

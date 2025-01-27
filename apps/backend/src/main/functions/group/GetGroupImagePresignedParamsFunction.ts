@@ -8,16 +8,15 @@ import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
-import { JoinGroupSchema } from "../../schema/group/JoinGroupSchema"
-import { GroupService } from "../../services/GroupService"
 import { CloudinaryService } from "../../services/storage/CloudinaryService"
+import { GroupService } from "../../services/GroupService"
 
 @Injectable()
-export class JoinGroupFunction extends APIServerlessFunction {
+export class GetGroupImagePresignedParamsFunction extends APIServerlessFunction {
   constructor(
-    private readonly cloudinaryService: CloudinaryService,
     private readonly validationService: ValidationService,
-    private readonly groupService: GroupService
+    private readonly groupService: GroupService,
+    private readonly cloudinaryService: CloudinaryService
   ) {
     super()
   }
@@ -26,7 +25,7 @@ export class JoinGroupFunction extends APIServerlessFunction {
     event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
     _context: Context
   ) {
-    const { error: authorizerError, value: contextValue } = this.validationService.validate(
+    const { error: authorizerError, value } = this.validationService.validate(
       AuthorizerContextSchema,
       event.requestContext.authorizer
     )
@@ -36,18 +35,9 @@ export class JoinGroupFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { error: joinGroupError, value: body } = this.validationService.validate(JoinGroupSchema, event.body)
-    if (joinGroupError) {
-      return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(joinGroupError, event.body, HTTPParameterSource.CLAIMS)])
-        .statusCode(HTTPStatusCode.BadRequest)
-    }
+    const group = await this.groupService.getUserGroup(value.id)
+    const { signature, timestamp } = await this.cloudinaryService.putPresignedUrlAsync("group-profile", group.id)
 
-    const user = await this.groupService.joinGroupOrThrowAsync(body.code, contextValue.id)
-    const image = await this.cloudinaryService.getUrlAsync("group-profile", user.groups[0].group.id)
-
-    return new HTTPResponse(MIMEType.JSON)
-      .body({ ...user.groups[0].group, imageUrl: image })
-      .statusCode(HTTPStatusCode.Ok)
+    return new HTTPResponse(MIMEType.JSON).body({ signature, timestamp }).statusCode(HTTPStatusCode.Ok)
   }
 }
