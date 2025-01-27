@@ -41,7 +41,7 @@ export class CreateGroupFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    await this.groupService.createAsync(body.name, contextValue.id)
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
+    const { id, code, name } = await this.groupService.createAsync(body.name, contextValue.id)
+    return new HTTPResponse(MIMEType.JSON).body({ id, code, name }).statusCode(HTTPStatusCode.Ok)
   }
 }

@@ -10,7 +10,12 @@ export const endpoint = {
     resend: `${API_URL}/auth/resend`
   },
   user: {
-    onboarding: `${API_URL}/users`,
+    root: `${API_URL}/users`,
     imagePresignedParams: `${API_URL}/users/image-presigned-params`
+  },
+  group: {
+    root: `${API_URL}/groups`,
+    join: `${API_URL}/groups/join`,
+    imagePresignedParams: `${API_URL}/groups/image-presigned-params`
   }
 }

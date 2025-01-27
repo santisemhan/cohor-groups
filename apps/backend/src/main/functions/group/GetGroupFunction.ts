@@ -8,12 +8,11 @@ import { ValidationService } from "../../services/common/ValidatorService"
 import { HttpValidationError } from "../../errors/HttpValidationError"
 import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
-import { JoinGroupSchema } from "../../schema/group/JoinGroupSchema"
 import { GroupService } from "../../services/GroupService"
 import { CloudinaryService } from "../../services/storage/CloudinaryService"
 
 @Injectable()
-export class JoinGroupFunction extends APIServerlessFunction {
+export class GetGroupFunction extends APIServerlessFunction {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
     private readonly validationService: ValidationService,
@@ -26,28 +25,15 @@ export class JoinGroupFunction extends APIServerlessFunction {
     event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
     _context: Context
   ) {
-    const { error: authorizerError, value: contextValue } = this.validationService.validate(
-      AuthorizerContextSchema,
-      event.requestContext.authorizer
-    )
-    if (authorizerError) {
+    const { error, value } = this.validationService.validate(AuthorizerContextSchema, event.requestContext.authorizer)
+    if (error) {
       return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(authorizerError, event.requestContext.authorizer, HTTPParameterSource.CLAIMS)])
+        .body([new HttpValidationError(error, event.requestContext.authorizer, HTTPParameterSource.CLAIMS)])
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { error: joinGroupError, value: body } = this.validationService.validate(JoinGroupSchema, event.body)
-    if (joinGroupError) {
-      return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(joinGroupError, event.body, HTTPParameterSource.CLAIMS)])
-        .statusCode(HTTPStatusCode.BadRequest)
-    }
-
-    const user = await this.groupService.joinGroupOrThrowAsync(body.code, contextValue.id)
-    const image = await this.cloudinaryService.getUrlAsync("group-profile", user.groups[0].group.id)
-
-    return new HTTPResponse(MIMEType.JSON)
-      .body({ ...user.groups[0].group, imageUrl: image })
-      .statusCode(HTTPStatusCode.Ok)
+    const group = await this.groupService.getUserGroup(value.id)
+    const image = await this.cloudinaryService.getUrlAsync("group-profile", group.id)
+    return new HTTPResponse(MIMEType.JSON).body({ ...group, imageURL: image }).statusCode(HTTPStatusCode.Ok)
   }
 }

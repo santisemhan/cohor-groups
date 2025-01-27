@@ -13,9 +13,15 @@ import UploadIcon from "../../../../components/icons/Upload"
 import MapPinIcon from "../../../../components/icons/MapPin"
 import { CreateGroupForm, CreateGroupSchema } from "../../../../lib/schema/onboarding/group/CreateGroupSchema"
 import { router } from "expo-router"
+import { useToastController } from "@tamagui/toast"
+import { useApiClient } from "../../../../lib/http/useApiClient"
+import { endpoint } from "../../../../lib/common/Endpoint"
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../../lib/common/Environment"
 
 // Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
 export default function CreateGroup() {
+  const toast = useToastController()
+  const api = useApiClient()
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
   const theme = useTheme()
@@ -28,8 +34,7 @@ export default function CreateGroup() {
     resolver: zodResolver(CreateGroupSchema)
   })
 
-  const onCreateGroup: SubmitHandler<CreateGroupForm> = async (data) => {
-    console.log(data)
+  const onCreateGroup = async () => {
     setShowStepTwo(true)
   }
 
@@ -46,9 +51,50 @@ export default function CreateGroup() {
     }
   }
 
-  const onUpdateImage = async () => {
+  const onUpdateImage: SubmitHandler<CreateGroupForm> = async (data) => {
+    try {
+      //despues mandamos las otras cosas cuando definamos todo
+      const response = await api.post<CreateGroupForm, { id: string; code: number; name: string }>(
+        endpoint.group.root,
+        {
+          name: data.name
+        }
+      )
+
+      const { signature, timestamp } = await api.get<{ signature: string; timestamp: string }>(
+        endpoint.group.imagePresignedParams
+      )
+      const form = new FormData()
+      // @ts-ignore
+      form.append("file", {
+        uri: image!.uri,
+        name: response.id,
+        type: image!.mimeType
+      })
+
+      form.append("api_key", CLOUDINARY_API_KEY)
+      form.append("timestamp", timestamp)
+      form.append("signature", signature)
+      form.append("folder", "group-profile")
+      form.append("public_id", response.id)
+
+      await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: form
+      })
+      router.replace({
+        pathname: "/onboarding/group/create/success",
+        params: { code: response.code, name: response.name }
+      })
+    } catch {
+      toast.show("Error!", {
+        message: "Error al crear el grupo",
+        customData: {
+          backgroundColor: "$error"
+        }
+      })
+    }
     console.log("Update image")
-    router.replace("/onboarding/group/create/success")
   }
 
   return (
@@ -167,9 +213,9 @@ export default function CreateGroup() {
 
                 <Button
                   isDisabled={!isValid}
-                  onPress={handleSubmit(onCreateGroup)}
+                  disabled={!isValid}
+                  onPress={onCreateGroup}
                   borderColor="$element-high-opacity-mid"
-                  loading={isSubmitting}
                 >
                   Continuar
                 </Button>
@@ -217,7 +263,13 @@ export default function CreateGroup() {
                     )}
                   </YStack>
                 </BlurView>
-                <Button isDisabled={!image} borderColor="$element-high-opacity-mid" onPress={onUpdateImage}>
+                <Button
+                  isDisabled={!image}
+                  disabled={!image}
+                  borderColor="$element-high-opacity-mid"
+                  loading={isSubmitting}
+                  onPress={handleSubmit(onUpdateImage)}
+                >
                   Siguiente
                 </Button>
               </YStack>

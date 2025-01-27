@@ -20,6 +20,8 @@ import { GetLoggedUserFunction } from "../../functions/auth/GetLoggedUser"
 import { CreateGroupFunction } from "../../functions/group/CreateGroupFunction"
 import { JoinGroupFunction } from "../../functions/group/JoinGroupFunction"
 import { GetProfileImagePresignedParamsFunction } from "../../functions/user/GetProfileImagePresignedParamsFunction"
+import { GetGroupFunction } from "../../functions/group/GetGroupFunction"
+import { GetGroupImagePresignedParamsFunction } from "../../functions/group/GetGroupImagePresignedParamsFunction"
 
 /**
  * @description
@@ -63,5 +65,7 @@ export const GetProfileImagePresignedParams = Dispatcher.of(GetProfileImagePresi
 // Group
 export const CreateGroup = Dispatcher.of(CreateGroupFunction)
 export const JoinGroup = Dispatcher.of(JoinGroupFunction)
+export const GetGroup = Dispatcher.of(GetGroupFunction)
+export const GetGroupImagePresignedParams = Dispatcher.of(GetGroupImagePresignedParamsFunction)
 
 export const Example = Dispatcher.of(ExampleFunction)
