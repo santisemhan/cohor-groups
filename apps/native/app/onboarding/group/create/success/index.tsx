@@ -3,16 +3,15 @@ import { SizableText, YStack } from "tamagui"
 import React from "react"
 
 import { BlurView } from "expo-blur"
-import { router, useLocalSearchParams } from "expo-router"
+import { router } from "expo-router"
 import GlassBottomSheet from "../../../../../components/GlassBotomSheet"
 import { Button } from "../../../../../components/ui/Button"
 import { Share } from "react-native"
 
 export default function GroupCreatedSuccess() {
-  const { code } = useLocalSearchParams()
   const shareCode = async () => {
     await Share.share({
-      message: `¡Unite a mi grupo en Cohor! Código de invitación: ${code.toString().padStart(5, "0")}`
+      message: "¡Unite a mi grupo en Cohor! Código de invitación: 123456"
     })
   }
 

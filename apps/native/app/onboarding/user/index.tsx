@@ -207,7 +207,7 @@ export default function CreateUserProfile() {
                         overflow: "hidden"
                       }}
                     >
-                      <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} hasError={!!errors.birthdate} />
+                      <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} />
                     </BlurView>
                   )}
                 />

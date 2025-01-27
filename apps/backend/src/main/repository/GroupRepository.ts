@@ -1,4 +1,3 @@
-import { OnboardingStep } from "@prisma/client"
 import { UserInGroupError } from "../errors/UserInGroupError"
 import { DatabaseService } from "../services/database/DatabaseService"
 import { Injectable } from "../support/decorator/Injectable"
@@ -9,7 +8,7 @@ export class GroupRepository {
 
   public async createGroupAsync(name: string, userId: string) {
     const connection = await this.databaseService.connectionAsync()
-    const group = await connection.group.create({
+    return await connection.group.create({
       data: {
         name,
         users: {
@@ -19,28 +18,22 @@ export class GroupRepository {
         }
       }
     })
-    await connection.user.update({
-      where: {
-        id: userId
-      },
-      data: {
-        onboardingStep: OnboardingStep.COMPLETED
-      }
-    })
-    return group.code
   }
 
-  public async joinGroupOrThrowAsync(code: number, userId: string) {
+  public async joinGroupOrThrowAsync(groupCode: number, userId: string) {
     const connection = await this.databaseService.connectionAsync()
     const group = await connection.userGroups.findFirst({
       where: {
+        group: {
+          groupCode
+        },
         userId
       }
     })
     if (group) {
       throw new UserInGroupError()
     }
-    await connection.userGroups.create({
+    return connection.userGroups.create({
       data: {
         user: {
           connect: {
@@ -49,17 +42,9 @@ export class GroupRepository {
         },
         group: {
           connect: {
-            code
+            groupCode
           }
         }
-      }
-    })
-    await connection.user.update({
-      where: {
-        id: userId
-      },
-      data: {
-        onboardingStep: OnboardingStep.COMPLETED
       }
     })
   }

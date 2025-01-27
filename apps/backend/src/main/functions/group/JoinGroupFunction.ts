@@ -41,7 +41,7 @@ export class JoinGroupFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    await this.groupService.joinGroupOrThrowAsync(body.code, contextValue.id)
+    await this.groupService.joinGroupOrThrowAsync(body.groupCode, contextValue.id)
     return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
   }
 }

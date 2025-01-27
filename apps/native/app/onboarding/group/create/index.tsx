@@ -13,14 +13,9 @@ import UploadIcon from "../../../../components/icons/Upload"
 import MapPinIcon from "../../../../components/icons/MapPin"
 import { CreateGroupForm, CreateGroupSchema } from "../../../../lib/schema/onboarding/group/CreateGroupSchema"
 import { router } from "expo-router"
-import { useToastController } from "@tamagui/toast"
-import { useApiClient } from "../../../../lib/http/useApiClient"
-import { endpoint } from "../../../../lib/common/Endpoint"
 
 // Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
 export default function CreateGroup() {
-  const toast = useToastController()
-  const api = useApiClient()
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
   const theme = useTheme()
@@ -33,7 +28,8 @@ export default function CreateGroup() {
     resolver: zodResolver(CreateGroupSchema)
   })
 
-  const onCreateGroup = async () => {
+  const onCreateGroup: SubmitHandler<CreateGroupForm> = async (data) => {
+    console.log(data)
     setShowStepTwo(true)
   }
 
@@ -50,24 +46,9 @@ export default function CreateGroup() {
     }
   }
 
-  const onUpdateImage: SubmitHandler<CreateGroupForm> = async (data) => {
-    try {
-      //despues mandamos las otras cosas cuando definamos todo
-      const response = await api.post<CreateGroupForm, { code: number }>(endpoint.group.create, { name: data.name })
-      router.replace({
-        pathname: "/onboarding/group/create/success",
-        params: { code: response.code }
-      })
-    } catch (error) {
-      console.log(error)
-      toast.show("Error!", {
-        message: "Error al crear el grupo",
-        customData: {
-          backgroundColor: "$error"
-        }
-      })
-    }
+  const onUpdateImage = async () => {
     console.log("Update image")
+    router.replace("/onboarding/group/create/success")
   }
 
   return (
@@ -186,9 +167,9 @@ export default function CreateGroup() {
 
                 <Button
                   isDisabled={!isValid}
-                  disabled={!isValid}
-                  onPress={onCreateGroup}
+                  onPress={handleSubmit(onCreateGroup)}
                   borderColor="$element-high-opacity-mid"
+                  loading={isSubmitting}
                 >
                   Continuar
                 </Button>
@@ -236,13 +217,7 @@ export default function CreateGroup() {
                     )}
                   </YStack>
                 </BlurView>
-                <Button
-                  isDisabled={!image}
-                  disabled={!image}
-                  borderColor="$element-high-opacity-mid"
-                  loading={isSubmitting}
-                  onPress={handleSubmit(onUpdateImage)}
-                >
+                <Button isDisabled={!image} borderColor="$element-high-opacity-mid" onPress={onUpdateImage}>
                   Siguiente
                 </Button>
               </YStack>

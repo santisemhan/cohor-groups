@@ -16,14 +16,14 @@ enum OnboardingStep {
 }
 
 model User {
-  id             String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  email          String          @unique
-  name           String?
-  birthdate      DateTime?       @db.Date
-  password       String?
-  isThirdParty   Boolean         @default(false)
-  validation     UserValidation?
-  groups         UserGroups[]
+  id           String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email        String          @unique
+  name         String?
+  birthdate    DateTime?       @db.Date
+  password     String?
+  isThirdParty Boolean         @default(false)
+  validation   UserValidation?
+  groups       UserGroups[]
   onboardingStep OnboardingStep?
 
   @@map("Users")
@@ -59,10 +59,10 @@ model UserGroups {
 }
 
 model Group {
-  id    String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  code  Int          @unique @default(autoincrement())
-  name  String
-  users UserGroups[]
+  id        String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  groupCode Int          @unique @default(autoincrement())
+  name      String
+  users     UserGroups[]
 
   @@map("Group")
 }

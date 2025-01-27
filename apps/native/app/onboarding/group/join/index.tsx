@@ -7,13 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { router } from "expo-router"
 import { KeyboardAvoidingView, Platform } from "react-native"
-import { useToastController } from "@tamagui/toast"
-import { useApiClient } from "../../../../lib/http/useApiClient"
-import { endpoint } from "../../../../lib/common/Endpoint"
 
 export default function JoinGroup() {
-  const toast = useToastController()
-  const api = useApiClient()
   const {
     formState: { isSubmitting, isValid },
     handleSubmit,
@@ -23,19 +18,9 @@ export default function JoinGroup() {
   })
 
   const onSumbitJoinGroup: SubmitHandler<JoinGroupForm> = async (formValues) => {
-    try {
-      console.log(parseInt("00009040", 10))
-      await api.post<JoinGroupForm, undefined>(endpoint.group.join, { code: parseInt(formValues.code, 10) })
-      router.replace("/onboarding/group/join/success")
-    } catch (error) {
-      console.log(error)
-      toast.show("Error!", {
-        message: "Error al entrar al grupo",
-        customData: {
-          backgroundColor: "$error"
-        }
-      })
-    }
+    console.log(formValues)
+    // on error throw toast
+    router.replace("/onboarding/group/join/success")
   }
 
   return (
