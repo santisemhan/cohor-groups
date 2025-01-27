@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const JoinGroupSchema = z.object({
-  groupCode: z.number()
+  code: z.number()
 })
 
 export type JoinGroupRequest = z.infer<typeof JoinGroupSchema>
