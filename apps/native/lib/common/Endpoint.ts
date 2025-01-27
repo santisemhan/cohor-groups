@@ -1,3 +1,4 @@
+import { group } from "console"
 import { API_URL } from "./Environment"
 
 export const endpoint = {
@@ -12,5 +13,9 @@ export const endpoint = {
   user: {
     onboarding: `${API_URL}/users`,
     imagePresignedParams: `${API_URL}/users/image-presigned-params`
+  },
+  group: {
+    join: `${API_URL}/groups/join`,
+    create: `${API_URL}/groups`
   }
 }

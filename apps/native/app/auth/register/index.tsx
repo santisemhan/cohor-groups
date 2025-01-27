@@ -36,7 +36,8 @@ export default function Register() {
         pathname: "auth/register/validation",
         params: { userId: response.id, email: response.email }
       })
-    } catch {
+    } catch (error) {
+      console.log(error)
       toast.show("Error!", {
         message: "Error al registrar el usuario",
         customData: {

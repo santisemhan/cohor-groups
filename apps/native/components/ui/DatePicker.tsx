@@ -8,6 +8,7 @@ interface DatePickerProps {
   date?: Date
   confirmText?: string
   cancelText?: string
+  hasError?: boolean
   accentColor?: string
   textColor?: string
   buttonTextColorIOS?: string
@@ -19,6 +20,7 @@ interface DatePickerProps {
 
 const DateTimePicker = function DatePicker(props: DatePickerProps) {
   const { onChange, onBlur, value } = props
+  console.log(props)
   const [show, setShow] = useState(false)
   const [date, setDate] = useState<Date | undefined>(props.date)
 
@@ -46,6 +48,7 @@ const DateTimePicker = function DatePicker(props: DatePickerProps) {
     <Pressable onPress={() => setShow(true)}>
       <XStack alignItems={"center"} justifyContent="flex-end">
         <Input
+          hasError={props.hasError}
           borderWidth={0}
           backgroundColor="transparent"
           color="$white-opacity-high"
