@@ -33,8 +33,7 @@ export default function JoinGroup() {
         params: { name: name, imageURL: imageUrl }
       })
     } catch {
-      toast.show("Error!", {
-        message: "Error al entrar al grupo",
+      toast.show("Error al entrar al grupo", {
         customData: {
           backgroundColor: "$error"
         }

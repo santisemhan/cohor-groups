@@ -37,8 +37,7 @@ export default function Register() {
         params: { userId: response.id, email: response.email }
       })
     } catch {
-      toast.show("Error!", {
-        message: "Error al registrar el usuario",
+      toast.show("Error al registrar el usuario", {
         customData: {
           backgroundColor: "$error"
         }

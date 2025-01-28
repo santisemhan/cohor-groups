@@ -20,9 +20,8 @@ export default function CustomToast() {
         animation="100ms"
         viewportName={currentToast.viewportName}
       >
-        <YStack>
-          <Toast.Title>{currentToast.title}</Toast.Title>
-          {!!currentToast.message && <Toast.Description>{currentToast.message}</Toast.Description>}
+        <YStack padding="5">
+          <Toast.Title color="$color.white">{currentToast.title}</Toast.Title>
         </YStack>
       </Toast>
       <ToastViewport flexDirection="column" left={left} top={top} right={right} />

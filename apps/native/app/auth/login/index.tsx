@@ -58,8 +58,7 @@ export default function Login() {
           router.replace("/auth/login")
       }
     } catch {
-      toast.show("Error!", {
-        message: "Email o contraseña incorrectos",
+      toast.show("Email o contraseña incorrectos", {
         customData: {
           backgroundColor: "$error"
         }
