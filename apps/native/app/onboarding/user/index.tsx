@@ -78,8 +78,7 @@ export default function CreateUserProfile() {
       }
       setUser(userToUpdate)
     } catch {
-      toast.show("Error!", {
-        message: "Error al registrar el usuario",
+      toast.show("Error al registrar el usuario", {
         customData: {
           backgroundColor: "$error"
         }
@@ -132,8 +131,7 @@ export default function CreateUserProfile() {
 
       router.replace("/onboarding/user/success")
     } catch {
-      toast.show("Error!", {
-        message: "Error al cargar la imagen del usuario",
+      toast.show("Error al cargar la imagen del usuario", {
         customData: {
           backgroundColor: "$error"
         }

@@ -87,8 +87,7 @@ export default function CreateGroup() {
         params: { code: response.code, name: response.name }
       })
     } catch {
-      toast.show("Error!", {
-        message: "Error al crear el grupo",
+      toast.show("Error al crear el grupo", {
         customData: {
           backgroundColor: "$error"
         }

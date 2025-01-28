@@ -28,8 +28,7 @@ export default function Home() {
         setMessage(response.message)
       })
       .catch((error) => {
-        toast.show("Error!", {
-          message: error.message,
+        toast.show(error.message, {
           customData: {
             backgroundColor: "$error"
           }
