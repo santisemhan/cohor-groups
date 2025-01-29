@@ -12,10 +12,6 @@
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "deploy:production": {
-      "dependsOn": ["^deploy:production"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"]
     }
   }
 }
