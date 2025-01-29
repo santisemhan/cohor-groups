@@ -7,7 +7,9 @@
     "prisma:build": "prisma format && prisma generate",
     "prisma:migration:apply": "npm run prisma:build && prisma migrate dev",
     "prisma:migration:create": "npm run prisma:build && prisma migrate dev --create-only",
-    "build": "npm run prisma:build && npx tsc"
+    "build": "npm run prisma:build && npx tsc",
+    "remove": "serverless remove --stage production",
+    "deploy:production": "rimraf .build && serverless deploy --force --stage production --verbose"
   },
   "devDependencies": {
     "@aws-sdk/s3-request-presigner": "^3.723.0",

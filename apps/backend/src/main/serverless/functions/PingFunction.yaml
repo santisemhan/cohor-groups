@@ -1,13 +1,12 @@
-Example:
+Ping:
   image:
     command:
-      - src/main/support/serverless/Dispatcher.Example
+      - src/main/support/serverless/Dispatcher.Ping
     name: main
-  description: "Example"
+  description: "Ping the server"
   ephemeralStorageSize: 512
   events:
     - http:
-        authorizer: ${self:custom.roleAuthorizer}
         cors:
           allowCredentials: true
           headers:
@@ -15,7 +14,7 @@ Example:
             - Content-Type
           origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
         method: "GET"
-        path: "/protected"
+        path: "/ping"
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30

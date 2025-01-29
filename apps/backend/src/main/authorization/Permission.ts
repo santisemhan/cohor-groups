@@ -9,8 +9,6 @@ export enum Role {
 }
 
 export const Permisions: FunctionPermissionSpecification = {
-  "GET/protected": [Role.User],
-
   "GET/auth/logged-user": [Role.User],
 
   "PUT/users": [Role.User],

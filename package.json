@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "co": "sui-mono commit",
     "check": "sui-mono check",
-    "deploy:backend:production": "docker build -t serverless-cohor-backend-production -f apps/backend/Dockerfile . --progress=plain"
+    "docker:backend:production": "docker build --platform linux/amd64 -t serverless-cohor-backend-production -f apps/backend/Dockerfile . --progress=plain"
   },
   "devDependencies": {
     "@s-ui/mono": "^2.45.0",

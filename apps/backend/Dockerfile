@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:20-x86_64 AS base
+FROM public.ecr.aws/lambda/nodejs:20 AS base
  
 FROM base AS builder
 
@@ -24,5 +24,5 @@ WORKDIR /app
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=installer /app/apps/backend/.build ./
 COPY --from=installer /app/node_modules ./node_modules
- 
+
 CMD [ "lambda_function.lambda_handler" ]

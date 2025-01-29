@@ -9,31 +9,15 @@ import { endpoint } from "../../lib/common/Endpoint"
 import { useAuth } from "../../lib/context/AuthContext"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { User } from "@cohor/types"
-import { useToastController } from "@tamagui/toast"
 
 export default function Home() {
   const api = useApiClient()
-  const toast = useToastController()
   const { user, setUser } = useAuth()
-  const [message, setMessage] = React.useState("App")
 
   useEffect(() => {
     api.get<{ user: User }>(endpoint.auth.loggedUser).then((response) => {
       setUser(response.user)
     })
-
-    api
-      .get<{ message: string }>(endpoint.example)
-      .then((response) => {
-        setMessage(response.message)
-      })
-      .catch((error) => {
-        toast.show(error.message, {
-          customData: {
-            backgroundColor: "$error"
-          }
-        })
-      })
   }, [])
 
   const signOut = async () => {
@@ -59,9 +43,6 @@ export default function Home() {
     >
       <YStack gap={40} width="100%">
         <YStack justifyContent="center" alignItems="center" gap={4}>
-          <SizableText color="$black" size="$headline-large">
-            {message}
-          </SizableText>
           <SizableText color="$black" size="$headline-large">
             {JSON.stringify(user)}
           </SizableText>
