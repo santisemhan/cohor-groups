@@ -1,5 +1,8 @@
 CreateGroup:
-  handler: src/main/support/serverless/Dispatcher.CreateGroup
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.CreateGroup
+    name: main
   description: "Create group"
   ephemeralStorageSize: 512
   events:

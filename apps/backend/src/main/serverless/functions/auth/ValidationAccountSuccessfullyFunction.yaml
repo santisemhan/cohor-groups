@@ -1,5 +1,8 @@
 ValidationAccountSuccessfully:
-  handler: src/main/support/serverless/Dispatcher.ValidationAccountSuccessfully
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.ValidationAccountSuccessfully
+    name: main
   description: "Validate account"
   ephemeralStorageSize: 512
   events:

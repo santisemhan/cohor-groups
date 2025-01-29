@@ -1,5 +1,8 @@
 GetGroup:
-  handler: src/main/support/serverless/Dispatcher.GetGroup
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.GetGroup
+    name: main
   description: "Get own group"
   ephemeralStorageSize: 512
   events:

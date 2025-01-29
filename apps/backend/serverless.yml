@@ -8,6 +8,10 @@ provider:
   runtime: nodejs20.x
   region: ${self:custom.region}
   stage: local
+  ecr:
+    images:
+      main:
+        uri: "${self:custom.ecr.imageURI}"
   environment:
     ENVIRONMENT: ${self:custom.environment.ENVIRONMENT.${self:custom.stage}}
     COHOR_APPLICATION_FRONTEND_ORIGINS: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
@@ -18,6 +22,9 @@ custom:
   environment: ${file(./src/main/serverless/configuration/Environment.yaml)}
   region: "us-east-1"
   stage: ${opt:stage, self:provider.stage}
+  ecr:
+    # https://www.serverless.com/framework/docs/providers/aws/guide/functions#referencing-container-image-as-a-target
+    imageURI: ${env:AWS_ECR_IMAGE_URI, "000000000000.dkr.ecr.region.amazonaws.com/namespace/repository:environment-commit-hash"}
   roleAuthorizer:
     name: RoleAuthorizer
     identitySource: method.request.header.authorization
@@ -35,13 +42,14 @@ custom:
     reloadHandler: true
 
 plugins:
+  - ./src/main/serverless/plugins/DockerOffline.js
   - serverless-plugin-typescript
   - serverless-offline
 
 functions:
   - ${file(./src/main/authorization/RoleAuthorizerFunction.yaml)}
   - ${file(./src/main/authorization/GoogleAuthorizerFunction.yaml)}
-  - ${file(./src/main/serverless/functions/ExampleFunction.yaml)}
+  - ${file(./src/main/serverless/functions/PingFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/GetLoggedUser.yaml)}
   - ${file(./src/main/serverless/functions/auth/LoginFunction.yaml)}
   - ${file(./src/main/serverless/functions/auth/RegisterFunction.yaml)}

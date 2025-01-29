@@ -1,7 +1,6 @@
 import { API_URL } from "./Environment"
 
 export const endpoint = {
-  example: `${API_URL}/protected`,
   auth: {
     loggedUser: `${API_URL}/auth/logged-user`,
     login: `${API_URL}/auth/login`,

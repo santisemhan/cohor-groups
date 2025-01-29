@@ -1,5 +1,8 @@
 UpdateUser:
-  handler: src/main/support/serverless/Dispatcher.UpdateUser
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.UpdateUser
+    name: main
   description: "Update logged user"
   ephemeralStorageSize: 512
   events:
