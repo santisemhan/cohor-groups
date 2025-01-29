@@ -8,6 +8,10 @@ provider:
   runtime: nodejs20.x
   region: ${self:custom.region}
   stage: local
+  ecr:
+    images:
+      main:
+        path: ./
   environment:
     ENVIRONMENT: ${self:custom.environment.ENVIRONMENT.${self:custom.stage}}
     COHOR_APPLICATION_FRONTEND_ORIGINS: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
@@ -35,6 +39,7 @@ custom:
     reloadHandler: true
 
 plugins:
+  - ./src/main/serverless/plugins/DockerOffline.js
   - serverless-plugin-typescript
   - serverless-offline
 

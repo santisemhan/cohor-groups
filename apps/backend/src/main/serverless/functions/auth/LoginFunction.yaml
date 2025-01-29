@@ -1,5 +1,8 @@
 Login:
-  handler: src/main/support/serverless/Dispatcher.Login
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.Login
+    name: main
   description: "Login a user"
   ephemeralStorageSize: 512
   events:
