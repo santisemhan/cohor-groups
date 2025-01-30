@@ -73,7 +73,7 @@ export class RoleAuthorizerFunction
       return this.apiGatewayService.authorizerResult(policy, loggedUserInfo)
     } catch (error) {
       this.logger.error(error)
-      throw new UnauthorizedError()
+      throw new Error("Unauthorized")
     }
   }
 }

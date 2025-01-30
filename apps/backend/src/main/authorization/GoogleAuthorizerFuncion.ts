@@ -57,7 +57,6 @@ export class GoogleAuthorizerFunction
       })
       const payload = token.getPayload()
       if (!payload) {
-        console.log("Payload not found")
         throw new UnauthorizedError()
       }
 
@@ -80,7 +79,7 @@ export class GoogleAuthorizerFunction
       return this.apiGatewayService.authorizerResult(policy)
     } catch (error) {
       this.logger.error(error)
-      throw new UnauthorizedError()
+      throw new Error("Unauthorized")
     }
   }
 }
