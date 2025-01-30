@@ -23,8 +23,8 @@ custom:
   region: "us-east-1"
   stage: ${opt:stage, self:provider.stage}
   ecr:
-    # https://www.serverless.com/framework/docs/providers/aws/guide/functions#referencing-container-image-as-a-target
     imageURI: ${env:AWS_ECR_IMAGE_URI, "000000000000.dkr.ecr.region.amazonaws.com/namespace/repository:environment-commit-hash"}
+  customDomain: ${file(./src/main/serverless/configuration/DomainManager.yaml)}
   roleAuthorizer:
     name: RoleAuthorizer
     identitySource: method.request.header.authorization
@@ -45,6 +45,7 @@ plugins:
   - ./src/main/serverless/plugins/DockerOffline.js
   - serverless-plugin-typescript
   - serverless-offline
+  - serverless-domain-manager
 
 functions:
   - ${file(./src/main/authorization/RoleAuthorizerFunction.yaml)}

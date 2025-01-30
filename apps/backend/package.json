@@ -19,6 +19,7 @@
     "cloudinary": "^2.5.1",
     "reflect-metadata": "^0.2.2",
     "serverless": "^3.40.0",
+    "serverless-domain-manager": "^8.0.0",
     "serverless-offline": "^13.9.0",
     "sql-formatter": "^15.4.8",
     "typedi": "^0.10.0"

@@ -3,9 +3,13 @@ ENVIRONMENT:
   production: "Production"
 
 COHOR_APPLICATION_FRONTEND_ORIGINS:
-  local: ${env:COHOR_APPLICATION_FRONTEND_ORIGINS, "http://localhost:8080"}
-  production: ""
+  local: ${env:COHOR_APPLICATION_FRONTEND_ORIGINS, "https://cohor.app"}
+  production: "https://cohor.app"
 
 COHOR_API_GATEWAY_ENDPOINT_URI:
-  local: ${env:COHOR_API_GATEWAY_ENDPOINT_URI, "https://89eb-2800-40-3c-2eff-d01a-749f-668e-a543.ngrok-free.app"}
-  production: ""
+  local: ${env:COHOR_API_GATEWAY_ENDPOINT_URI, "https://api.cohor.app"}
+  production: "https://api.cohor.app"
+
+AWS_ROUTE_53_PUBLIC_HOSTED_ZONE_ID:
+  local: ""
+  production: "Z09623431CS48B6ZD5210"

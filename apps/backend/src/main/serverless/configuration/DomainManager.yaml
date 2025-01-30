@@ -1,0 +1,16 @@
+# @see https://github.com/amplify-education/serverless-domain-manager
+# @see https://www.serverless.com/blog/serverless-api-gateway-domain/
+rest:
+  autoDomain: true
+  basePath: ""
+  certificateName: "api.cohor.app"
+  createRoute53IPv6Record: false
+  createRoute53Record: true
+  domainName: "api.cohor.app"
+  enabled: true
+  endpointType: REGIONAL
+  hostedZoneId: ${self:custom.environment.AWS_ROUTE_53_PUBLIC_HOSTED_ZONE_ID.${self:custom.stage}}
+  preserveExternalPathMappings: true
+  securityPolicy: tls_1_2
+  splitHorizonDns: false
+  stage: ${self:custom.stage}
