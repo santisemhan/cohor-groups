@@ -1,7 +1,10 @@
 GoogleAuthorizer:
   description: "Google Authorizer Function"
   ephemeralStorageSize: 512
-  handler: src/main/support/serverless/Dispatcher.GoogleAuthorizer
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.GoogleAuthorizer
+    name: main
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30

@@ -1,5 +1,8 @@
 GetProfileImagePresignedParams:
-  handler: src/main/support/serverless/Dispatcher.GetProfileImagePresignedParams
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.GetProfileImagePresignedParams
+    name: main
   description: "Get presigned params to upload profile image"
   ephemeralStorageSize: 512
   events:

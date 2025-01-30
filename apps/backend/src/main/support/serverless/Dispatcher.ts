@@ -9,7 +9,6 @@ import { ServerlessFunctionDispatcher } from "./type/ServerlessFunctionDispatche
 import { ShallNotInstantiateError } from "../../errors/ShallNotInstantiateError"
 import { LoginFunction } from "../../functions/auth/LoginFunction"
 import { RegisterFunction } from "../../functions/auth/RegisterFunction"
-import { ExampleFunction } from "../../functions/ExampleFunction"
 import { RoleAuthorizerFunction } from "../../authorization/RoleAuthorizerFunction"
 import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFunction"
 import { UpdateUserFunction } from "../../functions/user/UpdateUserFunction"
@@ -22,6 +21,7 @@ import { JoinGroupFunction } from "../../functions/group/JoinGroupFunction"
 import { GetProfileImagePresignedParamsFunction } from "../../functions/user/GetProfileImagePresignedParamsFunction"
 import { GetGroupFunction } from "../../functions/group/GetGroupFunction"
 import { GetGroupImagePresignedParamsFunction } from "../../functions/group/GetGroupImagePresignedParamsFunction"
+import { PingFunction } from "../../functions/PingFunction"
 
 /**
  * @description
@@ -68,4 +68,4 @@ export const JoinGroup = Dispatcher.of(JoinGroupFunction)
 export const GetGroup = Dispatcher.of(GetGroupFunction)
 export const GetGroupImagePresignedParams = Dispatcher.of(GetGroupImagePresignedParamsFunction)
 
-export const Example = Dispatcher.of(ExampleFunction)
+export const Ping = Dispatcher.of(PingFunction)

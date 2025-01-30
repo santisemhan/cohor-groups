@@ -1,5 +1,8 @@
 GetGroupImagePresignedParams:
-  handler: src/main/support/serverless/Dispatcher.GetGroupImagePresignedParams
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.GetGroupImagePresignedParams
+    name: main
   description: "Get presigned params to upload profile image group"
   ephemeralStorageSize: 512
   events:
