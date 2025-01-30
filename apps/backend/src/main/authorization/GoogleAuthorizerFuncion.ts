@@ -13,6 +13,7 @@ import { AuthenticationService } from "../services/AuthenticationService"
 import { IAMService } from "../services/aws/IAMService"
 import { APIGatewayService } from "../services/aws/APIGatewayService"
 import { OAuth2Client } from "google-auth-library"
+import { UnauthorizedError } from "../errors/UnauthorizedError"
 
 @Injectable()
 export class GoogleAuthorizerFunction
@@ -59,15 +60,15 @@ export class GoogleAuthorizerFunction
       const payload = token.getPayload()
       if (!payload) {
         console.log("Payload not found")
-        throw new Error("Unauthorized")
+        throw new UnauthorizedError()
       }
 
       if (payload.exp && Date.now() >= payload.exp * 1000) {
-        throw new Error("Unauthorized")
+        throw new UnauthorizedError()
       }
 
       if (!payload.email || !event.headers?.Email || payload.email !== event.headers.Email) {
-        throw new Error("Unauthorized")
+        throw new UnauthorizedError()
       }
 
       const policy: PolicyDocument = this.iamService.generatePolicy([
@@ -81,7 +82,7 @@ export class GoogleAuthorizerFunction
       return this.apiGatewayService.authorizerResult(policy)
     } catch (error) {
       this.logger.error(error)
-      throw new Error("Unauthorized")
+      throw new UnauthorizedError()
     }
   }
 }

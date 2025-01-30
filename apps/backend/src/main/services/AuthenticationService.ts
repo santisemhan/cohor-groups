@@ -17,6 +17,11 @@ import { UserValidatedError } from "../errors/UserValidatedError"
 import { TimeService } from "./common/TimeService"
 import { User, OnboardingStep } from "@cohor/types"
 import { RegisterRequest } from "../schema/auth/RegisterSchema"
+import { UserAlreadyExistError } from "../errors/UserAlreadyExistError"
+import { UserNotFoundError } from "../errors/UserNotFoundError"
+import { InvalidLoginMethodError } from "../errors/InvalidLoginMethodError"
+import { InvalidPasswordError } from "../errors/InvalidPasswordError"
+import { InvalidTokenError } from "../errors/InvalidTokenError"
 
 @Injectable()
 export class AuthenticationService {
@@ -35,7 +40,7 @@ export class AuthenticationService {
       userExists &&
       ((userExists.password !== null && data.isThirdParty) || (userExists.password === null && !data.isThirdParty))
     ) {
-      throw new Error("User already exists")
+      throw new UserAlreadyExistError()
     }
     if (userExists) return { id: userExists.email, email: userExists.email }
 
@@ -100,13 +105,13 @@ export class AuthenticationService {
 
   public async loginAsync(email: string, password?: string): Promise<{ user: User; accessToken: string }> {
     const user = await this.userRepository.findUserByEmailAsync(email)
-    if (!user) throw new Error("User not found")
-    if (user.isThirdParty && password) throw new Error("Invalid login method")
-    if (!user.isThirdParty && !password) throw new Error("Invalid login method")
+    if (!user) throw new UserNotFoundError()
+    if (user.isThirdParty && password) throw new InvalidLoginMethodError()
+    if (!user.isThirdParty && !password) throw new InvalidLoginMethodError()
 
     if (!user.isThirdParty) {
       const passwordMatch = await bcrypt.compare(password as string, user.password as string)
-      if (!passwordMatch) throw new Error("Invalid password")
+      if (!passwordMatch) throw new InvalidPasswordError()
 
       if (!user.validation?.validatedAt) throw new NotValidatedAccount()
     }
@@ -147,9 +152,9 @@ export class AuthenticationService {
 
   public async validateAccountAsync(userId: string, token: string) {
     const user = await this.userRepository.findUserByIdOrThrowAsync(userId)
-    if (!user) throw new Error("User not found")
+    if (!user) throw new UserNotFoundError()
 
-    if (user.validation?.token !== token) throw new Error("Invalid token")
+    if (user.validation?.token !== token) throw new InvalidTokenError()
 
     await this.userRepository.validateUserAsync(userId)
   }

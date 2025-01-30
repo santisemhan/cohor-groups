@@ -14,6 +14,8 @@ import { PermissionSpecification } from "./Permission"
 import { AuthenticationService } from "../services/AuthenticationService"
 import { IAMService } from "../services/aws/IAMService"
 import { APIGatewayService } from "../services/aws/APIGatewayService"
+import { UnauthorizedError } from "../errors/UnauthorizedError"
+import { EndpointPermissionError } from "../errors/EndpointPermissionError"
 
 @Injectable()
 export class RoleAuthorizerFunction
@@ -44,15 +46,15 @@ export class RoleAuthorizerFunction
       const endpoint = `${event.httpMethod}${event.resource}`
       const functionPermissions = PermissionSpecification.getFunctionPermissionsToString(endpoint)
       if (functionPermissions.length <= 0) {
-        throw new Error(`Permissions to endpoint [${endpoint}] was not specified`)
+        throw new EndpointPermissionError(endpoint)
       }
       const validToken = await this.authenticationService.verifyToken(token)
       if (validToken === null) {
-        throw new Error("Unauthorized")
+        throw new UnauthorizedError()
       }
 
       if (!functionPermissions.includes(validToken.role as string)) {
-        throw new Error("Unauthorized")
+        throw new UnauthorizedError()
       }
 
       const policy: PolicyDocument = this.iamService.generatePolicy([
@@ -71,7 +73,7 @@ export class RoleAuthorizerFunction
       return this.apiGatewayService.authorizerResult(policy, loggedUserInfo)
     } catch (error) {
       this.logger.error(error)
-      throw new Error("Unauthorized")
+      throw new UnauthorizedError()
     }
   }
 }
