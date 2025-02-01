@@ -64,7 +64,6 @@ export default function RootLayout() {
           }
         } else {
           SplashScreen.hideAsync()
-          router.replace("/app")
         }
       }
     }
