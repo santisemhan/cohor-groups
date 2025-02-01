@@ -35,36 +35,33 @@ export default function RootLayout() {
   }, [])
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [loaded])
-
-  useEffect(() => {
     const checkLoginStatus = async () => {
-      if (loaded) {
-        const token = await AsyncStorage.getItem("access_token")
-        if (token) {
-          SplashScreen.hideAsync()
-          const loggedUserResponse = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+      try {
+        if (!loaded) return
 
-          switch (loggedUserResponse.user.onboardingStep) {
-            case OnboardingStep.STEP_ONE:
-            case OnboardingStep.STEP_TWO:
-              router.replace("/onboarding/user")
-              break
-            case OnboardingStep.STEP_THREE:
-              router.replace("/onboarding/user/success")
-              break
-            case OnboardingStep.COMPLETED:
-              router.replace("/app")
-              break
-            default:
-              router.replace("/auth/login")
-          }
-        } else {
-          SplashScreen.hideAsync()
+        const token = await AsyncStorage.getItem("access_token")
+        if (!token) {
+          await SplashScreen.hideAsync()
+          return
         }
+
+        const { user } = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+        const onboardingStep = user?.onboardingStep ?? null
+
+        const onboardingRoutes: Record<OnboardingStep, string> = {
+          [OnboardingStep.STEP_ONE]: "/onboarding/user",
+          [OnboardingStep.STEP_TWO]: "/onboarding/user",
+          [OnboardingStep.STEP_THREE]: "/onboarding/user/success",
+          [OnboardingStep.COMPLETED]: "/app"
+        }
+
+        const route = onboardingRoutes[onboardingStep as OnboardingStep] || "/auth/login"
+
+        await router.replace(route)
+        await SplashScreen.hideAsync()
+      } catch (error) {
+        console.error("Error checking login status:", error)
+        await SplashScreen.hideAsync()
       }
     }
 
