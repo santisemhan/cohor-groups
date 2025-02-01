@@ -1,4 +1,5 @@
-//index.js
+import "react-native-gesture-handler"
+
 import { ToastProvider } from "@tamagui/toast"
 import { registerRootComponent } from "expo"
 import { ExpoRoot } from "expo-router"
