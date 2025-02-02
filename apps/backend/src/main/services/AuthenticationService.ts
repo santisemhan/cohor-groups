@@ -22,6 +22,7 @@ import { UserNotFoundError } from "../errors/UserNotFoundError"
 import { InvalidLoginMethodError } from "../errors/InvalidLoginMethodError"
 import { InvalidPasswordError } from "../errors/InvalidPasswordError"
 import { InvalidTokenError } from "../errors/InvalidTokenError"
+import { verifyEmailTemplate } from "../support/templates/VerifyEmailTemplate"
 
 @Injectable()
 export class AuthenticationService {
@@ -65,7 +66,7 @@ export class AuthenticationService {
     await this.mailService.sendMail({
       to: email,
       subject: "Validá tu cuenta",
-      body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${id}/${token}`
+      body: verifyEmailTemplate(`${configuration.source}/auth/validate/${id}/${token}`)
     })
     return { id, email }
   }
@@ -96,7 +97,7 @@ export class AuthenticationService {
       await this.mailService.sendMail({
         to: user.email,
         subject: "Validá tu cuenta",
-        body: `Por favor validá tu cuenta presionando el siguiente link: ${configuration.source}/auth/validate/${user.id}/${token}`
+        body: verifyEmailTemplate(`${configuration.source}/auth/validate/${id}/${token}`)
       })
     } catch (error) {
       throw new EmailRateLimitError(error)
