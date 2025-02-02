@@ -8,6 +8,6 @@ import { ErrorCode } from "./ErrorCode"
  */
 export class UserInGroupError extends ApplicationError<unknown> {
   public constructor() {
-    super(ErrorCode.UnknownError, "User is already in a group")
+    super(ErrorCode.UserInGroupError, "User is already in a group")
   }
 }

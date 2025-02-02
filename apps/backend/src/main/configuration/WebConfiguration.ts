@@ -1,4 +1,5 @@
 import { strict as assert } from "node:assert"
+import { OriginSpecifiedError } from "../errors/OriginSpecifiedError"
 
 /**
  * @description
@@ -12,7 +13,7 @@ export class WebConfiguration {
   public readonly source: string
 
   public constructor(configuration: WebConfiguration) {
-    assert.equal(0 < configuration.origins.length, true, new Error("Must be at least 1 origin specified."))
+    assert.equal(0 < configuration.origins.length, true, new OriginSpecifiedError())
     this.origins = configuration.origins
     this.source = configuration.source
   }

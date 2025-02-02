@@ -10,10 +10,12 @@ import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
 import { JoinGroupSchema } from "../../schema/group/JoinGroupSchema"
 import { GroupService } from "../../services/GroupService"
+import { CloudinaryService } from "../../services/storage/CloudinaryService"
 
 @Injectable()
 export class JoinGroupFunction extends APIServerlessFunction {
   constructor(
+    private readonly cloudinaryService: CloudinaryService,
     private readonly validationService: ValidationService,
     private readonly groupService: GroupService
   ) {
@@ -41,7 +43,11 @@ export class JoinGroupFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    await this.groupService.joinGroupOrThrowAsync(body.groupCode, contextValue.id)
-    return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NoContent)
+    const user = await this.groupService.joinGroupOrThrowAsync(body.code, contextValue.id)
+    const image = await this.cloudinaryService.getUrlAsync("group-profile", user.groups[0].group.id)
+
+    return new HTTPResponse(MIMEType.JSON)
+      .body({ ...user.groups[0].group, imageUrl: image })
+      .statusCode(HTTPStatusCode.Ok)
   }
 }

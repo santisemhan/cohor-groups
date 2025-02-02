@@ -1,5 +1,8 @@
 JoinGroup:
-  handler: src/main/support/serverless/Dispatcher.JoinGroup
+  image:
+    command:
+      - src/main/support/serverless/Dispatcher.JoinGroup
+    name: main
   description: "Join group"
   ephemeralStorageSize: 512
   events:

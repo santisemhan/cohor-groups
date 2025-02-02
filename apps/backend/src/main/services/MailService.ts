@@ -23,7 +23,7 @@ export class MailService {
     const { to, subject, body, from } = data
     try {
       const client = await this.getClientAsync()
-      const emailFrom = from || "Cohor <no-reply@resend.dev>"
+      const emailFrom = from || "Cohor <no-reply@cohor.app>"
       await client.emails.send({
         from: emailFrom,
         to,

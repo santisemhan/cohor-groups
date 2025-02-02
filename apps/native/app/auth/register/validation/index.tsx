@@ -22,16 +22,14 @@ export default function Validation() {
     api
       .post<undefined, undefined>(`${endpoint.auth.resend}/${userId}`)
       .then(() => {
-        toast.show("Success!", {
-          message: "Email sended!",
+        toast.show("Email sended!", {
           customData: {
             backgroundColor: "$success"
           }
         })
       })
       .catch(() => {
-        toast.show("Error!", {
-          message: "Please wait a few minutes",
+        toast.show("Please wait a few minutes", {
           customData: {
             backgroundColor: "$error"
           }
