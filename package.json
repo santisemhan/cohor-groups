@@ -6,7 +6,7 @@
     "build": "turbo build",
     "dev": "turbo dev --parallel",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,astro}\"",
     "co": "sui-mono commit",
     "check": "sui-mono check",
     "docker:backend:production": "docker build --platform linux/amd64 -t serverless-cohor-backend-production -f apps/backend/Dockerfile . --progress=plain"

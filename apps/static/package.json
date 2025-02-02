@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "lint": "eslint \"src/**/*.{ts,js,tsx,jsx,astro}\" --no-error-on-unmatched-pattern"
+    "lint": "eslint src --ext .astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.1",
