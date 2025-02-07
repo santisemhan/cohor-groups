@@ -1,8 +1,122 @@
 @import "tailwindcss";
 
-/*
-* Example of how to define a color using new tailwind config 
-*/
 @theme {
-  --color-mint-500: oklch(0.72 0.11 178);
+  /* Colors */
+  --color-black: oklch(23.93% 0 0);
+  --color-black-opacity-high: rgba(31, 31, 31, 0.8);
+  --color-black-opacity-mid: rgba(31, 31, 31, 0.32);
+  --color-black-opacity-low: rgba(31, 31, 31, 0.12);
+
+  --color-white: oklch(100% 0 0);
+  --color-white-opacity-high: rgba(255, 255, 255, 0.8);
+  --color-white-opacity-mid: rgba(255, 255, 255, 0.32);
+  --color-white-opacity-low: rgba(255, 255, 255, 0.12);
+
+  --color-success: oklch(69.59% 0.149 162.48);
+  --color-error: oklch(65.75% 0.185 30.44);
+
+  /* Font sizes */
+  --text-display-large: 36px;
+  --text-display-medium: 32px;
+  --text-display-small: 26px;
+
+  --text-headline-large: 28px;
+  --text-headline-medium: 26px;
+  --text-headline-small: 22px;
+
+  --text-title-large: 18px;
+  --text-title-medium: 16px;
+  --text-title-small: 14px;
+
+  --text-subhead-large: 22px;
+  --text-subhead-medium: 18px;
+  --text-subhead-small: 16px;
+
+  --text-body-large: 18px;
+  --text-body-medium: 16px;
+  --text-body-small: 14px;
+
+  --text-body-large-w-medium: 18px;
+  --text-body-medium-w-medium: 16px;
+  --text-body-small-w-medium: 14px;
+
+  --text-label-large: 12px;
+  --text-label-medium: 10px;
+  --text-label-small: 8px;
+
+  --text-label-large-w-medium: 12px;
+  --text-label-large-w-bold: 12px;
+  --text-label-medium-w-medium: 10px;
+  /* Font families */
+  --font-open-sauce-one: "Open Sauce One", sans-serif;
+  --font-clash-grotesk: "Clash Grotesk", sans-serif;
+
+  /* Font heights */
+  --leading-display-large: 48px;
+  --leading-display-medium: 40px;
+  --leading-display-small: 34px;
+
+  --leading-headline-large: 36px;
+  --leading-headline-medium: 32px;
+  --leading-headline-small: 28px;
+
+  --leading-title-large: 24px;
+  --leading-title-medium: 22px;
+  --leading-title-small: 20px;
+
+  --leading-subhead-large: 26px;
+  --leading-subhead-medium: 22px;
+  --leading-subhead-small: 20px;
+
+  --leading-body-large: 24px;
+  --leading-body-medium: 22px;
+  --leading-body-small: 20px;
+
+  --leading-body-large-w-medium: 24px;
+  --leading-body-medium-w-medium: 22px;
+  --leading-body-small-w-medium: 20px;
+
+  --leading-label-large: 16px;
+  --leading-label-medium: 14px;
+  --leading-label-small: 12px;
+
+  --leading-label-large-w-medium: 16px;
+  --leading-label-large-w-bold: 16px;
+  --leading-label-medium-w-medium: 14px;
+
+  /* Font weights */
+  --font-weight-display-large: bold;
+  --font-weight-display-medium: bold;
+  --font-weight-display-small: bold;
+
+  --font-weight-headline-large: bold;
+  --font-weight-headline-medium: bold;
+  --font-weight-headline-small: bold;
+
+  --font-weight-title-large: semibold;
+  --font-weight-title-medium: semibold;
+  --font-weight-title-small: semibold;
+
+  --font-weight-subhead-large: medium;
+  --font-weight-subhead-medium: medium;
+  --font-weight-subhead-small: medium;
+
+  --font-weight-body-large: regular;
+  --font-weight-body-medium: regular;
+  --font-weight-body-small: regular;
+
+  --font-weight-body-large-w-medium: medium;
+  --font-weight-body-medium-w-medium: medium;
+  --font-weight-body-small-w-medium: medium;
+
+  --font-weight-label-large: regular;
+  --font-weight-label-medium: regular;
+  --font-weight-label-small: regular;
+
+  --font-weight-label-large-w-medium: medium;
+  --font-weight-label-large-w-bold: bold;
+  --font-weight-label-medium-w-medium: medium;
+
+  /* Themes (light / dark)*/
+
 }

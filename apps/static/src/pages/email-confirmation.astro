@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro"
+---
+
+<Layout title="Email Confirmado">
+  <div
+    class="bg-[url(../assets/EmailConfirmed.png)] h-[100dvh] w-full bg-cover bg-no-repeat flex justify-center items-center"
+  >
+    <div class="flex flex-col justify-center gap-12">
+      <div class="flex flex-col items-center gap-6  ">
+        <h1 class="text-white font-clash-grotesk uppercase font-bold">Cohor</h1>
+        <div class="flex flex-col items-center justify-center text-center gap-[16px] text-white font-open-sauce-one">
+          <span class="font-bold text-display-medium">¡Email confirmado con éxito!</span>
+          <small class="text-body-small-w-medium leading-title-small w-[90%]"
+            >Gracias por verificar tu cuenta. Ya podés empezar a conectar con otros grupos en Cohor</small
+          >
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center gap-6 font-open-sauce-one">
+        <a class="cursor-pointer px-6 py-4 bg-white text-black rounded-full w-82 text-center font-semibold">Abrir app</a>
+        <small class="text-label-large text-white"
+          >Si no se redirige automáticamente en unos segundos, hacé click acá</small
+        >
+      </div>
+
+      <div>
+        <span>Nos vemos adentro, El equipo de Cohor ✌️</span>
+        <span>Tiktok | Instagram | LinkedIn</span>
+      </div>
+    </div>
+  </div>
+</Layout>
