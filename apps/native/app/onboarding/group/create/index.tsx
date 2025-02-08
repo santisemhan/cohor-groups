@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { KeyboardAvoidingView, Platform } from "react-native"
-import { Image, ScrollView, SizableText, useTheme, XStack, YStack } from "tamagui"
+import { Image, SizableText, useTheme, XStack, YStack } from "tamagui"
+import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { BlurView } from "expo-blur"
@@ -17,6 +17,8 @@ import { useToastController } from "@tamagui/toast"
 import { useApiClient } from "../../../../lib/http/useApiClient"
 import { endpoint } from "../../../../lib/common/Endpoint"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../../lib/common/Environment"
+import { KeyboardGestureArea } from "react-native-keyboard-controller"
+import { useKeyboardAnimation } from "../../../../lib/hooks/useKeyboardAnimation"
 
 // Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
 export default function CreateGroup() {
@@ -93,18 +95,23 @@ export default function CreateGroup() {
         }
       })
     }
-    console.log("Update image")
   }
 
+  const { height } = useKeyboardAnimation()
+
+  const scrollViewStyle = useAnimatedStyle(
+    () => ({
+      transform: [{ translateY: -height.value }]
+    }),
+    []
+  )
+
   return (
-    <KeyboardAvoidingView style={{ flex: 1, width: "100%" }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "flex-end"
-        }}
-        keyboardShouldPersistTaps="handled"
-        scrollEnabled={false}
+    <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1, width: "100%" }}>
+      <Reanimated.ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end", width: "100%" }}
+        style={scrollViewStyle}
       >
         <YStack gap={40} width="100%">
           <YStack justifyContent="center" alignItems="center" gap={4}>
@@ -195,6 +202,7 @@ export default function CreateGroup() {
                         <Input
                           borderWidth={0}
                           pl={4}
+                          width="100%"
                           backgroundColor="transparent"
                           color="$white-opacity-high"
                           placeholder="Ubicación"
@@ -275,7 +283,7 @@ export default function CreateGroup() {
             </GlassBottomSheet>
           )}
         </YStack>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </Reanimated.ScrollView>
+    </KeyboardGestureArea>
   )
 }

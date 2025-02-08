@@ -3,8 +3,7 @@ import React from "react"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Button } from "../../../../components/ui/Button"
 import { BlurView } from "expo-blur"
-import { openInbox } from "react-native-email-link"
-import { useLocalSearchParams } from "expo-router"
+import { Link, useLocalSearchParams } from "expo-router"
 import { endpoint } from "../../../../lib/common/Endpoint"
 import { useApiClient } from "../../../../lib/http/useApiClient"
 import { useToastController } from "@tamagui/toast"
@@ -13,10 +12,6 @@ export default function Validation() {
   const { userId, email } = useLocalSearchParams()
   const toast = useToastController()
   const api = useApiClient()
-
-  const onOpenMailer = () => {
-    openInbox()
-  }
 
   const resendEmail = () => {
     api
@@ -61,7 +56,9 @@ export default function Validation() {
           </SizableText>
         </YStack>
         <YStack width="100%" gap={20}>
-          <Button onPress={onOpenMailer}>Abrir email</Button>
+          <Link href="/auth/login" asChild>
+            <Button>Iniciar Sesión</Button>
+          </Link>
           <BlurView
             intensity={100}
             tint="dark"
