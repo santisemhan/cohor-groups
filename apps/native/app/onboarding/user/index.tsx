@@ -1,4 +1,4 @@
-import { Image, ScrollView, SizableText, useTheme, YStack } from "tamagui"
+import { Image, SizableText, useTheme, YStack } from "tamagui"
 
 import React, { useEffect, useState } from "react"
 
@@ -23,7 +23,9 @@ import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import { KeyboardAvoidingView, Platform } from "react-native"
+import { KeyboardGestureArea } from "react-native-keyboard-controller"
+import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
+import { useKeyboardAnimation } from "../../../lib/hooks/useKeyboardAnimation"
 
 export default function CreateUserProfile() {
   const toast = useToastController()
@@ -32,12 +34,22 @@ export default function CreateUserProfile() {
   const theme = useTheme()
   const [showStepTwo, setShowStepTwo] = useState(false)
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
+  const [imageLoading, setImageLoading] = useState(false)
 
   useEffect(() => {
     if (user?.onboardingStep === OnboardingStep.STEP_TWO) {
       setShowStepTwo(true)
     }
   }, [])
+
+  const { height } = useKeyboardAnimation()
+
+  const scrollViewStyle = useAnimatedStyle(
+    () => ({
+      transform: [{ translateY: -height.value }]
+    }),
+    []
+  )
 
   const {
     formState: { errors, isSubmitting, isValid },
@@ -101,6 +113,7 @@ export default function CreateUserProfile() {
 
   const onUpdateImage = async () => {
     try {
+      setImageLoading(true)
       const { signature, timestamp } = await api.get<{ signature: string; timestamp: string }>(
         endpoint.user.imagePresignedParams
       )
@@ -129,8 +142,10 @@ export default function CreateUserProfile() {
         onboardingStep: OnboardingStep.STEP_THREE
       })
 
+      setImageLoading(false)
       router.replace("/onboarding/user/success")
     } catch {
+      setImageLoading(false)
       toast.show("Error al cargar la imagen del usuario", {
         customData: {
           backgroundColor: "$error"
@@ -140,14 +155,11 @@ export default function CreateUserProfile() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, width: "100%" }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "flex-end"
-        }}
-        keyboardShouldPersistTaps="handled"
-        scrollEnabled={false}
+    <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1, width: "100%" }}>
+      <Reanimated.ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end" }}
+        style={scrollViewStyle}
       >
         <YStack gap={40} width="100%">
           <YStack justifyContent="center" alignItems="center" gap={4}>
@@ -261,14 +273,19 @@ export default function CreateUserProfile() {
                     )}
                   </YStack>
                 </BlurView>
-                <Button isDisabled={!image} onPress={onUpdateImage} borderColor="$element-high-opacity-mid">
+                <Button
+                  isDisabled={!image}
+                  onPress={onUpdateImage}
+                  borderColor="$element-high-opacity-mid"
+                  loading={imageLoading}
+                >
                   Siguiente
                 </Button>
               </YStack>
             </GlassBottomSheet>
           )}
         </YStack>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </Reanimated.ScrollView>
+    </KeyboardGestureArea>
   )
 }

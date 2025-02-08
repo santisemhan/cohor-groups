@@ -67,7 +67,7 @@ export default function Login() {
   }
 
   return (
-    <YStack gap={40} width="100%">
+    <YStack gap={40} width="100%" justifyContent="flex-end">
       <YStack justifyContent="center" alignItems="center" gap={4}>
         <SizableText textTransform="uppercase" color="$white" size="$headline-large">
           Cohor
