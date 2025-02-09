@@ -3,7 +3,7 @@ import { DatabaseService } from "../services/database/DatabaseService"
 import { Injectable } from "../support/decorator/Injectable"
 
 @Injectable()
-export class MailerRepository {
+export class MailRepository {
   constructor(
     private readonly databaseService: DatabaseService,
     private readonly timeService: TimeService

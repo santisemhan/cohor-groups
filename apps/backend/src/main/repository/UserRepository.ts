@@ -38,6 +38,7 @@ export class UserRepository {
   }
 
   public async findUserByIdOrThrowAsync(id: string) {
+    console.log(id)
     const connection = await this.databaseService.connectionAsync()
     return connection.user.findUniqueOrThrow({ where: { id }, include: { validation: true } })
   }
