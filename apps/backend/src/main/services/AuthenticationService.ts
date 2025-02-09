@@ -10,7 +10,7 @@ import { Role } from "../authorization/Permission"
 import { MailService } from "./MailService"
 import { WebConfigurationProvider } from "../configuration/provider/WebConfigurationProvider"
 import { NotValidatedAccount } from "../errors/NotValidatedAccount"
-import { MailerRepository } from "../repository/MailRepository"
+import { MailRepository } from "../repository/MailRepository"
 import { TooManyRequestError } from "../errors/TooManyRequestError"
 import { EmailRateLimitError } from "../errors/EmailRateLimitError"
 import { UserValidatedError } from "../errors/UserValidatedError"
@@ -27,7 +27,7 @@ import { InvalidTokenError } from "../errors/InvalidTokenError"
 export class AuthenticationService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly mailerRepository: MailerRepository,
+    private readonly mailerRepository: MailRepository,
     private readonly authenticationConfigurationProvider: AuthenticationConfigurationProvider,
     private readonly mailService: MailService,
     private readonly timeService: TimeService,

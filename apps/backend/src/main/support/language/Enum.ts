@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ShallNotInstantiateError } from "../../errors/ShallNotInstantiateError"
 
 /**
  * @description
@@ -9,10 +8,6 @@ import { ShallNotInstantiateError } from "../../errors/ShallNotInstantiateError"
  *	@see https://stackoverflow.com/a/57568856
  */
 export class Enum {
-  private constructor() {
-    throw new ShallNotInstantiateError()
-  }
-
   /**
    * @description
    *	Determines if a value belongs to the enum domain, and can be cast to

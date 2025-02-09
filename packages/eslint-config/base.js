@@ -38,5 +38,15 @@ module.exports = {
         useTabs: false
       }
     ]
-  }
+  },
+  overrides: [
+    {
+      files: ["**/*.test.ts"],
+      plugins: ["jest", "jest-formatting"],
+      extends: ["plugin:jest/recommended", "plugin:jest-formatting/recommended"],
+      rules: {
+        "jest/no-mocks-import": "off"
+      }
+    }
+  ]
 }

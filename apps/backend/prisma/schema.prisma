@@ -25,6 +25,7 @@ model User {
   validation     UserValidation?
   groups         UserGroups[]
   onboardingStep OnboardingStep?
+  mailRateLimits MailRateLimit[]
 
   @@map("Users")
 }
@@ -42,6 +43,7 @@ model UserValidation {
 model MailRateLimit {
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   userId    String   @unique @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   attemptMs Int
   createdAt DateTime
 
@@ -64,5 +66,5 @@ model Group {
   name  String
   users UserGroups[]
 
-  @@map("Group")
+  @@map("Groups")
 }
