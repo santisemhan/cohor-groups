@@ -4,7 +4,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "d2f2f50b-15d2-4e92-a351-b4fcd855a0c7",
     name: "Dios, patria y familia!",
-    presentation: "Monogamia o bala",
+    interests: ["Familia", "Religión", "Patria"],
+    location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/3c/82/a3/3c82a335d12c3ccdc338bea8bfce2a6c.jpg",
     members: [
       {
@@ -37,7 +38,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "e2d60d50-df77-4718-8e12-5c563a07e7c5",
     name: "La revolución del alma",
-    presentation: "Haz lo que sientas",
+    interests: ["Espiritualidad", "Meditación", "Paz interior"],
+    location: "Recoleta, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/9e/35/48/9e35484c88fa2c5aac66e9c3c849f434.jpg",
     members: [
       {
@@ -70,7 +72,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "ad8e2ff4-05ca-45b4-8f5c-d1d7c61587b0",
     name: "Vientos de cambio",
-    presentation: "La magia está en los detalles",
+    interests: ["Ecología", "Sustentabilidad", "Cambio climático"],
+    location: "Villa Crespo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/c7/69/0b/c7690b132ff7a01d51922c134ab4a859.jpg",
     members: [
       {
@@ -93,7 +96,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "e9b8990e-86a2-4f8e-bc9e-40726494be32",
     name: "Fuerza y honor",
-    presentation: "Vencer o morir",
+    interests: ["Deportes", "Competencia", "Superación"],
+    location: "Belgrano, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/14/f7/6f/14f76fa62e2d6d29af0fe3201a2bbdb9.jpg",
     members: [
       {
@@ -126,7 +130,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "f3f5e431-c4fd-468b-b282-c9fa9711b2ff",
     name: "Sin miedo al éxito",
-    presentation: "Hazlo con pasión",
+    interests: ["Emprendimiento", "Negocios", "Innovación"],
+    location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/3b/29/97/3b2997bda34ee285fe26ce665a6b9a61.jpg",
     members: [
       {
@@ -159,7 +164,8 @@ export const groups: SwippeableGroup[] = [
   {
     id: "c3d8f3c2-bf3f-4b74-a3fa-4b0f4d08e5f4",
     name: "Juntos por la victoria",
-    presentation: "Porque juntos somos más fuertes",
+    interests: ["Política", "Cambio social", "Participación"],
+    location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/b6/d7/34/b6d734a0df06defb3567a5ead23e790c.jpg",
     members: [
       {
@@ -186,6 +192,11 @@ export const groups: SwippeableGroup[] = [
         id: "d75d9b8d-2a9f-4d24-9b2f-e20b56c07397",
         name: "Esteban",
         imageUrl: "https://randomuser.me/api/portraits/men/33.jpg"
+      },
+      {
+        id: "b6a3a3c2-3c8b-4d7b-8f3f-5b0f4d08e5f4",
+        name: "María",
+        imageUrl: "https://randomuser.me/api/portraits/women/33.jpg"
       }
     ]
   }

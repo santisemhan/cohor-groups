@@ -14,6 +14,8 @@ import { OnboardingStep, User } from "@cohor/types"
 import { useApiClient } from "../lib/http/useApiClient"
 import CustomToast from "../components/toast"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { ToastProvider } from "@tamagui/toast"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -39,26 +41,27 @@ export default function RootLayout() {
       try {
         if (!loaded) return
 
-        const token = await AsyncStorage.getItem("access_token")
-        if (!token) {
-          await SplashScreen.hideAsync()
-          return
-        }
+        await router.replace("/app")
+        // const token = await AsyncStorage.getItem("access_token")
+        // if (!token) {
+        //   await SplashScreen.hideAsync()
+        //   return
+        // }
 
-        const { user } = await api.get<{ user: User }>(endpoint.auth.loggedUser)
-        const onboardingStep = user?.onboardingStep ?? null
+        // const { user } = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+        // const onboardingStep = user?.onboardingStep ?? null
 
-        const onboardingRoutes: Record<OnboardingStep, string> = {
-          [OnboardingStep.STEP_ONE]: "/onboarding/user",
-          [OnboardingStep.STEP_TWO]: "/onboarding/user",
-          [OnboardingStep.STEP_THREE]: "/onboarding/user/success",
-          [OnboardingStep.COMPLETED]: "/app"
-        }
+        // const onboardingRoutes: Record<OnboardingStep, string> = {
+        //   [OnboardingStep.STEP_ONE]: "/onboarding/user",
+        //   [OnboardingStep.STEP_TWO]: "/onboarding/user",
+        //   [OnboardingStep.STEP_THREE]: "/onboarding/user/success",
+        //   [OnboardingStep.COMPLETED]: "/app"
+        // }
 
-        const route = onboardingRoutes[onboardingStep as OnboardingStep] || "/auth/login"
+        // const route = onboardingRoutes[onboardingStep as OnboardingStep] || "/app"
 
-        await router.replace(route)
-        await SplashScreen.hideAsync()
+        // await router.replace("/app")
+        // await SplashScreen.hideAsync()
       } catch (error) {
         console.error("Error checking login status:", error)
         await SplashScreen.hideAsync()
@@ -73,12 +76,16 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
-      <AuthProvider>
-        <StatusBar style="light" />
-        <Stack screenOptions={{ headerShown: false }} />
-      </AuthProvider>
-      <CustomToast />
-    </TamaguiProvider>
+    <KeyboardProvider>
+      <ToastProvider swipeDirection="horizontal">
+        <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
+          <AuthProvider>
+            <StatusBar style="light" />
+            <Stack screenOptions={{ headerShown: false }} />
+          </AuthProvider>
+          <CustomToast />
+        </TamaguiProvider>
+      </ToastProvider>
+    </KeyboardProvider>
   )
 }

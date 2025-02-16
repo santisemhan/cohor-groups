@@ -13,7 +13,8 @@ export const SwippeableGroupSchema = z.object({
   id: z.string(),
   name: z.string(),
   imageUrl: z.string(),
-  presentation: z.string(),
+  interests: z.array(z.string()),
+  location: z.string(),
   members: z.array(
     z.object({
       id: z.string(),

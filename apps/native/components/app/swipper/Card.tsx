@@ -1,10 +1,11 @@
-import { SwippeableGroup } from "@cohor/types"
-import { Avatar, Image, SizableText, View, XStack, YStack, ScrollView } from "tamagui"
-import Gradient from "../../ui/Gradient"
-import { GestureDetector, Gesture } from "react-native-gesture-handler"
+import React, { useState } from "react"
+import { Avatar, Image, SizableText, View, XStack, YStack, Separator } from "tamagui"
+import { GestureDetector, Gesture, FlatList, ScrollView } from "react-native-gesture-handler"
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS } from "react-native-reanimated"
 import { useWindowDimensions } from "react-native"
-import { useState } from "react"
+import MapPinIcon from "../../icons/MapPin"
+import { SwippeableGroup } from "@cohor/types"
+import Gradient from "../../ui/Gradient"
 
 export default function Card({
   group,
@@ -23,11 +24,10 @@ export default function Card({
   const translateY = useSharedValue(0)
   const rotate = useSharedValue(0)
   const opacity = useSharedValue(1)
-  const teamSectionHeight = useSharedValue(SCREEN_HEIGHT * 0.15) // Altura inicial del contenedor de "Miembros del equipo"
+  const teamSectionHeight = useSharedValue(SCREEN_HEIGHT * 0.15)
   const teamSectionOpacity = useSharedValue(0)
 
-  // Altura dinámica para el contenedor de "Miembros del equipo"
-  const TEAM_SECTION_HEIGHT = SCREEN_HEIGHT * 0.7 // Ocupa el 80% de la pantalla
+  const TEAM_SECTION_HEIGHT = SCREEN_HEIGHT * 0.65
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }, { translateY: translateY.value }, { rotate: `${rotate.value}deg` }],
@@ -36,8 +36,7 @@ export default function Card({
 
   const teamSectionStyle = useAnimatedStyle(() => ({
     height: teamSectionHeight.value,
-    opacity: teamSectionOpacity.value,
-    overflow: "hidden"
+    opacity: teamSectionOpacity.value
   }))
 
   const handleSwipeComplete = (direction: "left" | "right") => {
@@ -68,7 +67,7 @@ export default function Card({
   const verticalPanGesture = Gesture.Pan().onEnd((event) => {
     if (event.translationY < -50) {
       runOnJS(setIsTeamVisible)(true)
-      teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT, { duration: 300 }) // Usa la altura dinámica
+      teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT, { duration: 300 })
       teamSectionOpacity.value = withTiming(1, { duration: 300 })
     } else if (event.translationY > 50) {
       runOnJS(setIsTeamVisible)(false)
@@ -91,6 +90,7 @@ export default function Card({
       >
         <Image src={group.imageUrl} alt={group.name} objectFit="cover" width="100%" height="100%" />
 
+        {/* Gradient if true*/}
         <View position="absolute" bottom={0} left={0} right={0} height="50%" zIndex={1}>
           <Gradient fromColor="rgba(0,0,0,0)" toColor="rgba(0,0,0,0)" height="100%" opacityColor1={0} />
         </View>
@@ -104,9 +104,12 @@ export default function Card({
             <SizableText color="$white" size="$display-small" textAlign="center">
               {group.name}
             </SizableText>
-            <SizableText color="$white-opacity-high" size="$body-small-w-medium" textAlign="center">
-              {group.presentation}
-            </SizableText>
+            <XStack gap={4} justifyContent="center" alignItems="center">
+              <MapPinIcon width={18} />
+              <SizableText color="$white-opacity-high" size="$body-small-w-medium" textAlign="center">
+                {group.location}
+              </SizableText>
+            </XStack>
           </YStack>
           <XStack alignItems="center" gap="$4" marginTop={12}>
             <XStack position="relative" width={50} height={24}>
@@ -130,20 +133,56 @@ export default function Card({
               {`${group.members.length} miembros`}
             </SizableText>
           </XStack>
-          {/* Sección "Miembros del equipo" con ScrollView y altura dinámica */}
-          <Animated.View style={[{ width: "100%" }, teamSectionStyle]}>
-            <ScrollView style={{ maxHeight: TEAM_SECTION_HEIGHT }}>
-              <YStack gap={8} marginTop={12}>
-                {group.members.map((member) => (
-                  <XStack key={member.id} alignItems="center" gap={8}>
-                    <Avatar circular size="$2">
-                      <Avatar.Image accessibilityLabel={member.name} src={member.imageUrl} />
-                      <Avatar.Fallback backgroundColor="$blue10" />
-                    </Avatar>
-                    <SizableText color="$white">{member.name}</SizableText>
-                  </XStack>
-                ))}
-              </YStack>
+
+          <Animated.View style={[{ width: "100%", height: TEAM_SECTION_HEIGHT }, teamSectionStyle]}>
+            <ScrollView>
+              <View position="absolute" bottom={0} left={0} right={0} height="100%" zIndex={1}>
+                {/* Add animation */}
+                <Gradient
+                  height={TEAM_SECTION_HEIGHT}
+                  fromColor="rgb(255, 99, 71)"
+                  toColor="rgb(255, 99, 71)"
+                  opacityColor1={0}
+                />
+              </View>
+              <View width="90%" alignSelf="center">
+                <Separator marginVertical={24} borderColor="$white-opacity-mid" />
+                <YStack gap={24}>
+                  <YStack gap={24}>
+                    <SizableText color="$white" size="$title-small">
+                      Miembros del grupo
+                    </SizableText>
+                    <FlatList
+                      contentContainerStyle={{ gap: 20 }}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      data={group.members}
+                      keyExtractor={(item) => item.id}
+                      renderItem={({ item }) => (
+                        <YStack gap={12} alignItems="center">
+                          <Avatar circular size="$8">
+                            <Avatar.Image accessibilityLabel={item.name} src={item.imageUrl} />
+                            <Avatar.Fallback backgroundColor="$blue10" />
+                          </Avatar>
+                          <YStack gap={2} alignItems="center">
+                            <SizableText color="$white" size="$label-large-w-medium">
+                              {item.name}
+                            </SizableText>
+                            <SizableText color="$white-opacity-high" size="$label-large-w-medium">
+                              24 años
+                            </SizableText>
+                          </YStack>
+                        </YStack>
+                      )}
+                    />
+                  </YStack>
+                  <YStack gap={24}>
+                    <SizableText color="$white" size="$title-small">
+                      Intereses del grupo
+                    </SizableText>
+                  </YStack>
+                </YStack>
+              </View>
             </ScrollView>
           </Animated.View>
         </View>
