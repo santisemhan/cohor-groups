@@ -1,33 +1,26 @@
-import { useTheme, useWindowDimensions, View, XStack } from "tamagui"
+import { RefObject } from "react"
+import { useTheme, View, XStack } from "tamagui"
 import CaretDobleLeftIcon from "../../icons/CaretDobleLeft"
 import { BlurView } from "expo-blur"
 import XIcon from "../../icons/X"
 import Gradient from "../../ui/Gradient"
 import HearthIcon from "../../icons/Hearth"
 import CaretDobleRightIcon from "../../icons/CaretDobleRight"
-import { runOnJS, useSharedValue, withTiming } from "react-native-reanimated"
+import { CardHandle } from "./Card"
 
-export default function SwipperActions() {
+interface SwipperActionsProps {
+  cardRef: RefObject<CardHandle>
+}
+
+export default function SwipperActions({ cardRef }: SwipperActionsProps) {
   const theme = useTheme()
 
-  const { width: SCREEN_WIDTH } = useWindowDimensions()
-
-  const translateX = useSharedValue(0)
-
-  const opacity = useSharedValue(1)
-
-  const handleSwipeComplete = (direction: "left" | "right") => {
-    console.log(direction)
+  const handleSwipeLeft = () => {
+    cardRef.current?.swipeLeft()
   }
 
-  const handleHearthTouch = () => {
-    translateX.value = withTiming(SCREEN_WIDTH, {}, () => runOnJS(handleSwipeComplete)("right"))
-    opacity.value = withTiming(0, { duration: 300 })
-  }
-
-  const handleXTouch = () => {
-    translateX.value = withTiming(-SCREEN_WIDTH, {}, () => runOnJS(handleSwipeComplete)("left"))
-    opacity.value = withTiming(0, { duration: 300 })
+  const handleSwipeRight = () => {
+    cardRef.current?.swipeRight()
   }
 
   return (
@@ -44,7 +37,7 @@ export default function SwipperActions() {
         <CaretDobleLeftIcon color={theme["white-opacity-mid"].val} />
       </View>
       <XStack gap={8}>
-        <View>
+        <View onPress={handleSwipeLeft}>
           <BlurView
             intensity={10}
             tint="light"
@@ -65,11 +58,11 @@ export default function SwipperActions() {
                 margin: 5
               }}
             >
-              <XIcon width={32} height={32} style={{ margin: 15 }} onPress={handleXTouch} />
+              <XIcon width={32} height={32} style={{ margin: 15 }} />
             </BlurView>
           </BlurView>
         </View>
-        <View>
+        <View onPress={handleSwipeRight}>
           <BlurView
             intensity={20}
             tint="dark"
@@ -104,7 +97,7 @@ export default function SwipperActions() {
                 opacityColor1={0.32}
                 opacityColor2={0.08}
               />
-              <HearthIcon color="#FF3E85" width={32} height={32} style={{ margin: 15 }} onPress={handleHearthTouch} />
+              <HearthIcon color="#FF3E85" width={32} height={32} style={{ margin: 15 }} />
             </BlurView>
           </BlurView>
         </View>
