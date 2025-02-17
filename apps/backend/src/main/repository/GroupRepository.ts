@@ -81,6 +81,13 @@ export class GroupRepository {
               userId
             }
           }
+        },
+        include: {
+          GroupInterest: {
+            include: {
+              Interest: true
+            }
+          }
         }
       })
     )[0]
