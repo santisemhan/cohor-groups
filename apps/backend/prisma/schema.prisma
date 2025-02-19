@@ -72,8 +72,6 @@ model Group {
 
 model GroupInterest {
   id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  code       Int      @unique @default(autoincrement())
-  name       String
   groupId    String   @db.Uuid
   group      Group    @relation(fields: [groupId], references: [id])
   Interest   Interest @relation(fields: [interestId], references: [id])
