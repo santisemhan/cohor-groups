@@ -6,6 +6,8 @@ import { useWindowDimensions } from "react-native"
 import MapPinIcon from "../../icons/MapPin"
 import { SwippeableGroup } from "@cohor/types"
 import Gradient from "../../ui/Gradient"
+import Chip from "../../ui/Chip"
+import { unicodeToHex } from "../../../lib/support/unicodeToHex"
 
 export type CardHandle = {
   swipeLeft: () => void
@@ -232,6 +234,21 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                       <SizableText color="$white" size="$title-small">
                         Intereses del grupo
                       </SizableText>
+                      <XStack gap={12} flexWrap="wrap">
+                        {group.interests.map((interest) => (
+                          <Chip
+                            key={interest.name}
+                            backgroundColor="$white-opacity-low"
+                            borderColor="$white-opacity-low"
+                            borderWidth={1}
+                          >
+                            <SizableText color="$element-high" size="$label-large-w-medium">
+                              {interest.name}
+                            </SizableText>
+                            <SizableText>{String.fromCodePoint(unicodeToHex(interest.unicode))}</SizableText>
+                          </Chip>
+                        ))}
+                      </XStack>
                     </YStack>
                   </YStack>
                 </View>

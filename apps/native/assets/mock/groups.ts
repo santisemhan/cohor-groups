@@ -4,7 +4,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "d2f2f50b-15d2-4e92-a351-b4fcd855a0c7",
     name: "Dios, patria y familia!",
-    interests: ["Familia", "Religión", "Patria"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/3c/82/a3/3c82a335d12c3ccdc338bea8bfce2a6c.jpg",
     members: [
@@ -38,7 +71,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "e2d60d50-df77-4718-8e12-5c563a07e7c5",
     name: "La revolución del alma",
-    interests: ["Espiritualidad", "Meditación", "Paz interior"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Recoleta, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/9e/35/48/9e35484c88fa2c5aac66e9c3c849f434.jpg",
     members: [
@@ -72,7 +138,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "ad8e2ff4-05ca-45b4-8f5c-d1d7c61587b0",
     name: "Vientos de cambio",
-    interests: ["Ecología", "Sustentabilidad", "Cambio climático"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Villa Crespo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/c7/69/0b/c7690b132ff7a01d51922c134ab4a859.jpg",
     members: [
@@ -96,7 +195,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "e9b8990e-86a2-4f8e-bc9e-40726494be32",
     name: "Fuerza y honor",
-    interests: ["Deportes", "Competencia", "Superación"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Belgrano, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/14/f7/6f/14f76fa62e2d6d29af0fe3201a2bbdb9.jpg",
     members: [
@@ -130,7 +262,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "f3f5e431-c4fd-468b-b282-c9fa9711b2ff",
     name: "Sin miedo al éxito",
-    interests: ["Emprendimiento", "Negocios", "Innovación"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/3b/29/97/3b2997bda34ee285fe26ce665a6b9a61.jpg",
     members: [
@@ -164,7 +329,40 @@ export const groups: SwippeableGroup[] = [
   {
     id: "c3d8f3c2-bf3f-4b74-a3fa-4b0f4d08e5f4",
     name: "Juntos por la victoria",
-    interests: ["Política", "Cambio social", "Participación"],
+    interests: [
+      {
+        name: "Asado con amigos",
+        unicode: "U+1F498	"
+      },
+      {
+        name: "Aire libre",
+        unicode: "U+1F648"
+      },
+      {
+        name: "Cena en un buen lugar",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Juntadas en casa",
+        unicode: "U+1F496"
+      },
+      {
+        name: "Plan tranqui",
+        unicode: "U+1F60B"
+      },
+      {
+        name: "Electronica",
+        unicode: "U+1F4AF"
+      },
+      {
+        name: "Rock",
+        unicode: "U+1F4A5"
+      },
+      {
+        name: "Trap/Rap",
+        unicode: "U+1FAE0"
+      }
+    ],
     location: "Palermo, Buenos Aires",
     imageUrl: "https://i.pinimg.com/736x/b6/d7/34/b6d734a0df06defb3567a5ead23e790c.jpg",
     members: [
