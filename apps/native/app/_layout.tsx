@@ -14,6 +14,8 @@ import { OnboardingStep, User } from "@cohor/types"
 import { useApiClient } from "../lib/http/useApiClient"
 import CustomToast from "../components/toast"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { KeyboardProvider } from "react-native-keyboard-controller"
+import { ToastProvider } from "@tamagui/toast"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -73,12 +75,16 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
-      <AuthProvider>
-        <StatusBar style="light" />
-        <Stack screenOptions={{ headerShown: false }} />
-      </AuthProvider>
-      <CustomToast />
-    </TamaguiProvider>
+    <KeyboardProvider>
+      <ToastProvider swipeDirection="horizontal">
+        <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
+          <AuthProvider>
+            <StatusBar style="light" />
+            <Stack screenOptions={{ headerShown: false }} />
+          </AuthProvider>
+          <CustomToast />
+        </TamaguiProvider>
+      </ToastProvider>
+    </KeyboardProvider>
   )
 }

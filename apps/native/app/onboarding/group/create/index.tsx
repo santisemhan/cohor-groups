@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Image, SizableText, useTheme, XStack, YStack } from "tamagui"
+import { useEffect, useState } from "react"
+import { Image, ScrollView, Separator, SizableText, useTheme, XStack, YStack } from "tamagui"
 import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
 import GlassBottomSheet from "../../../../components/GlassBotomSheet"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
@@ -15,16 +15,26 @@ import { CreateGroupForm, CreateGroupSchema } from "../../../../lib/schema/onboa
 import { router } from "expo-router"
 import { useToastController } from "@tamagui/toast"
 import { useApiClient } from "../../../../lib/http/useApiClient"
+import { Category } from "@cohor/types"
 import { endpoint } from "../../../../lib/common/Endpoint"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../../lib/common/Environment"
 import { KeyboardGestureArea } from "react-native-keyboard-controller"
 import { useKeyboardAnimation } from "../../../../lib/hooks/useKeyboardAnimation"
-
+import Chip from "../../../../components/ui/Chip"
+import { unicodeToHex } from "../../../../lib/support/unicodeToHex"
 // Hay que usar https://www.npmjs.com/package/react-native-google-places-autocomplete pero sale plata la api de google. Se puede reemplazar la api de google por otras, algo asi: https://stackoverflow.com/questions/71714305/alternatives-for-places-api-autocomplete-for-expo-react-native
 export default function CreateGroup() {
   const toast = useToastController()
   const api = useApiClient()
-  const [showStepTwo, setShowStepTwo] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [rotations, setRotations] = useState<
+    {
+      interestId: string
+      rotation: number
+    }[]
+  >([])
+  const [selectedInterest, setSelectedInterest] = useState<string[]>([])
+  const [step, setStep] = useState<"ONE" | "TWO" | "THREE">("ONE")
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
   const theme = useTheme()
 
@@ -36,8 +46,44 @@ export default function CreateGroup() {
     resolver: zodResolver(CreateGroupSchema)
   })
 
+  const onPressChip = (interestId: string) => {
+    if (selectedInterest.includes(interestId)) {
+      setSelectedInterest(selectedInterest.filter((interest) => interest !== interestId))
+      return
+    }
+    setSelectedInterest([...selectedInterest, interestId])
+  }
+
+  useEffect(() => {
+    const onGetCategories = async () => {
+      try {
+        const categories = await api.get<Category[]>(endpoint.category.root)
+        setCategories(categories)
+        setRotations(
+          categories.flatMap((category) =>
+            category.interests.map((interest) => ({
+              interestId: interest.id,
+              rotation: Math.floor(Math.random() * 8)
+            }))
+          )
+        )
+      } catch {
+        toast.show("Error al obtener categorias", {
+          customData: {
+            backgroundColor: "$error"
+          }
+        })
+      }
+    }
+    onGetCategories()
+  }, [])
+
   const onCreateGroup = async () => {
-    setShowStepTwo(true)
+    setStep("TWO")
+  }
+
+  const onSelectImage = async () => {
+    setStep("THREE")
   }
 
   const pickImage = async () => {
@@ -59,6 +105,7 @@ export default function CreateGroup() {
       const response = await api.post<CreateGroupForm, { id: string; code: number; name: string }>(
         endpoint.group.root,
         {
+          interestIds: selectedInterest,
           name: data.name
         }
       )
@@ -119,7 +166,7 @@ export default function CreateGroup() {
               Cohor
             </SizableText>
           </YStack>
-          {!showStepTwo ? (
+          {step === "ONE" && (
             <GlassBottomSheet>
               <SizableText color="$white" size="$subhead-medium">
                 Iniciar un grupo
@@ -228,7 +275,61 @@ export default function CreateGroup() {
                 </Button>
               </YStack>
             </GlassBottomSheet>
-          ) : (
+          )}
+          {step === "TWO" && (
+            <GlassBottomSheet>
+              <SizableText color="$white" size="$subhead-medium">
+                Elige los intereses de tu grupo
+              </SizableText>
+              <YStack gap={32} justifyContent="flex-end" width="100%">
+                <ScrollView maxHeight={500} width="100%" mb="20">
+                  <YStack gap="24">
+                    {categories.length > 0 &&
+                      categories.map((category) => (
+                        <YStack gap="24">
+                          <XStack alignItems="center" gap="8">
+                            <Separator borderColor="$white-opacity-mid" />
+                            <SizableText color="$white" size={"$body-small-w-medium"}>
+                              {category.name}
+                            </SizableText>
+                            <Separator borderColor="$white-opacity-mid" />
+                          </XStack>
+                          <XStack flexWrap="wrap" gap="16" justifyContent="center">
+                            {category.interests.map((interest) => (
+                              <Chip
+                                rotate={`${rotations.find((rotation) => rotation.interestId === interest.id)?.rotation || 0}deg`}
+                                backgroundColor={
+                                  selectedInterest.includes(interest.id) ? "$white" : "$white-opacity-low"
+                                }
+                                onPress={() => onPressChip(interest.id)}
+                              >
+                                <SizableText
+                                  color={selectedInterest.includes(interest.id) ? "$black" : "$white"}
+                                  size="$body-small-w-medium"
+                                >
+                                  {interest.name}
+                                </SizableText>
+                                <SizableText>{String.fromCodePoint(unicodeToHex(interest.unicode))}</SizableText>
+                              </Chip>
+                            ))}
+                          </XStack>
+                        </YStack>
+                      ))}
+                  </YStack>
+                </ScrollView>
+                <Button
+                  isDisabled={selectedInterest.length < 1}
+                  disabled={selectedInterest.length < 1}
+                  borderColor="$element-high-opacity-mid"
+                  loading={isSubmitting}
+                  onPress={onSelectImage}
+                >
+                  Siguiente
+                </Button>
+              </YStack>
+            </GlassBottomSheet>
+          )}
+          {step === "THREE" && (
             <GlassBottomSheet>
               <SizableText color="$white" size="$subhead-medium">
                 Seleccioná una foto para tu grupo
