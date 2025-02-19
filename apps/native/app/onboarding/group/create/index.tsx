@@ -26,7 +26,13 @@ import { unicodeToHex } from "../../../../lib/support/unicodeToHex"
 export default function CreateGroup() {
   const toast = useToastController()
   const api = useApiClient()
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [rotations, setRotations] = useState<
+    {
+      interestId: string
+      rotation: number
+    }[]
+  >([])
   const [selectedInterest, setSelectedInterest] = useState<string[]>([])
   const [step, setStep] = useState<"ONE" | "TWO" | "THREE">("ONE")
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null)
@@ -52,14 +58,14 @@ export default function CreateGroup() {
     const onGetCategories = async () => {
       try {
         const categories = await api.get<Category[]>(endpoint.category.root)
-        setCategories(
-          categories.map((category) => ({
-            ...category,
-            interests: category.interests.map((interest) => ({
-              ...interest,
-              rotate: `${Math.floor(Math.random() * 8)}deg`
+        setCategories(categories)
+        setRotations(
+          categories.flatMap((category) =>
+            category.interests.map((interest) => ({
+              interestId: interest.id,
+              rotation: Math.floor(Math.random() * 8)
             }))
-          }))
+          )
         )
       } catch {
         toast.show("Error al obtener categorias", {
@@ -99,6 +105,7 @@ export default function CreateGroup() {
       const response = await api.post<CreateGroupForm, { id: string; code: number; name: string }>(
         endpoint.group.root,
         {
+          interestIds: selectedInterest,
           name: data.name
         }
       )
@@ -275,7 +282,7 @@ export default function CreateGroup() {
                 Elige los intereses de tu grupo
               </SizableText>
               <YStack gap={32} justifyContent="flex-end" width="100%">
-                <ScrollView maxHeight={500} width="100%">
+                <ScrollView maxHeight={500} width="100%" mb="20">
                   <YStack gap="24">
                     {categories.length > 0 &&
                       categories.map((category) => (
@@ -290,12 +297,11 @@ export default function CreateGroup() {
                           <XStack flexWrap="wrap" gap="16" justifyContent="center">
                             {category.interests.map((interest) => (
                               <Chip
-                                rotate={interest.rotate}
+                                rotate={`${rotations.find((rotation) => rotation.interestId === interest.id)?.rotation || 0}deg`}
                                 backgroundColor={
                                   selectedInterest.includes(interest.id) ? "$white" : "$white-opacity-low"
                                 }
                                 onPress={() => onPressChip(interest.id)}
-                                key={interest.id}
                               >
                                 <SizableText
                                   color={selectedInterest.includes(interest.id) ? "$black" : "$white"}
@@ -312,8 +318,8 @@ export default function CreateGroup() {
                   </YStack>
                 </ScrollView>
                 <Button
-                  isDisabled={!image}
-                  disabled={!image}
+                  isDisabled={selectedInterest.length < 1}
+                  disabled={selectedInterest.length < 1}
                   borderColor="$element-high-opacity-mid"
                   loading={isSubmitting}
                   onPress={onSelectImage}
