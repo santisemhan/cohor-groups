@@ -61,10 +61,40 @@ model UserGroups {
 }
 
 model Group {
-  id    String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  code  Int          @unique @default(autoincrement())
-  name  String
-  users UserGroups[]
+  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  code          Int             @unique @default(autoincrement())
+  name          String
+  users         UserGroups[]
+  GroupInterest GroupInterest[]
 
   @@map("Groups")
+}
+
+model GroupInterest {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  groupId    String   @db.Uuid
+  group      Group    @relation(fields: [groupId], references: [id])
+  Interest   Interest @relation(fields: [interestId], references: [id])
+  interestId String   @db.Uuid
+
+  @@map("GroupInterest")
+}
+
+model Interest {
+  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  unicode       String
+  name          String
+  categoryId    String          @db.Uuid
+  category      Category        @relation(fields: [categoryId], references: [id])
+  groupInterest GroupInterest[]
+
+  @@map("Interest")
+}
+
+model Category {
+  id        String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String
+  interests Interest[]
+
+  @@map("Category")
 }
