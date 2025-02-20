@@ -7,7 +7,7 @@ import { Injectable } from "../support/decorator/Injectable"
 export class GroupRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  public async createGroupAsync(data: { name: string, interestIds: string[] }, userId: string) {
+  public async createGroupAsync(data: { name: string; interestIds: string[] }, userId: string) {
     const connection = await this.databaseService.connectionAsync()
     const group = await connection.group.create({
       data: {
@@ -15,7 +15,7 @@ export class GroupRepository {
         GroupInterest: {
           createMany: {
             data: data.interestIds.map((id) => ({
-              interestId: id,
+              interestId: id
             }))
           }
         },
