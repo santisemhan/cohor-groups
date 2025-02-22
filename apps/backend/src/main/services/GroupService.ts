@@ -5,7 +5,7 @@ import { Injectable } from "../support/decorator/Injectable"
 export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
 
-  public async createAsync(data: { name: string, interestIds: string[] }, userId: string) {
+  public async createAsync(data: { name: string; interestIds: string[] }, userId: string) {
     return this.groupRepository.createGroupAsync(data, userId)
   }
 
