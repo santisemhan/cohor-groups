@@ -37,7 +37,7 @@ export class ValidateAccountFunction extends APIServerlessFunction {
 
     const configuration = await this.webConfigurationProvider.getConfigurationAsync()
     return new HTTPResponse(MIMEType.JSON)
-      .header("Location", `${configuration.source}/auth/validate/success`)
+      .header("Location", `${configuration.origins[0]}/es/email-validated`)
       .statusCode(HTTPStatusCode.PermanentRedirect)
   }
 }
