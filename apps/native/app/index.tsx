@@ -41,24 +41,25 @@ export default function Home() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const token = await AsyncStorage.getItem("access_token")
-        if (!token) {
-          await SplashScreen.hideAsync()
-          return
-        }
+        await router.replace("/app/chat")
+        // const token = await AsyncStorage.getItem("access_token")
+        // if (!token) {
+        //   await SplashScreen.hideAsync()
+        //   return
+        // }
 
-        const { user } = await api.get<{ user: User }>(endpoint.auth.loggedUser)
-        const onboardingStep = user?.onboardingStep ?? null
+        // const { user } = await api.get<{ user: User }>(endpoint.auth.loggedUser)
+        // const onboardingStep = user?.onboardingStep ?? null
 
-        const onboardingRoutes: Record<OnboardingStep, string> = {
-          [OnboardingStep.STEP_ONE]: "/onboarding/user",
-          [OnboardingStep.STEP_TWO]: "/onboarding/user",
-          [OnboardingStep.STEP_THREE]: "/onboarding/user/success",
-          [OnboardingStep.COMPLETED]: "/app"
-        }
+        // const onboardingRoutes: Record<OnboardingStep, string> = {
+        //   [OnboardingStep.STEP_ONE]: "/onboarding/user",
+        //   [OnboardingStep.STEP_TWO]: "/onboarding/user",
+        //   [OnboardingStep.STEP_THREE]: "/onboarding/user/success",
+        //   [OnboardingStep.COMPLETED]: "/app"
+        // }
 
-        const route = onboardingRoutes[onboardingStep as OnboardingStep] || "/auth/login"
-        await router.replace(route)
+        // const route = onboardingRoutes[onboardingStep as OnboardingStep] || "/auth/login"
+        // await router.replace(route)
       } catch (error) {
         console.error("Error checking login status:", error)
       } finally {

@@ -26702,6 +26702,13 @@
           "val": "rgba(255, 255, 255, 0.12)",
           "variable": ""
         },
+        "primary": {
+          "isVar": true,
+          "key": "$primary",
+          "name": "c-primary",
+          "val": "rgba(255, 62, 133, 1)",
+          "variable": ""
+        },
         "success": {
           "isVar": true,
           "key": "$success",
@@ -27629,6 +27636,13 @@
         "key": "$white-opacity-low",
         "name": "c-white-opacity-low",
         "val": "rgba(255, 255, 255, 0.12)",
+        "variable": ""
+      },
+      "$color.primary": {
+        "isVar": true,
+        "key": "$primary",
+        "name": "c-primary",
+        "val": "rgba(255, 62, 133, 1)",
         "variable": ""
       },
       "$color.success": {

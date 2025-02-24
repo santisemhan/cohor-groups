@@ -97,7 +97,7 @@ export default function SwipperActions({ cardRef }: SwipperActionsProps) {
                 opacityColor1={0.32}
                 opacityColor2={0.08}
               />
-              <HearthIcon color="#FF3E85" width={32} height={32} style={{ margin: 15 }} />
+              <HearthIcon color={theme["primary"].val} width={32} height={32} style={{ margin: 15 }} />
             </BlurView>
           </BlurView>
         </View>
