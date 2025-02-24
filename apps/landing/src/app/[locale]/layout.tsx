@@ -1,8 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google"
 import "../globals.css"
-import { getMessages } from "next-intl/server"
+import { Geist, Geist_Mono } from "next/font/google"
+import { setRequestLocale } from "next-intl/server"
 import { NextIntlClientProvider } from "next-intl"
 import { Metadata } from "next"
+import { routing } from "@/i18n/routing"
+import { notFound } from "next/navigation"
+import { Locale } from "@/config"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,16 +24,22 @@ const geistMono = Geist_Mono({
 
 type LayoutProps = {
   children: React.ReactNode
-  params: { locale: string }
+  params: { locale: Locale }
 }
 
-export default async function Layout({ children, params }: LayoutProps) {
-  const { locale } = params
-  const messages = await getMessages({ locale })
+export default async function LocaleLayout({ children, params }: LayoutProps) {
+  const { locale } = await params;
+
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound()
+  }
+
+  setRequestLocale(locale);
+
   return (
     <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider>
           {children}
         </NextIntlClientProvider>
       </body>

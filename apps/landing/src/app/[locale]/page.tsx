@@ -1,13 +1,22 @@
-"use client"
+import { Locale } from "@/config"
+import { getTranslations } from "next-intl/server"
 
-import { useTranslations } from "use-intl"
-export default function IndexPage() {
-  const t = useTranslations("IndexPage")
+export default async function IndexPage() {
+  const t = await getTranslations("HOME")
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1>{t("title")}</h1>
+        <h1>{t("TITLE")}</h1>
       </main>
     </div>
   )
+}
+
+export async function generateMetadata({ params }: { params: { locale: Locale } }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "HOME" })
+
+  return {
+    title: t("TITLE")
+  }
 }
