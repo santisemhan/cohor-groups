@@ -1,4 +1,3 @@
-import { Locale } from "@/config"
 import { getTranslations } from "next-intl/server"
 
 export default async function IndexPage() {
@@ -12,9 +11,8 @@ export default async function IndexPage() {
   )
 }
 
-export async function generateMetadata({ params }: { params: { locale: Locale } }) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "HOME" })
+export async function generateMetadata() {
+  const t = await getTranslations("HOME")
 
   return {
     title: t("TITLE")
