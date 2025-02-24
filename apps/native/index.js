@@ -1,20 +1,19 @@
 import "react-native-gesture-handler"
 
-import { ToastProvider } from "@tamagui/toast"
 import { registerRootComponent } from "expo"
 import { ExpoRoot } from "expo-router"
-import { KeyboardProvider } from "react-native-keyboard-controller"
+
+import { configureReanimatedLogger, ReanimatedLogLevel } from "react-native-reanimated"
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false
+})
 
 // Must be exported or Fast Refresh won't update the context
 export function App() {
   const ctx = require.context("./app") //Path with src folder
-  return (
-    <KeyboardProvider>
-      <ToastProvider swipeDirection="horizontal" placement="top-right">
-        <ExpoRoot context={ctx} />
-      </ToastProvider>
-    </KeyboardProvider>
-  )
+  return <ExpoRoot context={ctx} />
 }
 
 registerRootComponent(App)
