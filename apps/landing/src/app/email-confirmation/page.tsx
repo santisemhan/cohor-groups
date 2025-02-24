@@ -27,7 +27,7 @@ export default function EmailConfirmated() {
           </small>
         </div>
         <div className="flex flex-col justify-center items-center gap-4 px-2 md:flex-row">
-          <span className=" text-white text-body-small-w-medium">Nos vemos adentro, El equipo de Cohor ✌️</span>
+          <span className=" text-white text-body-small-w-medium">Nos vemos adentro, El equipo de Cohor &#x270C;</span>
           <div className="flex justify-center items-center gap-4">
             <TiktokIcon fill="#fff" className="cursor-pointer" />
             <InstagramIcon fill="#fff" className="cursor-pointer" />

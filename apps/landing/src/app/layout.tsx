@@ -7,22 +7,22 @@ const fontSans = LocalFont({
   src: [
     {
       path: "../components/fonts/OpenSauceOne-Bold.ttf",
-      weight: "400",
+      weight: "700",
       style: "normal"
     },
     {
       path: "../components/fonts/OpenSauceOne-Medium.ttf",
-      weight: "700",
+      weight: "500",
       style: "normal"
     },
     {
       path: "../components/fonts/OpenSauceOne-Regular.ttf",
-      weight: "700",
+      weight: "400",
       style: "normal"
     },
     {
       path: "../components/fonts/OpenSauceOne-Semibold.ttf",
-      weight: "700",
+      weight: "600",
       style: "normal"
     }
   ],
