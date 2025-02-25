@@ -13,6 +13,8 @@ const tokens = createTokens({
     "white-opacity-mid": "rgba(255, 255, 255, 0.32)",
     "white-opacity-low": "rgba(255, 255, 255, 0.12)",
 
+    primary: "rgba(255, 62, 133, 1)",
+
     success: "#10B981",
     error: "#ED5A46"
   },

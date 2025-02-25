@@ -9,7 +9,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: theme["element-high"].val,
+        tabBarActiveTintColor: theme["primary"].val,
         tabBarInactiveTintColor: theme["element-disabled"].val,
         tabBarStyle: {
           backgroundColor: theme.background.val,
