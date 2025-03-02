@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react"
 import { SafeAreaView, StyleSheet } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { View } from "tamagui"
-import Card, { CardHandle } from "../../../components/app/swipper/Card"
+import Card, { CardHandle } from "../../../components/templates/swipper/Card"
 import { groups } from "../../../assets/mock/groups"
-import SwipperActions from "../../../components/app/swipper/SwipperActions"
+import SwipperActions from "../../../components/templates/swipper/SwipperActions"
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(groups.length - 1)
