@@ -24,7 +24,7 @@ export default function RootLayout() {
       <ToastProvider swipeDirection="horizontal">
         <TamaguiProvider config={tamaguiConfig} defaultTheme={"dark"}>
           <AuthProvider>
-            <StatusBar style="light" />
+            <StatusBar style="dark" />
             <Stack screenOptions={{ headerShown: false }} />
           </AuthProvider>
           <CustomToast />
