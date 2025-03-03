@@ -1,13 +1,13 @@
 import { ReactNode } from "react"
-import { SizableText, Stack, View } from "tamagui"
+import { SizableText, Stack, View, ViewProps } from "tamagui"
 
-interface EmptyStateProps {
+interface EmptyStateProps extends ViewProps {
   title: string
   subtitle: string
   ilustration: ReactNode
 }
 
-export default function EmptyState({ title, subtitle, ilustration }: EmptyStateProps) {
+export default function EmptyState({ title, subtitle, ilustration, ...props }: EmptyStateProps) {
   return (
     <View
       backgroundColor="$surface"
@@ -21,6 +21,7 @@ export default function EmptyState({ title, subtitle, ilustration }: EmptyStateP
       marginHorizontal={12}
       textWrap="pretty"
       gap={24}
+      {...props}
     >
       {ilustration}
       <Stack gap={12} maxWidth={480}>
