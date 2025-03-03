@@ -12,3 +12,13 @@ export type ChatPreview = {
     }
     recentMatch: boolean
 }
+
+export type Message = {
+    id: string
+    content: string
+    // date: string
+    sender?: {
+        name: string
+        imageUrl: string
+    }
+}

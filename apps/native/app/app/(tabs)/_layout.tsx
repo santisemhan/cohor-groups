@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router"
 import { getFontSize, useTheme } from "tamagui"
 import HouseSimpleIcon from "../../../components/icons/HouseSimple"
-import ChatCircleIcon from "../../../components/icons/ChatCircle"
+import ChatCircleIcon, { ChatCircleFilledIcon } from "../../../components/icons/ChatCircle"
 import UserIcon from "../../../components/icons/User"
 
 export default function TabLayout() {
@@ -38,7 +38,12 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: "Chat",
-          tabBarIcon: ({ color }) => <ChatCircleIcon width={26} height={26} color={color} />,
+          tabBarIcon: ({ color, focused }) =>
+            !focused ? (
+              <ChatCircleIcon width={26} height={26} color={color} />
+            ) : (
+              <ChatCircleFilledIcon width={26} height={26} color={color} />
+            ),
           headerShown: false
         }}
       />

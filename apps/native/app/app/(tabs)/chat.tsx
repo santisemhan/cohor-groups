@@ -1,11 +1,12 @@
 import { SafeAreaView } from "react-native-safe-area-context"
-import { ScrollView, useTheme } from "tamagui"
+import { useTheme } from "tamagui"
 import EmptyState from "../../../components/templates/common/EmptyState"
 import MainHeader from "../../../components/templates/common/MainHeader"
 import EmptyEvents from "../../../components/illustations/EmptyEvents"
 import { ChatPreview as ChatPreviewType } from "@cohor/types"
 import React, { useEffect, useState } from "react"
 import ChatPreview from "../../../components/templates/chat/ChatPreview"
+import { FlatList } from "react-native"
 
 export default function Chat() {
   const theme = useTheme()
@@ -58,10 +59,11 @@ export default function Chat() {
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.surface.val }}>
       <MainHeader title="Chats" />
       {chats.length > 0 ? (
-        <ScrollView>
-          {chats.map((chat) => (
+        <FlatList
+          data={chats}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item: chat }) => (
             <ChatPreview
-              key={chat.id}
               id={chat.id}
               groupName={chat.group.name}
               groupImageUrl={chat.group.imageUrl}
@@ -69,8 +71,8 @@ export default function Chat() {
               lastMessage={chat.lastMessage?.content}
               newMessage={!chat.lastMessage?.viewed}
             />
-          ))}
-        </ScrollView>
+          )}
+        />
       ) : (
         <EmptyState
           title="Todavía no hay chats grupales"

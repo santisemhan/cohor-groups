@@ -29,7 +29,14 @@ export default function Message({ sender, message }: MessageProps) {
             <SizableText color="$white" size="$body-small-w-medium">
               {message}
             </SizableText>
-            <SizableText color="$white" alignSelf="flex-end" size="$label-medium-w-medium">
+            <SizableText
+              // position="absolute"
+              // bottom={5}
+              // right={15}
+              color="$white"
+              alignSelf="flex-end"
+              size="$label-medium-w-medium"
+            >
               10:45
             </SizableText>
           </>
