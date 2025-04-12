@@ -64,11 +64,8 @@ export function Navigation({ children }: { children: React.ReactNode }) {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="primary" className="w-full">
-                Login
-              </NavbarButton>
-              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="primary" className="w-full">
-                Book a call
+              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="gradient" className="w-full">
+                {t("BOOK_A_CALL")}
               </NavbarButton>
             </div>
           </MobileNavMenu>

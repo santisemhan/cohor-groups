@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server"
+import Image from "next/image"
 
 export default async function Quote() {
   const t = await getTranslations("HOME.QUOTE")
@@ -11,7 +12,9 @@ export default async function Quote() {
         </p>
         <div className="flex gap-4">
           <div className="size-10 rounded-full bg-primary border border-border">
-            <img
+            <Image
+              width={40}
+              height={40}
               src="https://randomuser.me/api/portraits/men/91.jpg"
               alt="Alex Johnson"
               className="size-full rounded-full object-contain"
