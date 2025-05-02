@@ -68,6 +68,6 @@ export async function generateMetadata() {
   const t = await getTranslations("EMAIL.CONFIRMATION")
 
   return {
-    title: t("TITLE")
+    title: `Cohor | ${t("TITLE")}`
   }
 }
