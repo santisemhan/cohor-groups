@@ -7,14 +7,16 @@ import { getTranslations } from "next-intl/server"
 
 export default async function IndexPage() {
   return (
-    <Navigation>
-      <main className="flex flex-col items-center justify-center divide-y divide-border min-h-screen w-full">
-        <Hero />
-        <Features />
-        <Quote />
-        <Footer />
-      </main>
-    </Navigation>
+    <div className="max-w-7xl mx-auto border-x relative">
+      <Navigation>
+        <div className="flex flex-col items-center justify-center divide-y divide-border min-h-screen w-full">
+          <Hero />
+          <Features />
+          <Quote />
+          <Footer />
+        </div>
+      </Navigation>
+    </div>
   )
 }
 
