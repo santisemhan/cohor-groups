@@ -5,13 +5,13 @@ import {
   NavItems,
   MobileNav,
   NavbarLogo,
-  NavbarButton,
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu
 } from "@/components/ui/resizable-navbar"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import { Button } from "./ui/button"
 
 export function Navigation({ children }: { children: React.ReactNode }) {
   const t = useTranslations("HOME.NAVBAR")
@@ -41,7 +41,7 @@ export function Navigation({ children }: { children: React.ReactNode }) {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="gradient">{t("BOOK_A_CALL")}</NavbarButton>
+            <Button variant="gradient">{t("BOOK_A_CALL")}</Button>
           </div>
         </NavBody>
 
@@ -64,9 +64,9 @@ export function Navigation({ children }: { children: React.ReactNode }) {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton onClick={() => setIsMobileMenuOpen(false)} variant="gradient" className="w-full">
+              <Button onClick={() => setIsMobileMenuOpen(false)} variant="gradient" className="w-full">
                 {t("BOOK_A_CALL")}
-              </NavbarButton>
+              </Button>
             </div>
           </MobileNavMenu>
         </MobileNav>

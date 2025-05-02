@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-sans"
+  variable: "--custom-font-sans"
 })
 
 type LayoutProps = {
@@ -39,13 +39,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale} className="dark">
       <body
-        className={cn(
-          "max-w-7xl mx-auto border-x relative font-sans antialiased",
-          fontSans.className
-        )}
         style={{ backgroundColor: "oklch(21.03% .006 285.89)" }}
+        className={cn("font-sans antialiased", fontSans.className)}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

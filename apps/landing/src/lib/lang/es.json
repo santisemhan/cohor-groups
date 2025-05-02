@@ -44,5 +44,15 @@
   },
   "FOOTER": {
     "DESCRIPTION": "Cohor está diseñado para simplificar la forma en que te conectás con otros, ayudándote a encontrar, unirte y hacer crecer grupos sin esfuerzo, para que podás enfocarte en construir relaciones significativas."
+  },
+  "EMAIL": {
+    "CONFIRMATION": {
+      "TITLE": "¡Email confirmado con éxito!",
+      "DESCRIPTION": "Gracias por verificar tu cuenta. Ya podés empezar a conectar con otros grupos en Cohor.",
+      "OPEN_APP": "Abrir la app",
+      "REGARDS": "Nos vemos adentro, El equipo de Cohor",
+      "NOT_REDIRECTION": "Si no se redirige automáticamente en unos segundos, hacé",
+      "CLICK_HERE": "clic acá"
+    }
   }
 }
