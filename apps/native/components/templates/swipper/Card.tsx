@@ -17,7 +17,7 @@ export type CardHandle = {
 export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direction: "left" | "right") => void }>(
   function Card({ group, onSwipe }, ref) {
     const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions()
-    const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25
+    const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.1
 
     const [isVisible, setIsVisible] = useState(true)
     const [isTeamVisible, setIsTeamVisible] = useState(false)
@@ -80,11 +80,15 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
     const horizontalPanGesture = Gesture.Pan()
       .onUpdate((event) => {
         if (isTeamVisible) return
+        if (Math.abs(event.translationY) > Math.abs(event.translationX)) return
+
         translateX.value = event.translationX
         rotate.value = (event.translationX / SCREEN_WIDTH) * 20
       })
       .onEnd((event) => {
         if (isTeamVisible) return
+        if (Math.abs(event.translationY) > Math.abs(event.translationX)) return
+
         if (event.translationX > SWIPE_THRESHOLD) {
           translateX.value = withTiming(SCREEN_WIDTH, {}, () => runOnJS(handleSwipeComplete)("right"))
           opacity.value = withTiming(0, { duration: 300 })
@@ -100,17 +104,17 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
     const verticalPanGesture = Gesture.Pan().onEnd((event) => {
       if (event.translationY < -50) {
         runOnJS(setIsTeamVisible)(true)
-        teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT, { duration: 600 })
-        teamSectionOpacity.value = withTiming(1, { duration: 600 })
-        backgroundOpacity.value = withTiming(0.75, { duration: 600 })
-        scrollX.value = withTiming(0, { duration: 300 }, () => {
+        teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT, { duration: 400 })
+        teamSectionOpacity.value = withTiming(1, { duration: 400 })
+        backgroundOpacity.value = withTiming(0.75, { duration: 400 })
+        scrollX.value = withTiming(0, { duration: 400 }, () => {
           runOnJS(scrollToStart)()
         })
       } else if (event.translationY > 50) {
         runOnJS(setIsTeamVisible)(false)
-        teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT * 0.2, { duration: 600 })
-        teamSectionOpacity.value = withTiming(0, { duration: 600 })
-        backgroundOpacity.value = withTiming(0.3, { duration: 600 })
+        teamSectionHeight.value = withTiming(TEAM_SECTION_HEIGHT * 0.2, { duration: 400 })
+        teamSectionOpacity.value = withTiming(0, { duration: 400 })
+        backgroundOpacity.value = withTiming(0.3, { duration: 400 })
         scrollX.value = withTiming(SCREEN_WIDTH, { duration: 0 }, () => {
           runOnJS(scrollToEnd)()
         })

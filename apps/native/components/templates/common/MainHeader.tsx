@@ -7,7 +7,7 @@ interface MainHeaderProps {
 
 export default function MainHeader({ title, subtitle }: MainHeaderProps) {
   return (
-    <View alignItems="flex-start" backgroundColor="$surface" paddingVertical={24} paddingHorizontal={12}>
+    <View alignItems="flex-start" backgroundColor="transparent" paddingVertical={24} paddingHorizontal={12}>
       <Stack gap={2}>
         <SizableText textAlign="center" size="$headline-large" color="$element-high">
           {title}

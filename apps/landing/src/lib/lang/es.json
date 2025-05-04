@@ -1,6 +1,58 @@
 {
   "HOME": {
-    "TITLE": "Bienvenido a la página de inicio",
-    "DESCRIPTION": "Esta es la página de inicio de la aplicación de aterrizaje."
+    "TITLE": "Cohor - Creá tu nuevo grupo social",
+    "DESCRIPTION": "Creá o unite a un grupo, conectate con otros y comenzá a chatear juntos.",
+    "NAVBAR": {
+      "FEATURES": "Características",
+      "BLOG": "Blog",
+      "CONTACT": "Contacto",
+      "BOOK_A_CALL": "Agendá una reunión"
+    },
+    "HERO": {
+      "EYEBROW": "Tu vida social, reimaginada",
+      "TITLE": "Creá tu nuevo grupo social Conectá-Chateá-Unite",
+      "DESCRIPTION": "Creá o unite a un grupo, conectate con otros y comenzá a chatear juntos.",
+      "BUTTON": {
+        "GET_THE_APP": "Obtén la APP",
+        "CONTACT_US": "Contactanos"
+      }
+    },
+    "FEATURES": {
+      "TITLE": "Explorá. Conectá. Unite con grupos.",
+      "DESCRIPTION": "Descubrí chats grupales en tiempo real, espacios enfocados en privacidad y la forma más fácil de conocer nuevos grupos.",
+      "FEATURE_1": {
+        "TITLE": "Creá o unite a grupos",
+        "DESCRIPTION": "Creá un nuevo grupo o unite a uno en segundos. Conectate fácilmente con tu grupo de amigos o invitalos."
+      },
+      "FEATURE_2": {
+        "TITLE": "Descubrí nuevos grupos",
+        "DESCRIPTION": "Encontrá y conectá con otros grupos. Hacé amigos y expandí tu círculo social, juntos."
+      },
+      "FEATURE_3": {
+        "TITLE": "Privacidad y seguridad primero",
+        "DESCRIPTION": "Tu grupo está seguro. Todos los chats son privados, seguros y con protección en su núcleo."
+      },
+      "FEATURE_4": {
+        "TITLE": "Chat grupal en tiempo real",
+        "DESCRIPTION": "Disfrutá de conversaciones grupales sin interrupciones. Chateá con todos los miembros a la vez, de manera instantánea y sencilla."
+      }
+    },
+    "QUOTE": {
+      "CONTENT": "“Cohor te ayuda a crear conexiones genuinas, donde los grupos crecen y las amistades florecen. Se trata de conectar a las personas que realmente deben estar juntas, sin esfuerzo.”",
+      "TITLE": "Fundador y CEO de Cohor"
+    }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Cohor está diseñado para simplificar la forma en que te conectás con otros, ayudándote a encontrar, unirte y hacer crecer grupos sin esfuerzo, para que podás enfocarte en construir relaciones significativas."
+  },
+  "EMAIL": {
+    "CONFIRMATION": {
+      "TITLE": "¡Email confirmado con éxito!",
+      "DESCRIPTION": "Gracias por verificar tu cuenta. Ya podés empezar a conectar con otros grupos en Cohor.",
+      "OPEN_APP": "Abrir la app",
+      "REGARDS": "Nos vemos adentro, El equipo de Cohor",
+      "NOT_REDIRECTION": "Si no se redirige automáticamente en unos segundos, hacé",
+      "CLICK_HERE": "clic acá"
+    }
   }
 }
