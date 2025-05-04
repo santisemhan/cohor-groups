@@ -7,13 +7,14 @@ import DatePickerComponent from "react-native-date-picker"
 interface DatePickerProps {
   date?: Date
   hasError?: boolean
-  onChange?: (value: string) => void
+  onChange: (value: string) => void
   onBlur?: () => void
   value?: string
+  title?: string
 }
 
 const DatePicker = function DatePicker(props: DatePickerProps) {
-  const { onChange, onBlur, value } = props
+  const { onChange, onBlur, value, title = null } = props
 
   const [date, setDate] = useState(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))
   const [open, setOpen] = useState(false)
@@ -32,7 +33,6 @@ const DatePicker = function DatePicker(props: DatePickerProps) {
           color="$white-opacity-high"
           placeholder="Fecha de nacimiento"
           placeholderTextColor="$white-opacity-high"
-          onChangeText={onChange}
           onBlur={onBlur}
           value={value || (date && formatDate(date))}
           pointerEvents="none"
@@ -53,9 +53,14 @@ const DatePicker = function DatePicker(props: DatePickerProps) {
         onCancel={() => {
           setOpen(false)
         }}
+        onDateChange={(date) => {
+          setDate(date)
+          onChange(formatDate(date))
+        }}
         theme="dark"
         mode="date"
         locale="es-AR"
+        title={title}
       />
     </Pressable>
   )

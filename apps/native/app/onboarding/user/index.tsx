@@ -216,7 +216,13 @@ export default function CreateUserProfile() {
                         overflow: "hidden"
                       }}
                     >
-                      <DatePicker onChange={onChange} onBlur={onBlur} value={value} hasError={!!errors.birthdate} />
+                      <DatePicker
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        hasError={!!errors.birthdate}
+                        title="Seleccioná tu fecha de nacimiento"
+                      />
                     </BlurView>
                   )}
                 />
