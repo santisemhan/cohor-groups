@@ -1,51 +1,29 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Pressable } from "react-native"
-import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { XStack } from "tamagui"
 import { Input } from "./Input"
+import DatePickerComponent from "react-native-date-picker"
 
 interface DatePickerProps {
   date?: Date
-  confirmText?: string
-  cancelText?: string
   hasError?: boolean
-  accentColor?: string
-  textColor?: string
-  buttonTextColorIOS?: string
   onChange?: (value: string) => void
-  onConfirm?: (date: Date) => void
   onBlur?: () => void
   value?: string
 }
 
-const DateTimePicker = function DatePicker(props: DatePickerProps) {
+const DatePicker = function DatePicker(props: DatePickerProps) {
   const { onChange, onBlur, value } = props
-  console.log(props)
-  const [show, setShow] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(props.date)
 
-  useEffect(() => {
-    setDate(props.date)
-  }, [props.date])
-
-  const hideDatePicker = () => {
-    setShow(false)
-  }
+  const [date, setDate] = useState(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))
+  const [open, setOpen] = useState(false)
 
   const formatDate = (date: Date): string => {
     return date.toISOString().split("T")[0]
   }
 
-  const handleConfirm = (selectedDate: Date) => {
-    setDate(selectedDate)
-    const formattedValue = formatDate(selectedDate)
-    props.onConfirm && props.onConfirm(selectedDate)
-    onChange && onChange(formattedValue)
-    hideDatePicker()
-  }
-
   return (
-    <Pressable onPress={() => setShow(true)}>
+    <Pressable onPress={() => setOpen(true)}>
       <XStack alignItems={"center"} justifyContent="flex-end">
         <Input
           hasError={props.hasError}
@@ -63,21 +41,24 @@ const DateTimePicker = function DatePicker(props: DatePickerProps) {
         />
       </XStack>
 
-      <DateTimePickerModal
-        cancelTextIOS={props.cancelText}
-        confirmTextIOS={props.confirmText}
+      <DatePickerComponent
+        modal
+        open={open}
         date={date}
-        isVisible={show}
-        accentColor={props.accentColor}
-        textColor={props.textColor}
-        buttonTextColorIOS={props.buttonTextColorIOS}
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        themeVariant="dark"
+        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 18))}
+        onConfirm={(date) => {
+          setOpen(false)
+          setDate(date)
+        }}
+        onCancel={() => {
+          setOpen(false)
+        }}
+        theme="dark"
+        mode="date"
         locale="es-AR"
       />
     </Pressable>
   )
 }
 
-export default DateTimePicker
+export default DatePicker
