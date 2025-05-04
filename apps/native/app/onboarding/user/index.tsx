@@ -14,7 +14,7 @@ import { CreateUserProfileSchema, CreateUserProfileForm } from "../../../lib/sch
 import { endpoint } from "../../../lib/common/Endpoint"
 import { useApiClient } from "../../../lib/http/useApiClient"
 
-import DateTimePicker from "../../../components/ui/DatePicker"
+import DatePicker from "../../../components/ui/DatePicker"
 import UploadIcon from "../../../components/icons/Upload"
 import { useAuth } from "../../../lib/context/AuthContext"
 import * as ImagePicker from "expo-image-picker"
@@ -216,7 +216,13 @@ export default function CreateUserProfile() {
                         overflow: "hidden"
                       }}
                     >
-                      <DateTimePicker onChange={onChange} onBlur={onBlur} value={value} hasError={!!errors.birthdate} />
+                      <DatePicker
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        hasError={!!errors.birthdate}
+                        title="Seleccioná tu fecha de nacimiento"
+                      />
                     </BlurView>
                   )}
                 />
