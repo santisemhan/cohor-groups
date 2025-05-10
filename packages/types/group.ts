@@ -13,12 +13,15 @@ export const SwippeableGroupSchema = z.object({
   id: z.string(),
   name: z.string(),
   imageUrl: z.string(),
-  presentation: z.string(),
-  members: z.array(z.object({
-    id: z.string(),
-    name: z.string(),
-    imageUrl: z.string()
-  }))
+  interests: z.array(z.object({ name: z.string(), unicode: z.string() })),
+  location: z.string(),
+  members: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      imageUrl: z.string()
+    })
+  )
 })
 
 export type SwippeableGroup = z.infer<typeof SwippeableGroupSchema>

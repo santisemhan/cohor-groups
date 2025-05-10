@@ -1,8 +1,10 @@
-import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
-import React, { useRef } from "react"
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native"
 import { Slot, useFocusEffect } from "expo-router"
+import React, { useRef } from "react"
+import { View } from "react-native"
+import { KeyboardGestureArea } from "react-native-keyboard-controller"
+import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
+import { useKeyboardAnimation } from "../../lib/hooks/useKeyboardAnimation"
 
 export default function AuthLayout() {
   const videoRef = useRef<Video>(null)
@@ -17,8 +19,17 @@ export default function AuthLayout() {
     }, [])
   )
 
+  const { height } = useKeyboardAnimation()
+
+  const scrollViewStyle = useAnimatedStyle(
+    () => ({
+      transform: [{ translateY: -height.value }]
+    }),
+    []
+  )
+
   return (
-    <View style={{ display: "flex", height: "100%", justifyContent: "flex-end", alignItems: "center" }}>
+    <View style={{ flex: 1 }}>
       <Video
         ref={videoRef}
         source={require("../../assets/video/CohorCreateAccount.mp4")}
@@ -35,18 +46,15 @@ export default function AuthLayout() {
           height: "100%"
         }}
       />
-      <KeyboardAvoidingView style={{ flex: 1, width: "100%" }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: "flex-end"
-          }}
-          keyboardShouldPersistTaps="handled"
-          scrollEnabled={false}
+      <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1 }}>
+        <Reanimated.ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end" }}
+          style={scrollViewStyle}
         >
           <Slot />
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </Reanimated.ScrollView>
+      </KeyboardGestureArea>
     </View>
   )
 }

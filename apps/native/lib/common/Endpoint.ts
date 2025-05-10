@@ -16,5 +16,8 @@ export const endpoint = {
     root: `${API_URL}/groups`,
     join: `${API_URL}/groups/join`,
     imagePresignedParams: `${API_URL}/groups/image-presigned-params`
+  },
+  category: {
+    root: `${API_URL}/categories`
   }
 }

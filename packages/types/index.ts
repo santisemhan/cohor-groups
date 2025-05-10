@@ -1,3 +1,5 @@
 export * from "./user"
 export * from "./group"
 export * from "./onboarding-step"
+export * from "./category"
+export * from "./chat"

@@ -6,20 +6,28 @@
     "build": "turbo build",
     "dev": "turbo dev --parallel",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,astro}\"",
     "co": "sui-mono commit",
     "check": "sui-mono check",
+    "test": "turbo test",
     "docker:backend:production": "docker build --platform linux/amd64 -t serverless-cohor-backend-production -f apps/backend/Dockerfile . --progress=plain"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@s-ui/mono": "^2.45.0",
-    "@tamagui/config": "^1.120.2",
+    "@swc/jest": "^0.2.38",
     "@types/bcryptjs": "^2.4.6",
-    "@types/node": "^20.17.10",
-    "prettier": "^3.4.2",
-    "turbo": "^2.3.4",
-    "typescript": "^5.7.2",
-    "zod": "^3.24.1"
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.32",
+    "dotenv-cli": "^8.0.0",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2",
+    "turbo": "^2.5.2",
+    "typescript": "^5.8.3",
+    "zod": "^3.24.3"
   },
   "engines": {
     "node": "20.x"

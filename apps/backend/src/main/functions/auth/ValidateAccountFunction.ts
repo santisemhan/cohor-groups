@@ -36,8 +36,10 @@ export class ValidateAccountFunction extends APIServerlessFunction {
     await this.authenticationService.validateAccountAsync(userId, token)
 
     const configuration = await this.webConfigurationProvider.getConfigurationAsync()
+
+    // TODO: Add language
     return new HTTPResponse(MIMEType.JSON)
-      .header("Location", `${configuration.source}/auth/validate/success`)
+      .header("Location", `${configuration.origins[0]}/en/email-validated`) // es/email-validado.
       .statusCode(HTTPStatusCode.PermanentRedirect)
   }
 }

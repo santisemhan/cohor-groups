@@ -1,0 +1,58 @@
+{
+  "HOME": {
+    "TITLE": "Cohor - Meet your new social crew",
+    "DESCRIPTION": "Create or join a group, match with others, and start chatting — together.",
+    "NAVBAR": {
+      "FEATURES": "Features",
+      "BLOG": "Blog",
+      "CONTACT": "Contact",
+      "BOOK_A_CALL": "Book a call"
+    },
+    "HERO": {
+      "EYEBROW": "Your social life, reimagined",
+      "TITLE": "Meet your new social crew Match-Chat-Connect",
+      "DESCRIPTION": "Create or join a group, match with others, and start chatting — together.",
+      "BUTTON": {
+        "GET_THE_APP": "Get the APP",
+        "CONTACT_US": "Contact us"
+      }
+    },
+    "FEATURES": {
+      "TITLE": "Explore. Match. Connect with Groups.",
+      "DESCRIPTION": "Discover real-time group chat, privacy-focused spaces, and the easiest way to meet new friend groups online.",
+      "FEATURE_1": {
+        "TITLE": "Create or Join Groups",
+        "DESCRIPTION": "Start a new group or join one in seconds. Easily connect with your friends — or bring them along!"
+      },
+      "FEATURE_2": {
+        "TITLE": "Discover New Groups",
+        "DESCRIPTION": "Find and match with other groups. Make friends and expand your social circle, together."
+      },
+      "FEATURE_3": {
+        "TITLE": "Privacy & Security First",
+        "DESCRIPTION": "Your group stays safe. All chats are private, secure, and built with protection at the core."
+      },
+      "FEATURE_4": {
+        "TITLE": "Real-time Group Chat",
+        "DESCRIPTION": "Experience seamless group conversations. Chat with all members at once, instantly and effortlessly."
+      }
+    },
+    "QUOTE": {
+      "CONTENT": "“Cohor helps you build genuine connections, where groups grow and friendships thrive. It’s about connecting people who truly belong together, effortlessly.”",
+      "TITLE": "Founder & CEO of Cohor"
+    }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Cohor is designed to simplify the way you connect with others, helping you find, join, and grow groups effortlessly — so you can focus on building meaningful relationships."
+  },
+  "EMAIL": {
+    "CONFIRMATION": {
+      "TITLE": "Email successfully confirmed!",
+      "DESCRIPTION": "Thank you for verifying your account. You can now start connecting with other groups on Cohor.",
+      "OPEN_APP": "Open the app",
+      "REGARDS": "See you inside, The Cohor Team",
+      "NOT_REDIRECTION": "If you are not redirected automatically in a few seconds,",
+      "CLICK_HERE": "click here"
+    }
+  }
+}

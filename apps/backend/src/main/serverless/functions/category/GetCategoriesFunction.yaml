@@ -1,12 +1,13 @@
-ValidationAccountSuccessfully:
+GetGroup:
   image:
     command:
-      - src/main/support/serverless/Dispatcher.ValidationAccountSuccessfully
+      - src/main/support/serverless/Dispatcher.GetCategories
     name: main
-  description: "Validate account"
+  description: "Get categories"
   ephemeralStorageSize: 512
   events:
     - http:
+        authorizer: ${self:custom.roleAuthorizer}
         cors:
           allowCredentials: true
           headers:
@@ -14,7 +15,7 @@ ValidationAccountSuccessfully:
             - Content-Type
           origin: ${self:custom.environment.COHOR_APPLICATION_FRONTEND_ORIGINS.${self:custom.stage}}
         method: "GET"
-        path: "/auth/validate/success"
+        path: "/categories"
   maximumRetryAttempts: 0
   memorySize: 512
   timeout: 30
