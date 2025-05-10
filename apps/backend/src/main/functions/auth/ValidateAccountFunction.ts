@@ -39,7 +39,7 @@ export class ValidateAccountFunction extends APIServerlessFunction {
 
     // TODO: Add language
     return new HTTPResponse(MIMEType.JSON)
-      .header("Location", `${configuration.origins[0]}/en/email-validated`) // es/email-validado.
+      .header("Location", `${configuration.origins[0]}/es/email-confirmado`)
       .statusCode(HTTPStatusCode.PermanentRedirect)
   }
 }
