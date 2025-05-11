@@ -12,7 +12,6 @@ import { RegisterFunction } from "../../functions/auth/RegisterFunction"
 import { RoleAuthorizerFunction } from "../../authorization/RoleAuthorizerFunction"
 import { ValidateAccountFunction } from "../../functions/auth/ValidateAccountFunction"
 import { UpdateUserFunction } from "../../functions/user/UpdateUserFunction"
-import { ValidationAccountSuccessfullyFunction } from "../../functions/auth/ValidationAccountSuccessfullyFunction"
 import { ResendEmailFunction } from "../../functions/auth/ResendEmailFunction"
 import { GoogleAuthorizerFunction } from "../../authorization/GoogleAuthorizerFuncion"
 import { GetLoggedUserFunction } from "../../functions/auth/GetLoggedUser"
@@ -57,7 +56,6 @@ export const Login = Dispatcher.of(LoginFunction)
 export const Register = Dispatcher.of(RegisterFunction)
 export const ValidateAccount = Dispatcher.of(ValidateAccountFunction)
 export const ResendEmail = Dispatcher.of(ResendEmailFunction)
-export const ValidationAccountSuccessfully = Dispatcher.of(ValidationAccountSuccessfullyFunction)
 
 // User
 export const UpdateUser = Dispatcher.of(UpdateUserFunction)
