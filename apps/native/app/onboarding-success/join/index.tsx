@@ -1,6 +1,6 @@
 import { Image, SizableText, YStack } from "tamagui"
-import GlassBottomSheet from "../../../../../components/GlassBotomSheet"
-import { Button } from "../../../../../components/ui/Button"
+import GlassBottomSheet from "../../../components/GlassBotomSheet"
+import { Button } from "../../../components/ui/Button"
 import { router, useLocalSearchParams } from "expo-router"
 
 export default function SuccessJoinGroup() {

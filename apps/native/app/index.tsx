@@ -2,17 +2,17 @@ import React, { useState, useRef, useEffect, useCallback } from "react"
 import { View } from "tamagui"
 import { ResizeMode, Video } from "expo-av"
 import { YStack, SizableText } from "tamagui"
-import GlassBottomSheet from "../components/GlassBotomSheet"
-import { router, useFocusEffect } from "expo-router"
+import { useFocusEffect, useRouter } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
-import AuthOptions from "../components/templates/auth/AuthOptions"
-import LoginOptions from "../components/templates/auth/login/LoginOptions"
-import RegisterOptions from "../components/templates/auth/register/RegisterOptions"
-import { useApiClient } from "../lib/http/useApiClient"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { endpoint } from "../lib/common/Endpoint"
 import { OnboardingStep, User } from "@cohor/types"
 import { useFonts } from "expo-font"
+import RegisterOptions from "../components/templates/auth/register/RegisterOptions"
+import LoginOptions from "../components/templates/auth/login/LoginOptions"
+import { useApiClient } from "../lib/http/useApiClient"
+import { endpoint } from "../lib/common/Endpoint"
+import GlassBottomSheet from "../components/GlassBotomSheet"
+import AuthOptions from "../components/templates/auth/AuthOptions"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -30,6 +30,8 @@ export default function Home() {
     "OpenSauceOne-Bold": require("../assets/fonts/OpenSauceOne-Bold.ttf")
   })
   const [authFlow, setAuthFlow] = useState<"login" | "register" | undefined>(undefined)
+
+  const router = useRouter()
 
   const flowMap = {
     register: <RegisterOptions setAuthFlow={setAuthFlow} />,
@@ -70,11 +72,6 @@ export default function Home() {
 
   const onLayoutRootView = useCallback(() => {
     if (appIsReady) {
-      // This tells the splash screen to hide immediately! If we call this after
-      // `setAppIsReady`, then we may see a blank screen while the app is
-      // loading its initial state and rendering its first pixels. So instead,
-      // we hide the splash screen once we know the root view has already
-      // performed layout.
       SplashScreen.hide()
     }
   }, [appIsReady])

@@ -180,13 +180,7 @@
               "scaleZ": true,
               "shadowOpacity": true,
               "boxShadow": true,
-              "filter": true,
-              "boxSizing": true,
-              "mixBlendMode": true,
-              "outlineWidth": true,
-              "outlineStyle": true,
-              "outlineSpread": true,
-              "outlineColor": true
+              "filter": true
             }
           }
         },
@@ -582,13 +576,7 @@
               "scaleZ": true,
               "shadowOpacity": true,
               "boxShadow": true,
-              "filter": true,
-              "boxSizing": true,
-              "mixBlendMode": true,
-              "outlineWidth": true,
-              "outlineStyle": true,
-              "outlineSpread": true,
-              "outlineColor": true
+              "filter": true
             }
           }
         },
@@ -770,13 +758,7 @@
               "scaleZ": true,
               "shadowOpacity": true,
               "boxShadow": true,
-              "filter": true,
-              "boxSizing": true,
-              "mixBlendMode": true,
-              "outlineWidth": true,
-              "outlineStyle": true,
-              "outlineSpread": true,
-              "outlineColor": true
+              "filter": true
             },
             "defaultProps": {
               "tag": "span",

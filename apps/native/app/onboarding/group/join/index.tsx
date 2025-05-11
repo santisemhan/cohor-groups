@@ -40,7 +40,7 @@ export default function JoinGroup() {
         code: parseInt(formValues.code, 10)
       })
       router.replace({
-        pathname: "/onboarding/group/join/success",
+        pathname: "/onboarding-success/join",
         params: { name: name, imageURL: imageUrl }
       })
     } catch {
