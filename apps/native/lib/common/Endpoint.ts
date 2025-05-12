@@ -13,7 +13,8 @@ export const endpoint = {
     imagePresignedParams: `${API_URL}/users/image-presigned-params`
   },
   group: {
-    root: `${API_URL}/groups`,
+    root: `${API_URL}/group`,
+    groups: `${API_URL}/groups`,
     join: `${API_URL}/groups/join`,
     imagePresignedParams: `${API_URL}/groups/image-presigned-params`
   },

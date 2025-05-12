@@ -99,4 +99,19 @@ export class GroupRepository {
       })
     )[0]
   }
+
+  public async getGroups(excludedGroupId: string) {
+    const connection = await this.databaseService.connectionAsync()
+    return connection.group.findMany({
+      where: {
+        NOT: {
+          id: excludedGroupId
+        }
+      },
+      select: {
+        id: true,
+        name: true
+      }
+    })
+  }
 }

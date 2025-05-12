@@ -16,4 +16,8 @@ export class GroupService {
   public async getUserGroup(userId: string) {
     return this.groupRepository.getUserGroup(userId)
   }
+
+  public async getGroups(excludedGroupId: string) {
+    return this.groupRepository.getGroups(excludedGroupId)
+  }
 }
