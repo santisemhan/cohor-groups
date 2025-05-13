@@ -2,9 +2,7 @@ import { ResizeMode, Video } from "expo-av"
 import { Slot, useFocusEffect } from "expo-router"
 import React, { useRef } from "react"
 import { View } from "react-native"
-import { KeyboardGestureArea } from "react-native-keyboard-controller"
-import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
-import { useKeyboardAnimation } from "../../lib/hooks/useKeyboardAnimation"
+import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 
 export default function AuthLayout() {
   const videoRef = useRef<Video>(null)
@@ -17,15 +15,6 @@ export default function AuthLayout() {
         videoRef.current?.pauseAsync()
       }
     }, [])
-  )
-
-  const { height } = useKeyboardAnimation()
-
-  const scrollViewStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: -height.value }]
-    }),
-    []
   )
 
   return (
@@ -46,15 +35,16 @@ export default function AuthLayout() {
           height: "100%"
         }}
       />
-      <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1 }}>
-        <Reanimated.ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end" }}
-          style={scrollViewStyle}
+      <KeyboardAvoidingView behavior={"padding"} style={{ flex: 1, width: "100%" }}>
+        <View
+          style={{
+            flexGrow: 1,
+            justifyContent: "flex-end"
+          }}
         >
           <Slot />
-        </Reanimated.ScrollView>
-      </KeyboardGestureArea>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }

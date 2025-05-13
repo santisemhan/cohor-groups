@@ -1,4 +1,4 @@
-import { Image, SizableText, useTheme, YStack } from "tamagui"
+import { Image, SizableText, useTheme, View, YStack } from "tamagui"
 
 import React, { useEffect, useState } from "react"
 
@@ -23,9 +23,7 @@ import FormError from "../../../components/FormError"
 import { useToastController } from "@tamagui/toast"
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "../../../lib/common/Environment"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import { KeyboardGestureArea } from "react-native-keyboard-controller"
-import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
-import { useKeyboardAnimation } from "../../../lib/hooks/useKeyboardAnimation"
+import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 
 export default function CreateUserProfile() {
   const toast = useToastController()
@@ -41,15 +39,6 @@ export default function CreateUserProfile() {
       setShowStepTwo(true)
     }
   }, [])
-
-  const { height } = useKeyboardAnimation()
-
-  const scrollViewStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: -height.value }]
-    }),
-    []
-  )
 
   const {
     formState: { errors, isSubmitting, isValid },
@@ -155,11 +144,12 @@ export default function CreateUserProfile() {
   }
 
   return (
-    <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1, width: "100%" }}>
-      <Reanimated.ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end" }}
-        style={scrollViewStyle}
+    <KeyboardAvoidingView behavior={"padding"} style={{ flex: 1, width: "100%" }}>
+      <View
+        style={{
+          flexGrow: 1,
+          justifyContent: "flex-end"
+        }}
       >
         <YStack gap={40} width="100%">
           <YStack justifyContent="center" alignItems="center" gap={4}>
@@ -291,7 +281,7 @@ export default function CreateUserProfile() {
             </GlassBottomSheet>
           )}
         </YStack>
-      </Reanimated.ScrollView>
-    </KeyboardGestureArea>
+      </View>
+    </KeyboardAvoidingView>
   )
 }

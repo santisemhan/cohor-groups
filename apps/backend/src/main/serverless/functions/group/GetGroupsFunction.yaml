@@ -1,4 +1,4 @@
-GetGroup:
+GetGroups:
   image:
     command:
       - src/main/support/serverless/Dispatcher.GetGroups

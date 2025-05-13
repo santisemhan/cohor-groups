@@ -3,21 +3,10 @@ import { Slot, useFocusEffect } from "expo-router"
 import { ResizeMode, Video } from "expo-av"
 import React, { useRef } from "react"
 import { SizableText, YStack } from "tamagui"
-import Reanimated, { useAnimatedStyle } from "react-native-reanimated"
-import { KeyboardGestureArea } from "react-native-keyboard-controller"
-import { useKeyboardAnimation } from "../../lib/hooks/useKeyboardAnimation"
+import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 
 export default function CreateGroupSucessLayout() {
   const videoRef = useRef<Video>(null)
-
-  const { height } = useKeyboardAnimation()
-
-  const scrollViewStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: -height.value }]
-    }),
-    []
-  )
 
   useFocusEffect(
     React.useCallback(() => {
@@ -47,11 +36,12 @@ export default function CreateGroupSucessLayout() {
           height: "100%"
         }}
       />
-      <KeyboardGestureArea interpolator="ios" offset={50} style={{ flex: 1, width: "100%" }}>
-        <Reanimated.ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ height: "100%", flex: 1, justifyContent: "flex-end", width: "100%" }}
-          style={scrollViewStyle}
+      <KeyboardAvoidingView behavior={"padding"} style={{ flex: 1, width: "100%" }}>
+        <View
+          style={{
+            flexGrow: 1,
+            justifyContent: "flex-end"
+          }}
         >
           <YStack gap={40} width="100%">
             <YStack justifyContent="center" alignItems="center" gap={4}>
@@ -61,8 +51,8 @@ export default function CreateGroupSucessLayout() {
             </YStack>
             <Slot />
           </YStack>
-        </Reanimated.ScrollView>
-      </KeyboardGestureArea>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }
