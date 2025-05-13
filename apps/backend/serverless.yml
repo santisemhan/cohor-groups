@@ -61,6 +61,7 @@ functions:
   - ${file(./src/main/serverless/functions/group/CreateGroupFunction.yaml)}
   - ${file(./src/main/serverless/functions/group/JoinGroupFunction.yaml)}
   - ${file(./src/main/serverless/functions/group/GetGroupFunction.yaml)}
+  - ${file(./src/main/serverless/functions/group/GetGroupsFunction.yaml)}
   - ${file(./src/main/serverless/functions/group/GetGroupImagePresignedParamsFunction.yaml)}
   - ${file(./src/main/serverless/functions/category/GetCategoriesFunction.yaml)}
 

@@ -25,9 +25,8 @@ export default function CreateGroupStepThree() {
   const onUpdateImage = async () => {
     try {
       setIsLoading(true)
-      //despues mandamos las otras cosas cuando definamos todo
       const response = await api.post<CreateGroupForm, { id: string; code: number; name: string }>(
-        endpoint.group.root,
+        endpoint.group.groups,
         {
           interestIds: data.interests,
           name: data.name

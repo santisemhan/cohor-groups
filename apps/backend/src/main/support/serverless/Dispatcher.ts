@@ -22,6 +22,7 @@ import { GetGroupFunction } from "../../functions/group/GetGroupFunction"
 import { GetGroupImagePresignedParamsFunction } from "../../functions/group/GetGroupImagePresignedParamsFunction"
 import { GetCategoriesFunction } from "../../functions/category/GetCategoriesFunction"
 import { PingFunction } from "../../functions/PingFunction"
+import { GetGroupsFunction } from "../../functions/group/GetGroupsFunction"
 
 /**
  * @description
@@ -65,6 +66,7 @@ export const GetProfileImagePresignedParams = Dispatcher.of(GetProfileImagePresi
 export const CreateGroup = Dispatcher.of(CreateGroupFunction)
 export const JoinGroup = Dispatcher.of(JoinGroupFunction)
 export const GetGroup = Dispatcher.of(GetGroupFunction)
+export const GetGroups = Dispatcher.of(GetGroupsFunction)
 export const GetGroupImagePresignedParams = Dispatcher.of(GetGroupImagePresignedParamsFunction)
 
 // Category
