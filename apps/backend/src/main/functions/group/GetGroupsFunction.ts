@@ -10,6 +10,8 @@ import { HTTPParameterSource } from "../../support/http/HTTPParameterSource"
 import { AuthorizerContext, AuthorizerContextSchema } from "../../schema/AuthorizerContextSchema"
 import { GroupService } from "../../services/GroupService"
 import { CloudinaryService } from "../../services/storage/CloudinaryService"
+import { createPaginationOptionsSchema } from "../../support/paginator/PaginationOptions"
+import { Group } from "@prisma/client"
 
 @Injectable()
 export class GetGroupsFunction extends APIServerlessFunction {
@@ -32,21 +34,25 @@ export class GetGroupsFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
+    const { error: bodyError, value: body } = this.validationService.validate(
+      createPaginationOptionsSchema<Group>(["name"]),
+      event.body
+    )
+
+    if (bodyError) {
+      return new HTTPResponse(MIMEType.JSON)
+        .body([new HttpValidationError(bodyError, event.body, HTTPParameterSource.BODY)])
+        .statusCode(HTTPStatusCode.BadRequest)
+    }
+
     const loggedUserGroup = await this.groupService.getUserGroup(value.id)
 
     if (!loggedUserGroup) {
       return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NotFound)
     }
 
-    const groupsRaw = await this.groupService.getGroups(loggedUserGroup.id)
+    const paginatedGroups = await this.groupService.getGroups(loggedUserGroup.id, body)
 
-    const groups = await Promise.all(
-      groupsRaw.map(async (group) => ({
-        ...group,
-        imageURL: await this.cloudinaryService.getUrlAsync("group-profile", group.id)
-      }))
-    )
-
-    return new HTTPResponse(MIMEType.JSON).body(groups).statusCode(HTTPStatusCode.Ok)
+    return new HTTPResponse(MIMEType.JSON).body(paginatedGroups).statusCode(HTTPStatusCode.Ok)
   }
 }

@@ -1,7 +1,10 @@
-import { OnboardingStep } from "@prisma/client"
+import { Group, OnboardingStep } from "@prisma/client"
 import { UserInGroupError } from "../errors/UserInGroupError"
 import { DatabaseService } from "../services/database/DatabaseService"
 import { Injectable } from "../support/decorator/Injectable"
+import { PaginationOptions } from "../support/paginator/PaginationOptions"
+import { Paginator } from "../support/paginator/Paginator"
+import { PaginatedResult } from "../support/paginator/PaginatedResult"
 
 @Injectable()
 export class GroupRepository {
@@ -100,18 +103,36 @@ export class GroupRepository {
     )[0]
   }
 
-  public async getGroups(excludedGroupId: string) {
+  public async getGroups(
+    excludedGroupId: string,
+    options: PaginationOptions<Group> = {}
+  ): Promise<PaginatedResult<{ id: string; name: string }>> {
     const connection = await this.databaseService.connectionAsync()
-    return connection.group.findMany({
-      where: {
-        NOT: {
-          id: excludedGroupId
-        }
+
+    return Paginator.paginate<Group, { id: string; name: string }>(
+      async ({ skip, take }) => {
+        return connection.group.findMany({
+          where: { NOT: { id: excludedGroupId } },
+          select: { id: true, name: true },
+          skip,
+          take,
+          orderBy: this.buildOrderBy(options)
+        })
       },
-      select: {
-        id: true,
-        name: true
-      }
-    })
+      async () => {
+        return connection.group.count({
+          where: { NOT: { id: excludedGroupId } }
+        })
+      },
+      options
+    )
+  }
+
+  private buildOrderBy(options: PaginationOptions<Group>): Record<string, "asc" | "desc"> {
+    if (!options.orderBy) return { name: "asc" as const }
+
+    return {
+      [options.orderBy]: options.orderDirection === "desc" ? "desc" : "asc"
+    }
   }
 }
