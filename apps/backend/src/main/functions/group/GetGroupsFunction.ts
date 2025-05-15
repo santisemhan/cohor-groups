@@ -34,14 +34,14 @@ export class GetGroupsFunction extends APIServerlessFunction {
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
-    const { error: bodyError, value: body } = this.validationService.validate(
+    const { error: queryError, value: queryValue } = this.validationService.validate(
       createPaginationOptionsSchema<Group>(["name"]),
-      event.body
+      event.queryStringParameters
     )
 
-    if (bodyError) {
+    if (queryError) {
       return new HTTPResponse(MIMEType.JSON)
-        .body([new HttpValidationError(bodyError, event.body, HTTPParameterSource.BODY)])
+        .body([new HttpValidationError(queryError, event.queryStringParameters, HTTPParameterSource.QUERY)])
         .statusCode(HTTPStatusCode.BadRequest)
     }
 
@@ -51,7 +51,7 @@ export class GetGroupsFunction extends APIServerlessFunction {
       return new HTTPResponse(MIMEType.JSON).statusCode(HTTPStatusCode.NotFound)
     }
 
-    const paginatedGroups = await this.groupService.getGroups(loggedUserGroup.id, body)
+    const paginatedGroups = await this.groupService.getGroups(loggedUserGroup.id, queryValue)
 
     return new HTTPResponse(MIMEType.JSON).body(paginatedGroups).statusCode(HTTPStatusCode.Ok)
   }

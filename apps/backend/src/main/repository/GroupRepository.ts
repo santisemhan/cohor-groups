@@ -105,7 +105,7 @@ export class GroupRepository {
 
   public async getGroups(
     excludedGroupId: string,
-    options: PaginationOptions<Group> = {}
+    options: PaginationOptions<Group>
   ): Promise<PaginatedResult<{ id: string; name: string }>> {
     const connection = await this.databaseService.connectionAsync()
 
@@ -116,7 +116,7 @@ export class GroupRepository {
           select: { id: true, name: true },
           skip,
           take,
-          orderBy: this.buildOrderBy(options)
+          orderBy: { [options.orderBy]: options.orderDirection === "desc" ? "desc" : "asc" }
         })
       },
       async () => {
@@ -126,13 +126,5 @@ export class GroupRepository {
       },
       options
     )
-  }
-
-  private buildOrderBy(options: PaginationOptions<Group>): Record<string, "asc" | "desc"> {
-    if (!options.orderBy) return { name: "asc" as const }
-
-    return {
-      [options.orderBy]: options.orderDirection === "desc" ? "desc" : "asc"
-    }
   }
 }

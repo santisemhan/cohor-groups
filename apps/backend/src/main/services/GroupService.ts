@@ -23,7 +23,7 @@ export class GroupService {
     return this.groupRepository.getUserGroup(userId)
   }
 
-  public async getGroups(excludedGroupId: string, options: PaginationOptions<Group> = {}) {
+  public async getGroups(excludedGroupId: string, options: PaginationOptions<Group>) {
     const response = await this.groupRepository.getGroups(excludedGroupId, options)
     const groups = await Promise.all(
       response.data.map(async (group) => ({
