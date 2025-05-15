@@ -27,7 +27,7 @@ describe("GroupRepository", () => {
     })
 
     const groupName = `${randomUUID()} Group`
-    const group = await groupRepository.createGroupAsync(groupName, user.id)
+    const group = await groupRepository.createGroupAsync({ name: groupName, interestIds: [] }, user.id)
 
     expect(group).toHaveProperty("id")
     expect(group).toHaveProperty("code")
@@ -53,7 +53,7 @@ describe("GroupRepository", () => {
     })
 
     const groupName = `${randomUUID()} Group`
-    const group = await groupRepository.createGroupAsync(groupName, admin.id)
+    const group = await groupRepository.createGroupAsync({ name: groupName, interestIds: [] }, admin.id)
     await groupRepository.joinGroupOrThrowAsync(group.code, user.id)
 
     const updatedUser = await prisma.user.findUnique({
@@ -82,7 +82,7 @@ describe("GroupRepository", () => {
     })
 
     const groupName = `${randomUUID()} Group`
-    const group = await groupRepository.createGroupAsync(groupName, admin.id)
+    const group = await groupRepository.createGroupAsync({ name: groupName, interestIds: [] }, admin.id)
     await groupRepository.joinGroupOrThrowAsync(group.code, user.id)
 
     let error
@@ -105,7 +105,7 @@ describe("GroupRepository", () => {
     })
 
     const groupName = `${randomUUID()} Group`
-    const group = await groupRepository.createGroupAsync(groupName, user.id)
+    const group = await groupRepository.createGroupAsync({ name: groupName, interestIds: [] }, user.id)
 
     const userGroup = await groupRepository.getUserGroup(user.id)
 
