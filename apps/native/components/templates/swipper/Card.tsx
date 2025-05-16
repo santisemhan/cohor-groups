@@ -181,7 +181,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                     borderColor={"$white-opacity-low"}
                     borderWidth={1}
                   >
-                    <Avatar.Image accessibilityLabel={member.name} src={member.imageUrl} />
+                    <Avatar.Image accessibilityLabel={member.name} src={member.imageURL} />
                     <Avatar.Fallback backgroundColor="$blue10" />
                   </Avatar>
                 ))}
@@ -210,7 +210,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                         renderItem={({ item }) => (
                           <YStack gap={12} alignItems="center">
                             <Avatar circular size="$8">
-                              <Avatar.Image accessibilityLabel={item.name} src={item.imageUrl} />
+                              <Avatar.Image accessibilityLabel={item.name} src={item.imageURL} />
                               <Avatar.Fallback backgroundColor="$blue10" />
                             </Avatar>
                             <YStack gap={2} alignItems="center">
