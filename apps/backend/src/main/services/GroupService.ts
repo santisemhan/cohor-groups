@@ -26,10 +26,22 @@ export class GroupService {
   public async getGroups(excludedGroupId: string, options: PaginationOptions<Group>) {
     const response = await this.groupRepository.getGroups(excludedGroupId, options)
     const groups = await Promise.all(
-      response.data.map(async (group) => ({
-        ...group,
-        imageURL: await this.cloudinaryService.getUrlAsync("group-profile", group.id)
-      }))
+      response.data.map(async (group) => {
+        const imageURL = await this.cloudinaryService.getUrlAsync("group-profile", group.id)
+
+        const membersWithImages = await Promise.all(
+          group.members.map(async (member) => ({
+            ...member,
+            imageURL: await this.cloudinaryService.getUrlAsync("profile", member.id)
+          }))
+        )
+
+        return {
+          ...group,
+          imageURL,
+          members: membersWithImages
+        }
+      })
     )
     return {
       ...response,

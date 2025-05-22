@@ -7,7 +7,7 @@ import { Category } from "@cohor/types"
 import { useApiClient } from "../../../../../lib/http/useApiClient"
 import { endpoint } from "../../../../../lib/common/Endpoint"
 import { useToastController } from "@tamagui/toast"
-import { unicodeToHex } from "../../../../../lib/support/unicodeToHex"
+import { unicodeToHex } from "../../../../../lib/utils/support/unicodeToHex"
 import useOnboardingGroupStore from "../../../../../lib/store/onboardingGroupStore"
 import { useRouter } from "expo-router"
 

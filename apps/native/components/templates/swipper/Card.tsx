@@ -7,12 +7,9 @@ import MapPinIcon from "../../icons/MapPin"
 import { SwippeableGroup } from "@cohor/types"
 import Gradient from "../../ui/Gradient"
 import Chip from "../../ui/Chip"
-import { unicodeToHex } from "../../../lib/support/unicodeToHex"
+import { unicodeToHex } from "../../../lib/utils/support/unicodeToHex"
 
-export type CardHandle = {
-  swipeLeft: () => void
-  swipeRight: () => void
-}
+export type CardHandle = { swipeLeft: () => void; swipeRight: () => void }
 
 export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direction: "left" | "right") => void }>(
   function Card({ group, onSwipe }, ref) {
@@ -45,9 +42,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
       opacity: teamSectionOpacity.value
     }))
 
-    const backgroundStyle = useAnimatedStyle(() => ({
-      opacity: backgroundOpacity.value
-    }))
+    const backgroundStyle = useAnimatedStyle(() => ({ opacity: backgroundOpacity.value }))
 
     const handleSwipeComplete = (direction: "left" | "right") => {
       onSwipe(direction)
@@ -64,10 +59,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
       opacity.value = withTiming(0, { duration: 300 })
     }
 
-    useImperativeHandle(ref, () => ({
-      swipeLeft,
-      swipeRight
-    }))
+    useImperativeHandle(ref, () => ({ swipeLeft, swipeRight }))
 
     const scrollToStart = () => {
       flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
@@ -133,7 +125,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
         <Animated.View
           style={[{ position: "absolute", width: "100%", height: "100%", overflow: "hidden" }, animatedStyle]}
         >
-          <Image src={group.imageUrl} alt={group.name} objectFit="cover" width="100%" height="100%" />
+          <Image src={group.imageURL} alt={group.name} objectFit="cover" width="100%" height="100%" />
 
           <Animated.View
             style={[
@@ -172,7 +164,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
               <XStack gap={4} justifyContent="center" alignItems="center">
                 <MapPinIcon width={18} />
                 <SizableText color="$white-opacity-high" size="$body-small-w-medium" textAlign="center">
-                  {group.location}
+                  {group.location || "CABA, Argentina [TODO]"}
                 </SizableText>
               </XStack>
             </YStack>
@@ -189,7 +181,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                     borderColor={"$white-opacity-low"}
                     borderWidth={1}
                   >
-                    <Avatar.Image accessibilityLabel={member.name} src={member.imageUrl} />
+                    <Avatar.Image accessibilityLabel={member.name} src={member.imageURL} />
                     <Avatar.Fallback backgroundColor="$blue10" />
                   </Avatar>
                 ))}
@@ -218,7 +210,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                         renderItem={({ item }) => (
                           <YStack gap={12} alignItems="center">
                             <Avatar circular size="$8">
-                              <Avatar.Image accessibilityLabel={item.name} src={item.imageUrl} />
+                              <Avatar.Image accessibilityLabel={item.name} src={item.imageURL} />
                               <Avatar.Fallback backgroundColor="$blue10" />
                             </Avatar>
                             <YStack gap={2} alignItems="center">
@@ -239,19 +231,20 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
                         Intereses del grupo
                       </SizableText>
                       <XStack gap={12} flexWrap="wrap">
-                        {group.interests.map((interest) => (
-                          <Chip
-                            key={interest.name}
-                            backgroundColor="$white-opacity-low"
-                            borderColor="$white-opacity-low"
-                            borderWidth={1}
-                          >
-                            <SizableText color="$element-high" size="$label-large-w-medium">
-                              {interest.name}
-                            </SizableText>
-                            <SizableText>{String.fromCodePoint(unicodeToHex(interest.unicode))}</SizableText>
-                          </Chip>
-                        ))}
+                        {group &&
+                          group.interests.map((interest) => (
+                            <Chip
+                              key={interest.name}
+                              backgroundColor="$white-opacity-low"
+                              borderColor="$white-opacity-low"
+                              borderWidth={1}
+                            >
+                              <SizableText color="$element-high" size="$label-large-w-medium">
+                                {interest.name}
+                              </SizableText>
+                              <SizableText>{String.fromCodePoint(unicodeToHex(interest.unicode))}</SizableText>
+                            </Chip>
+                          ))}
                       </XStack>
                     </YStack>
                   </YStack>
