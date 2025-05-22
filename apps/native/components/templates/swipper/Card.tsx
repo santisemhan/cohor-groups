@@ -164,7 +164,7 @@ export default forwardRef<CardHandle, { group: SwippeableGroup; onSwipe: (direct
               <XStack gap={4} justifyContent="center" alignItems="center">
                 <MapPinIcon width={18} />
                 <SizableText color="$white-opacity-high" size="$body-small-w-medium" textAlign="center">
-                  {group.location}
+                  {group.location || "CABA, Argentina [TODO]"}
                 </SizableText>
               </XStack>
             </YStack>
